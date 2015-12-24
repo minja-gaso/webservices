@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		elementFormDefault="qualified">
+	<element name="data">
+		<complexType>
+			<sequence>
+				<element name="environment">
+					<complexType>
+						<sequence>
+							<element name="serverName" type="string" />
+							<element name="assets" type="string" />
+							<element name="contactName" type="string" />
+							<element name="contactEmail" type="string" />
+						</sequence>
+					</complexType>
+				</element>
+				<element name="form" minOccurs="0" maxOccurs="unbounded">					
+					<complexType>
+						<sequence>
+							<element name="id" type="int" />
+							<element name="creationTimestamp" type="date" />
+							<element name="type" type="string" />
+							<element name="status" type="string" />
+							<element name="title" type="string" />
+							<element name="prettyUrl" type="string" />
+							<element name="submissionCount" type="int" />
+							<element name="returnUrl" type="string" />
+							<element name="skinUrl" type="string" />
+							<element name="skinSelector" type="string" />
+							<element name="question" minOccurs="0" maxOccurs="unbounded">												
+								<complexType>
+									<sequence>
+										<element name="id" type="int" />
+										<element name="number" type="int" />
+										<element name="type" type="string" />
+										<element name="label" type="string" />
+										<element name="page" type="int" />
+										<element name="defaultAnswer" type="string" />
+										<element name="filter" type="string" />
+										<element name="maxCharacterLimit" type="int" />
+										<element name="maxWordLimit" type="int" />
+										<element name="required" type="boolean" />									
+										<element name="possibleAnswer" minOccurs="0" maxOccurs="unbounded">					
+											<complexType>
+												<sequence>
+													<element name="id" type="int" />
+													<element name="label" type="string" />
+													<element name="value" type="int" />
+												</sequence>
+											</complexType>
+										</element>
+										<element name="fkId" type="int" />
+									</sequence>
+								</complexType>
+							</element>
+							<element name="currentPage" type="int" />
+							<element name="lastPage" type="int" />
+							<element name="deleted" type="boolean" />
+						</sequence>
+					</complexType>
+				</element>				
+				<element name="submission" minOccurs="0" maxOccurs="unbounded">					
+					<complexType>
+						<sequence>
+							<element name="id" type="int" />
+							<element name="userId" type="int" />
+							<element name="answer" minOccurs="0" maxOccurs="unbounded">					
+								<complexType>
+									<sequence>
+										<element name="questionId" type="int" />
+										<element name="multipleChoice" type="boolean" />
+										<element name="answerValue" type="string" />
+										<element name="answerLabel" type="string" />
+									</sequence>
+								</complexType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>				
+				<element name="message" minOccurs="0" maxOccurs="unbounded">				
+					<complexType>
+						<sequence>
+							<element name="type" type="string" />
+							<element name="label" type="string" />
+							<element name="questionId" type="int" />
+							<element name="questionNumber" type="int" />
+						</sequence>
+					</complexType>				
+				</element>
+				<element name="user">
+					<complexType>
+						<sequence>
+							<element name="id" type="int" />
+							<element name="emailAddress" type="string" />
+							<element name="firstName" type="string" />
+							<element name="lastName" type="string" />
+							<element name="pictureUrl" type="string" />
+							<element name="active" type="boolean" />
+							<element name="admin" type="boolean" />
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>
