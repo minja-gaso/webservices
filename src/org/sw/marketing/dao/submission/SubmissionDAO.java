@@ -7,10 +7,10 @@ public interface SubmissionDAO
 	/*
 	 * insert submission
 	 */
-	public int insert(int formID);
+	public long insert(long formID);
 	
 	/*
 	 * read submissions
 	 */
-	public java.util.List<Submission> getSubmissions(int formID);
+	public java.util.List<Submission> getSubmissions(long formID);
 }

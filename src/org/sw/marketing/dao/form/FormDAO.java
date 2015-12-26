@@ -1,16 +1,17 @@
 package org.sw.marketing.dao.form;
 
 import org.sw.marketing.data.form.Data.Form;
+import org.sw.marketing.data.form.Data.User;
 
 public interface FormDAO
 {
 	public java.util.List<Form> getForms();
 	
-	public Form getForm(int id);
+	public Form getForm(long id);
 	
-	public int createForm();
+	public long createForm(User user);
 
-	public void deleteForm(int formId);
+	public void deleteForm(long formId);
 	
 	public void updateForm(Form form);
 }

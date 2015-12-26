@@ -10,6 +10,7 @@ import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.SQLStatements;
 import org.sw.marketing.data.form.Data.Form;
+import org.sw.marketing.data.form.Data.User;
 import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class FormDAOImpl extends BaseDAO implements FormDAO
@@ -38,7 +39,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 					formList = new java.util.ArrayList<Form>();
 				}
 
-				int id = resultSet.getInt("form_id");
+				long id = resultSet.getLong("form_id");
 				java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
 				String type = resultSet.getString("form_type");
 				String title = resultSet.getString("form_title");
@@ -77,7 +78,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 	}
 
 	@Override
-	public Form getForm(int id)
+	public Form getForm(long id)
 	{
 		Form form = null;
 
@@ -90,7 +91,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_FORM);
-			statement.setInt(1, id);
+			statement.setLong(1, id);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next())
@@ -133,26 +134,29 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 	}
 
 	@Override
-	public int createForm()
+	public long createForm(User user)
 	{
-		int id = 0;
+		long id = 0;
 		
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
 		java.sql.PreparedStatement statement = null;
 		java.sql.ResultSet resultSet = null;
 
+		System.out.println("USER ID: " + user.getId());
+		System.out.println("USER EMAIL: " + user.getEmailAddress());
+		
 		try
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.INSERT_FORM, Statement.RETURN_GENERATED_KEYS);
-			statement.setInt(1, 1);
+			statement.setLong(1, user.getId());
 			statement.executeUpdate();
 			resultSet = statement.getGeneratedKeys();
 			
 			if(resultSet.next())
 			{
-				id = resultSet.getInt(1);
+				id = resultSet.getLong(1);
 			}
 		}
 		catch (SQLException e)
@@ -168,7 +172,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 	}
 
 	@Override
-	public void deleteForm(int formId)
+	public void deleteForm(long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -179,7 +183,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.DELETE_FORM);
-			statement.setInt(1, formId);
+			statement.setLong(1, formId);
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -208,7 +212,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 			statement.setString(2, form.getPrettyUrl());
 			statement.setString(3, form.getSkinUrl());
 			statement.setString(4, form.getSkinSelector());
-			statement.setInt(5, form.getId());
+			statement.setLong(5, form.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)

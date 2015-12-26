@@ -7,14 +7,14 @@ public interface QuestionDAO
 	/*
 	 * create
 	 */
-	public int insertQuestion(int questionNumber, int page, int formId);
+	public void insertQuestion(int questionNumber, int page, long formId);
 	
 	/*
 	 * read
 	 */
-	public java.util.List<Question> getQuestions(int formId);	
-	public java.util.List<Question> getQuestionsByPage(int formId, int formPage);	
-	public Question getQuestion(int questionId);
+	public java.util.List<Question> getQuestions(long formId);	
+	public java.util.List<Question> getQuestionsByPage(long formId, int formPage);	
+	public Question getQuestion(long questionId);
 	public Question getQuestionByNumber(int number);
 	/*
 	 * update
@@ -23,22 +23,22 @@ public interface QuestionDAO
 	/*
 	 * delete
 	 */
-	public void deleteQuestion(int questionId);
+	public void deleteQuestion(long questionId);
 	/*
 	 * utility methods
 	 */
-	public int getNextNumber(int formId);
-	public int getLatestPage(int formId);
-	public int getMostRecentQuestionNumber(int formId);
+	public int getNextNumber(long formId);
+	public int getLatestPage(long formId);
+	public int getMostRecentQuestionNumber(long formId);
 	public int getQuestionPageCount(int page);
-	public void moveDownQuestion(int questionNumber, int formId);
-	public void moveUpQuestion(int questionNumber, int formId);
-	public void incrementPageNumber(int questionNumber, int formId);
-	public void decrementPageNumber(int questionNumber, int formId);
+	public void moveDownQuestion(int questionNumber, long formId);
+	public void moveUpQuestion(int questionNumber, long formId);
+	public void incrementPageNumber(int questionNumber, long formId);
+	public void decrementPageNumber(int questionNumber, long formId);
 	
-	public void insertPageBreak(int questionNumber, int formId);
+	public void insertPageBreak(int questionNumber, long formId);
 	public void deletePageBreak(int pageNumber);
-	public void removePageBreak(int questionNumber, int formId);
-	public void moveDownQuestions(int questionNumber, int formId);
-	public void moveUpQuestions(int questionNumber, int formId);
+	public void removePageBreak(int questionNumber, long formId);
+	public void moveDownQuestions(int questionNumber, long formId);
+	public void moveUpQuestions(int questionNumber, long formId);
 }

@@ -33,8 +33,8 @@ public class SubmissionAnswerDAOImpl extends BaseDAO implements SubmissionAnswer
 				isMultipleChoice = true;
 			}
 			statement.setBoolean(2, isMultipleChoice);
-			statement.setInt(3, question.getId());
-			statement.setInt(4, submission.getId());
+			statement.setLong(3, question.getId());
+			statement.setLong(4, submission.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -48,7 +48,7 @@ public class SubmissionAnswerDAOImpl extends BaseDAO implements SubmissionAnswer
 	}
 
 	@Override
-	public java.util.List<Answer> getSubmissionAnswers(int submissionID)
+	public java.util.List<Answer> getSubmissionAnswers(long submissionID)
 	{
 		java.util.List<Answer> submissionAnswerList = null;
 
@@ -61,7 +61,7 @@ public class SubmissionAnswerDAOImpl extends BaseDAO implements SubmissionAnswer
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_SUBMISSION_ANSWERS);
-			statement.setInt(1, submissionID);
+			statement.setLong(1, submissionID);
 			resultSet = statement.executeQuery();
 
 			Answer answer = null;
@@ -73,7 +73,7 @@ public class SubmissionAnswerDAOImpl extends BaseDAO implements SubmissionAnswer
 				}
 
 //				int id = resultSet.getInt("sub_answer_id");
-				int questionID = resultSet.getInt("question_id");
+				long questionID = resultSet.getLong("question_id");
 				String answerValue = resultSet.getString("sub_answer_value");
 				boolean multipleChoice = resultSet.getBoolean("is_sub_answer_multiple_choice");
 

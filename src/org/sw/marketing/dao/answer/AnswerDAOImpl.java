@@ -15,7 +15,7 @@ import org.sw.marketing.util.DateToXmlGregorianCalendar;
 public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 {
 	@Override
-	public void insertAnswerToQuestion(int questionId, PossibleAnswer answer)
+	public void insertAnswerToQuestion(long questionId, PossibleAnswer answer)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -27,7 +27,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.INSERT_ANSWER_TO_QUESTION);
 			statement.setString(1, answer.getLabel());
-			statement.setInt(2, questionId);
+			statement.setLong(2, questionId);
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -41,7 +41,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 	}
 
 	@Override
-	public List<PossibleAnswer> getPossibleAnswers(int questionId)
+	public List<PossibleAnswer> getPossibleAnswers(long questionId)
 	{ 
 		java.util.List<PossibleAnswer> answerList = null;
 
@@ -54,7 +54,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_ANSWERS_FOR_QUESTION);
-			statement.setInt(1, questionId);
+			statement.setLong(1, questionId);
 			resultSet = statement.executeQuery();
 
 			PossibleAnswer answer = null;
@@ -65,7 +65,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 					answerList = new java.util.ArrayList<PossibleAnswer>();
 				}
 
-				int id = resultSet.getInt("answer_id");
+				long id = resultSet.getLong("answer_id");
 				String label = resultSet.getString("answer_label");
 
 				answer = new PossibleAnswer();
@@ -88,7 +88,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 	}
 
 	@Override
-	public String getPossibleAnswerLabel(int answerID)
+	public String getPossibleAnswerLabel(long answerID)
 	{
 		String answerLabel = null;
 
@@ -101,7 +101,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_ANSWER);
-			statement.setInt(1, answerID);
+			statement.setLong(1, answerID);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next())

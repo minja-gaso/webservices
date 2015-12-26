@@ -8,5 +8,5 @@ public interface SubmissionAnswerDAO
 {
 	public void insert(Submission submission, Answer answer, Question question);
 	
-	public java.util.List<Answer> getSubmissionAnswers(int submissionID);
+	public java.util.List<Answer> getSubmissionAnswers(long submissionID);
 }

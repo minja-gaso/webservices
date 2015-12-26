@@ -9,7 +9,7 @@ public class SQLStatements
 	public static final String INSERT_FORM = "INSERT INTO forms (fk_user_id) VALUES (?)";	
 	public static final String INSERT_QUESTION = "INSERT INTO questions (question_number, question_page, fk_form_id) VALUES (?, ?, ?)";
 	public static final String INSERT_ANSWER_TO_QUESTION = "INSERT INTO answers (answer_label, fk_question_id) VALUES (?, ?)";	
-	public static final String INSERT_SUBMISSION = "INSERT INTO submissions (fk_user_id, fk_form_id) VALUES (1, ?)";
+	public static final String INSERT_SUBMISSION = "INSERT INTO submissions (fk_form_id) VALUES (?)";
 	public static final String INSERT_SUBMISSION_ANSWER = "INSERT INTO submission_answers (sub_answer_value, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?)";
 	
 	/*

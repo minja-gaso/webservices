@@ -12,7 +12,7 @@ import org.sw.marketing.data.form.Data.Form.Question;
 public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 {
 	@Override
-	public int getNextNumber(int formId)
+	public int getNextNumber(long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -25,7 +25,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_NEXT_NUMBER);
-			statement.setInt(1, formId);
+			statement.setLong(1, formId);
 			resultSet = statement.executeQuery();
 	
 			while (resultSet.next())
@@ -46,7 +46,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 	
 	@Override
-	public int getLatestPage(int formId)
+	public int getLatestPage(long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -59,7 +59,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_LATEST_PAGE);
-			statement.setInt(1, formId);
+			statement.setLong(1, formId);
 			resultSet = statement.executeQuery();
 	
 			while (resultSet.next())
@@ -80,9 +80,9 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public int insertQuestion(int questionNumber, int page, int formId)
+	public void insertQuestion(int questionNumber, int page, long formId)
 	{
-		int id = 0;
+//		long id = 0;
 		
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -92,17 +92,17 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_QUESTION, Statement.RETURN_GENERATED_KEYS);
+			statement = connection.prepareStatement(SQLStatements.INSERT_QUESTION);
 			statement.setInt(1, questionNumber);
 			statement.setInt(2, page);
-			statement.setInt(3, formId);
+			statement.setLong(3, formId);
 			statement.executeUpdate();
-			resultSet = statement.getGeneratedKeys();
+//			resultSet = statement.getGeneratedKeys();
 			
-			if(resultSet.next())
-			{
-				id = resultSet.getInt(1);
-			}
+//			if(resultSet.next())
+//			{
+//				id = resultSet.getInt(1);
+//			}
 		}
 		catch (SQLException e)
 		{
@@ -113,7 +113,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 			closeConnection(connection, statement, resultSet);
 		}
 		
-		return id;
+//		return id;
 	}
 	
 	@Override
@@ -161,7 +161,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	
 
 	@Override
-	public List<Question> getQuestions(int formId)
+	public List<Question> getQuestions(long formId)
 	{
 		java.util.List<Question> questionList = null;
 
@@ -174,7 +174,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_QUESTIONS);
-			statement.setInt(1, formId);
+			statement.setLong(1, formId);
 			resultSet = statement.executeQuery();
 
 			Question question = null;
@@ -185,7 +185,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 					questionList = new java.util.ArrayList<Question>();
 				}
 
-				int id = resultSet.getInt("question_id");
+				long id = resultSet.getLong("question_id");
 				int number = resultSet.getInt("question_number");
 				String type = resultSet.getString("question_type");
 				String label = resultSet.getString("question_label");
@@ -222,7 +222,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		return questionList;
 	}
 	@Override
-	public List<Question> getQuestionsByPage(int formId, int formPage)
+	public List<Question> getQuestionsByPage(long formId, int formPage)
 	{
 		java.util.List<Question> questionList = null;
 
@@ -236,7 +236,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_QUESTIONS_BY_PAGE);
 			statement.setInt(1, formPage);
-			statement.setInt(2, formId);
+			statement.setLong(2, formId);
 			resultSet = statement.executeQuery();
 
 			Question question = null;
@@ -247,7 +247,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 					questionList = new java.util.ArrayList<Question>();
 				}
 
-				int id = resultSet.getInt("question_id");
+				long id = resultSet.getLong("question_id");
 				int number = resultSet.getInt("question_number");
 				String type = resultSet.getString("question_type");
 				String label = resultSet.getString("question_label");
@@ -285,7 +285,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 	
 	@Override
-	public Question getQuestion(int questionId)
+	public Question getQuestion(long questionId)
 	{
 		Question question = null;
 		
@@ -298,12 +298,12 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_QUESTION);
-			statement.setInt(1, questionId);
+			statement.setLong(1, questionId);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next())
 			{
-				int id = resultSet.getInt("question_id");
+				long id = resultSet.getLong("question_id");
 				int number = resultSet.getInt("question_number");
 				String type = resultSet.getString("question_type");
 				String label = resultSet.getString("question_label");
@@ -358,7 +358,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 
 			while (resultSet.next())
 			{
-				int id = resultSet.getInt("question_id");
+				long id = resultSet.getLong("question_id");
 				int number = resultSet.getInt("question_number");
 				String type = resultSet.getString("question_type");
 				String label = resultSet.getString("question_label");
@@ -429,7 +429,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public int getMostRecentQuestionNumber(int formId)
+	public int getMostRecentQuestionNumber(long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -442,7 +442,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.GET_MOST_RECENT_QUESTION_NUMBER);
-			statement.setInt(1, formId);
+			statement.setLong(1, formId);
 			resultSet = statement.executeQuery();
 	
 			while (resultSet.next())
@@ -483,7 +483,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 			statement.setInt(7, question.getMaxCharacterLimit());
 			statement.setInt(8, question.getMaxWordLimit());
 			statement.setBoolean(9, question.isRequired());
-			statement.setInt(10, question.getId());
+			statement.setLong(10, question.getId());
 			statement.executeUpdate();			
 		}
 		catch (SQLException e)
@@ -523,7 +523,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 //	}
 
 	@Override
-	public void deleteQuestion(int questionId)
+	public void deleteQuestion(long questionId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -534,7 +534,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.DELETE_QUESTION);
-			statement.setInt(1, questionId);
+			statement.setLong(1, questionId);
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -548,7 +548,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public void moveDownQuestions(int questionNumber, int formId)
+	public void moveDownQuestions(int questionNumber, long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -560,7 +560,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.MOVE_DOWN_QUESTIONS);
 			statement.setInt(1, questionNumber);
-			statement.setInt(2, formId);
+			statement.setLong(2, formId);
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -574,7 +574,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public void moveUpQuestions(int questionNumber, int formId)
+	public void moveUpQuestions(int questionNumber, long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -586,7 +586,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.MOVE_UP_QUESTIONS);
 			statement.setInt(1, questionNumber);
-			statement.setInt(2, formId);
+			statement.setLong(2, formId);
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -600,7 +600,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public void moveDownQuestion(int questionNumber, int formId)
+	public void moveDownQuestion(int questionNumber, long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -626,7 +626,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public void moveUpQuestion(int questionNumber, int formId)
+	public void moveUpQuestion(int questionNumber, long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -652,7 +652,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public void insertPageBreak(int questionNumber, int formId)
+	public void insertPageBreak(int questionNumber, long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -678,7 +678,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public void removePageBreak(int questionNumber, int formId)
+	public void removePageBreak(int questionNumber, long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -704,7 +704,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public void incrementPageNumber(int questionNumber, int formId)
+	public void incrementPageNumber(int questionNumber, long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -729,7 +729,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 	}
 
 	@Override
-	public void decrementPageNumber(int questionNumber, int formId)
+	public void decrementPageNumber(int questionNumber, long formId)
 	{
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;

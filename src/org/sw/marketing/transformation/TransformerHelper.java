@@ -24,6 +24,7 @@ public class TransformerHelper
 			JAXBContext jaxbContext = JAXBContext.newInstance(packageName);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 		    marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		    marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 		    marshaller.marshal(data, xmlWriter);
 		}
 		catch (JAXBException e)

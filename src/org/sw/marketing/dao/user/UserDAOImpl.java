@@ -29,7 +29,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO
 
 			while (resultSet.next())
 			{
-				int id = resultSet.getInt("user_id");
+				long id = resultSet.getLong("user_id");
 				String emailAddress = resultSet.getString("user_email");
 				String firstName = resultSet.getString("user_first_name");
 				String lastName = resultSet.getString("user_last_name");

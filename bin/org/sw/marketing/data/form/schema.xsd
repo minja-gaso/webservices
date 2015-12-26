@@ -17,7 +17,7 @@
 				<element name="form" minOccurs="0" maxOccurs="unbounded">					
 					<complexType>
 						<sequence>
-							<element name="id" type="int" />
+							<element name="id" type="long" />
 							<element name="creationTimestamp" type="date" />
 							<element name="type" type="string" />
 							<element name="status" type="string" />
@@ -30,7 +30,7 @@
 							<element name="question" minOccurs="0" maxOccurs="unbounded">												
 								<complexType>
 									<sequence>
-										<element name="id" type="int" />
+										<element name="id" type="long" />
 										<element name="number" type="int" />
 										<element name="type" type="string" />
 										<element name="label" type="string" />
@@ -43,7 +43,7 @@
 										<element name="possibleAnswer" minOccurs="0" maxOccurs="unbounded">					
 											<complexType>
 												<sequence>
-													<element name="id" type="int" />
+													<element name="id" type="long" />
 													<element name="label" type="string" />
 													<element name="value" type="int" />
 												</sequence>
@@ -62,12 +62,12 @@
 				<element name="submission" minOccurs="0" maxOccurs="unbounded">					
 					<complexType>
 						<sequence>
-							<element name="id" type="int" />
-							<element name="userId" type="int" />
+							<element name="id" type="long" />
+							<element name="userId" type="long" />
 							<element name="answer" minOccurs="0" maxOccurs="unbounded">					
 								<complexType>
 									<sequence>
-										<element name="questionId" type="int" />
+										<element name="questionId" type="long" />
 										<element name="multipleChoice" type="boolean" />
 										<element name="answerValue" type="string" />
 										<element name="answerLabel" type="string" />
@@ -82,7 +82,7 @@
 						<sequence>
 							<element name="type" type="string" />
 							<element name="label" type="string" />
-							<element name="questionId" type="int" />
+							<element name="questionId" type="long" />
 							<element name="questionNumber" type="int" />
 						</sequence>
 					</complexType>				
@@ -90,7 +90,7 @@
 				<element name="user">
 					<complexType>
 						<sequence>
-							<element name="id" type="int" />
+							<element name="id" type="long" />
 							<element name="emailAddress" type="string" />
 							<element name="firstName" type="string" />
 							<element name="lastName" type="string" />

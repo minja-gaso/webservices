@@ -7,11 +7,11 @@ public interface AnswerDAO
 	/*
 	 * create
 	 */
-	public void insertAnswerToQuestion(int questionId, PossibleAnswer answer);
+	public void insertAnswerToQuestion(long questionId, PossibleAnswer answer);
 	
 	/*
 	 * read
 	 */
-	public java.util.List<PossibleAnswer> getPossibleAnswers(int questionId);
-	public String getPossibleAnswerLabel(int answerID);
+	public java.util.List<PossibleAnswer> getPossibleAnswers(long questionId);
+	public String getPossibleAnswerLabel(long answerID);
 }
