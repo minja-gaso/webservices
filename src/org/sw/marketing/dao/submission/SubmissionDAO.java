@@ -13,4 +13,5 @@ public interface SubmissionDAO
 	 * read submissions
 	 */
 	public java.util.List<Submission> getSubmissions(long formID);
+	public java.util.List<Submission> getSubmissionsFromStartToEndDate(long formID, String startDateStr, String endDateStr);
 }

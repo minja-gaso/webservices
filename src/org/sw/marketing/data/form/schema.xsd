@@ -100,6 +100,14 @@
 						</sequence>
 					</complexType>
 				</element>
+				<element name="analytics">
+					<complexType>
+						<sequence>
+							<element name="startDateStr" type="string" />
+							<element name="endDateStr" type="string" />
+						</sequence>
+					</complexType>
+				</element>
 			</sequence>
 		</complexType>
 	</element>

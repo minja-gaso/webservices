@@ -25,6 +25,7 @@ public class SQLStatements
 	public static final String GET_ANSWER = "SELECT * FROM answers WHERE answer_id = ?";
 	public static final String GET_ANSWERS_FOR_QUESTION = "SELECT * FROM answers WHERE fk_question_id = ?";
 	public static final String GET_SUBMISSIONS = "SELECT * FROM submissions WHERE fk_form_id = ?";
+	public static final String GET_SUBMISSIONS_FROM_START_TO_END_DATE = "SELECT * FROM submissions WHERE fk_form_id = ? AND submission_timestamp::date >= ? AND submission_timestamp::date <= ?";
 	public static final String GET_SUBMISSION_ANSWERS = "SELECT * FROM submission_answers INNER JOIN questions ON submission_answers.fk_question_id = questions.question_id WHERE submission_answers.fk_submission_id = ?";
 	
 	/*
