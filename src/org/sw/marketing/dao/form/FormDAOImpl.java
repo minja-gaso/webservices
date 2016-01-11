@@ -142,9 +142,6 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		java.sql.Connection connection = null;
 		java.sql.PreparedStatement statement = null;
 		java.sql.ResultSet resultSet = null;
-
-		System.out.println("USER ID: " + user.getId());
-		System.out.println("USER EMAIL: " + user.getEmailAddress());
 		
 		try
 		{

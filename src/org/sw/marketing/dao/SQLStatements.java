@@ -11,6 +11,8 @@ public class SQLStatements
 	public static final String INSERT_ANSWER_TO_QUESTION = "INSERT INTO answers (answer_label, fk_question_id) VALUES (?, ?)";	
 	public static final String INSERT_SUBMISSION = "INSERT INTO submissions (fk_form_id) VALUES (?)";
 	public static final String INSERT_SUBMISSION_ANSWER = "INSERT INTO submission_answers (sub_answer_value, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?)";
+	public static final String INSERT_SUBMISSION_TEMP = "INSERT INTO temp_submissions (fk_form_id, session_id) VALUES (?, ?)";
+	public static final String INSERT_SUBMISSION_TEMP_ANSWER = "INSERT INTO temp_submission_answers (sub_answer_value, sub_page, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?, ?)";
 	
 	/*
 	 * read
@@ -24,9 +26,11 @@ public class SQLStatements
 	public static final String GET_QUESTION_BY_NUMBER = "SELECT * FROM questions WHERE question_number = ?";
 	public static final String GET_ANSWER = "SELECT * FROM answers WHERE answer_id = ?";
 	public static final String GET_ANSWERS_FOR_QUESTION = "SELECT * FROM answers WHERE fk_question_id = ?";
+	public static final String GET_SUBMISSION_TEMP = "SELECT * FROM temp_submissions WHERE fk_form_id = ? AND session_id = ?";
 	public static final String GET_SUBMISSIONS = "SELECT * FROM submissions WHERE fk_form_id = ?";
 	public static final String GET_SUBMISSIONS_FROM_START_TO_END_DATE = "SELECT * FROM submissions WHERE fk_form_id = ? AND submission_timestamp::date >= ? AND submission_timestamp::date <= ?";
 	public static final String GET_SUBMISSION_ANSWERS = "SELECT * FROM submission_answers INNER JOIN questions ON submission_answers.fk_question_id = questions.question_id WHERE submission_answers.fk_submission_id = ?";
+	public static final String GET_SUBMISSION_TEMP_ANSWERS = "SELECT * FROM temp_submission_answers INNER JOIN questions ON temp_submission_answers.fk_question_id = questions.question_id WHERE temp_submission_answers.fk_submission_id = ? AND sub_page = ?";
 	
 	/*
 	 * update
@@ -41,6 +45,15 @@ public class SQLStatements
 	public static final String DELETE_FORM = "UPDATE forms SET is_form_deleted = true WHERE form_id = ?";
 	public static final String DELETE_QUESTION = "DELETE FROM questions WHERE question_id = ?";
 	public static final String DELETE_PAGE_BREAK = "UPDATE questions SET question_page = question_page - 1 WHERE question_page >= ?";	
+	public static final String DELETE_SUBMISSION_TEMP_ANSWERS = "DELETE FROM temp_submission_answers WHERE fk_submission_id = ? AND sub_page = ?";
+	
+	/*
+	 * copy to
+	 */
+	public static final String COPY_TO_SUBMISSIONS = "INSERT INTO submissions (submission_id, submission_timestamp, fk_form_id) SELECT submission_id, submission_timestamp, fk_form_id FROM temp_submissions WHERE session_id = ? AND fk_form_id = ?";
+	public static final String DELETE_FROM_TEMP_SUBMISSIONS = "DELETE FROM temp_submissions WHERE session_id = ? AND fk_form_id = ?";
+	public static final String COPY_TO_SUBMISSION_ANSWERS = "INSERT INTO submission_answers (sub_answer_id, sub_answer_value, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) SELECT sub_answer_id, sub_answer_value, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id FROM temp_submission_answers WHERE fk_submission_id = ?";
+	public static final String DELETE_FROM_TEMP_SUBMISSION_ANSWERS = "DELETE FROM temp_submission_answers WHERE fk_submission_id = ?";
 	
 	/*
 	 * utility statements

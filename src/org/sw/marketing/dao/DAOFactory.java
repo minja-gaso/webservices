@@ -10,6 +10,10 @@ import org.sw.marketing.dao.submission.SubmissionAnswerDAO;
 import org.sw.marketing.dao.submission.SubmissionAnswerDAOImpl;
 import org.sw.marketing.dao.submission.SubmissionDAO;
 import org.sw.marketing.dao.submission.SubmissionDAOImpl;
+import org.sw.marketing.dao.submission.TempSubmissionAnswerDAO;
+import org.sw.marketing.dao.submission.TempSubmissionAnswerDAOImpl;
+import org.sw.marketing.dao.submission.TempSubmissionDAO;
+import org.sw.marketing.dao.submission.TempSubmissionDAOImpl;
 import org.sw.marketing.dao.user.UserDAO;
 import org.sw.marketing.dao.user.UserDAOImpl;
 
@@ -38,5 +42,13 @@ public class DAOFactory
 	public static SubmissionAnswerDAO getSubmissionAnswerDAO()
 	{
 		return new SubmissionAnswerDAOImpl();
+	}
+	public static TempSubmissionDAO getTempSubmissionDAO()
+	{
+		return new TempSubmissionDAOImpl();
+	}
+	public static TempSubmissionAnswerDAO getTempSubmissionAnswerDAO()
+	{
+		return new TempSubmissionAnswerDAOImpl();
 	}
 }

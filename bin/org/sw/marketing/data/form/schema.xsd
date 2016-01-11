@@ -63,6 +63,7 @@
 					<complexType>
 						<sequence>
 							<element name="id" type="long" />
+							<element name="page" type="int" />
 							<element name="userId" type="long" />
 							<element name="answer" minOccurs="0" maxOccurs="unbounded">					
 								<complexType>
@@ -81,6 +82,7 @@
 					<complexType>
 						<sequence>
 							<element name="type" type="string" />
+							<element name="subtype" type="string" />
 							<element name="label" type="string" />
 							<element name="questionId" type="long" />
 							<element name="questionNumber" type="int" />
