@@ -20,6 +20,7 @@ public class SQLStatements
 	public static final String GET_USER_BY_EMAIL = "SELECT * FROM users WHERE user_email = ?";
 	public static final String GET_FORMS = "SELECT * FROM forms WHERE is_form_deleted = false";
 	public static final String GET_FORM = "SELECT * FROM forms WHERE form_id = ?";
+	public static final String GET_FORM_BY_PRETTY_URL = "SELECT * FROM forms WHERE form_pretty_url = ?";
 	public static final String GET_QUESTIONS = "SELECT * FROM questions WHERE fk_form_id = ? ORDER BY question_number ASC";
 	public static final String GET_QUESTIONS_BY_PAGE = "SELECT * FROM questions WHERE question_page = ? AND fk_form_id = ? ORDER BY question_number ASC";
 	public static final String GET_QUESTION = "SELECT * FROM questions WHERE question_id = ?";

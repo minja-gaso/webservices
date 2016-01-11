@@ -134,6 +134,63 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 	}
 
 	@Override
+	public Form getFormByPrettyUrl(String prettyUrl)
+	{
+		Form form = null;
+
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(SQLStatements.GET_FORM_BY_PRETTY_URL);
+			statement.setString(1, prettyUrl);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				long id = resultSet.getLong("form_id");
+				java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
+				String type = resultSet.getString("form_type");
+				String status = resultSet.getString("form_status");
+				String title = resultSet.getString("form_title");
+//				String prettyUrl = resultSet.getString("form_pretty_url");
+				int submissionCount = resultSet.getInt("form_submission_count");
+				String returnUrl = resultSet.getString("form_return_url");
+				String skinUrl = resultSet.getString("form_skin_url");
+				String skinSelector = resultSet.getString("form_skin_selector");
+				boolean deleted = resultSet.getBoolean("is_form_deleted");
+
+				form = new Form();
+				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp));
+				form.setId(id);
+				form.setType(type);
+				form.setStatus(status);
+				form.setTitle(title);
+				form.setPrettyUrl(prettyUrl);
+				form.setSubmissionCount(submissionCount);
+				form.setReturnUrl(returnUrl);
+				form.setSkinUrl(skinUrl);
+				form.setSkinSelector(skinSelector);
+				form.setDeleted(deleted);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return form;
+	}
+
+	@Override
 	public long createForm(User user)
 	{
 		long id = 0;
