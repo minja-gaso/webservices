@@ -96,4 +96,92 @@ public class SubmissionAnswerDAOImpl extends BaseDAO implements SubmissionAnswer
 
 		return submissionAnswerList;
 	}
+
+	@Override
+	public Answer getSubmissionAnswer(long submissionID, long answerID)
+	{
+		Answer answer = null;
+
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(SQLStatements.GET_SUBMISSION_ANSWER);
+			statement.setLong(1, submissionID);
+			statement.setLong(2, answerID);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				answer = new Answer();
+//				int id = resultSet.getInt("sub_answer_id");
+				long questionID = resultSet.getLong("fk_question_id");
+				String answerValue = resultSet.getString("sub_answer_value");
+				boolean multipleChoice = resultSet.getBoolean("is_sub_answer_multiple_choice");
+
+				answer = new Answer();
+				answer.setQuestionId(questionID);
+				answer.setAnswerValue(answerValue);
+				answer.setMultipleChoice(multipleChoice);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return answer;
+	}
+	
+	@Override
+	public Answer getSubmissionAnswerByValue(long submissionID, long answerID)
+	{
+		Answer answer = null;
+
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(SQLStatements.GET_SUBMISSION_ANSWER_BY_VALUE);
+			statement.setLong(1, submissionID);
+			statement.setString(2, String.valueOf(answerID));
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				answer = new Answer();
+//				int id = resultSet.getInt("sub_answer_id");
+				long questionID = resultSet.getLong("fk_question_id");
+				String answerValue = resultSet.getString("sub_answer_value");
+				boolean multipleChoice = resultSet.getBoolean("is_sub_answer_multiple_choice");
+
+				answer = new Answer();
+				answer.setQuestionId(questionID);
+				answer.setAnswerValue(answerValue);
+				answer.setMultipleChoice(multipleChoice);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return answer;
+	}
 }

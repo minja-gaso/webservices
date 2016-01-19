@@ -87,6 +87,47 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		return answerList;
 	}
 
+
+	@Override
+	public PossibleAnswer getPossibleAnswer(long id)
+	{ 
+		PossibleAnswer answer = null;
+
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(SQLStatements.GET_ANSWER);
+			statement.setLong(1, id);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				answer = new PossibleAnswer();
+
+				String label = resultSet.getString("answer_label");
+
+				answer = new PossibleAnswer();
+				answer.setId(id);
+				answer.setLabel(label);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return answer;
+	}
+
 	@Override
 	public String getPossibleAnswerLabel(long answerID)
 	{

@@ -13,5 +13,6 @@ public interface AnswerDAO
 	 * read
 	 */
 	public java.util.List<PossibleAnswer> getPossibleAnswers(long questionId);
+	public PossibleAnswer getPossibleAnswer(long questionId);
 	public String getPossibleAnswerLabel(long answerID);
 }
