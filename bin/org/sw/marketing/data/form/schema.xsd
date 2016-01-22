@@ -7,6 +7,7 @@
 				<element name="environment">
 					<complexType>
 						<sequence>
+							<element name="componentId" type="int" />
 							<element name="serverName" type="string" />
 							<element name="assets" type="string" />
 							<element name="contactName" type="string" />
@@ -55,10 +56,20 @@
 							</element>
 							<element name="currentPage" type="int" />
 							<element name="lastPage" type="int" />
+							<element name="score" type="int" />
 							<element name="deleted" type="boolean" />
 						</sequence>
 					</complexType>
-				</element>				
+				</element>											
+				<element name="possibleAnswer" minOccurs="0" maxOccurs="unbounded">					
+					<complexType>
+						<sequence>
+							<element name="id" type="long" />
+							<element name="label" type="string" />
+							<element name="value" type="int" />
+						</sequence>
+					</complexType>
+				</element>		
 				<element name="submission" minOccurs="0" maxOccurs="unbounded">					
 					<complexType>
 						<sequence>

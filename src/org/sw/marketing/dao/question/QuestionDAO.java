@@ -8,6 +8,7 @@ public interface QuestionDAO
 	 * create
 	 */
 	public void insertQuestion(int questionNumber, int page, long formId);
+	public void insertQuestionSelfAssessment(int questionNumber, int page, long formId);
 	
 	/*
 	 * read

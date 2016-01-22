@@ -10,6 +10,8 @@ public interface TempSubmissionAnswerDAO
 
 	public java.util.List<Answer> getSubmissionAnswersByPage(Submission submission);
 	
+	public java.util.List<Answer> getSubmissionAnswers(Submission submission);
+	
 	public void deleteSubmissionAnswersByPage(Submission submission);
 	
 	/*

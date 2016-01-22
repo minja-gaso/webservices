@@ -10,12 +10,20 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.URIResolver;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 public class TransformerHelper
 {
-	public static String getXmlStr(String packageName, Object data)
+	public String urlResolverBaseUrl = null;
+	
+	public void setUrlResolverBaseUrl(String urlResolverBaseUrl)
+	{
+		this.urlResolverBaseUrl = urlResolverBaseUrl;
+	}
+
+	public String getXmlStr(String packageName, Object data)
 	{
 		StringWriter xmlWriter = new StringWriter();
 		
@@ -37,12 +45,14 @@ public class TransformerHelper
 		return xmlStr;
 	}
 	
-	public static String getHtmlStr(String xmlStr, java.io.InputStream xslStream)
+	public String getHtmlStr(String xmlStr, java.io.InputStream xslStream)
 	{
 		StringWriter htmlWriter = new StringWriter();
 		try
 		{
+//			URIResolver uriResolver = new 
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			transformerFactory.setURIResolver(new XsltResolver());
 			Transformer transformer = transformerFactory.newTransformer(new StreamSource(xslStream));
 			StreamResult streamResult = new StreamResult(htmlWriter);
 			transformer.transform(new StreamSource(new StringReader(xmlStr)), streamResult);

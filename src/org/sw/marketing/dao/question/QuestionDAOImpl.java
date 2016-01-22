@@ -115,6 +115,43 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		
 //		return id;
 	}
+
+	@Override
+	public void insertQuestionSelfAssessment(int questionNumber, int page, long formId)
+	{
+//		long id = 0;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(SQLStatements.INSERT_QUESTION_SELF_ASSESSMENT);
+			statement.setInt(1, questionNumber);
+			statement.setInt(2, page);
+			statement.setLong(3, formId);
+			statement.executeUpdate();
+//			resultSet = statement.getGeneratedKeys();
+			
+//			if(resultSet.next())
+//			{
+//				id = resultSet.getInt(1);
+//			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+		
+//		return id;
+	}
 	
 	@Override
 	public void deletePageBreak(int pageNumber)
