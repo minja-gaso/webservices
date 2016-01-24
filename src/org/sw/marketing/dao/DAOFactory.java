@@ -6,6 +6,8 @@ import org.sw.marketing.dao.form.FormDAO;
 import org.sw.marketing.dao.form.FormDAOImpl;
 import org.sw.marketing.dao.question.QuestionDAO;
 import org.sw.marketing.dao.question.QuestionDAOImpl;
+import org.sw.marketing.dao.score.ScoreDAO;
+import org.sw.marketing.dao.score.ScoreDAOImpl;
 import org.sw.marketing.dao.submission.SubmissionAnswerDAO;
 import org.sw.marketing.dao.submission.SubmissionAnswerDAOImpl;
 import org.sw.marketing.dao.submission.SubmissionDAO;
@@ -34,6 +36,10 @@ public class DAOFactory
 	public static AnswerDAO getPossibleAnswerDAO()
 	{
 		return new AnswerDAOImpl();
+	}
+	public static ScoreDAO getScoreDAO()
+	{
+		return new ScoreDAOImpl();
 	}
 	public static SubmissionDAO getSubmissionDAO()
 	{

@@ -16,6 +16,7 @@ public class SQLStatements
 	public static final String INSERT_SUBMISSION_ANSWER = "INSERT INTO submission_answers (sub_answer_value, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?)";
 	public static final String INSERT_SUBMISSION_TEMP = "INSERT INTO temp_submissions (fk_form_id, session_id) VALUES (?, ?)";
 	public static final String INSERT_SUBMISSION_TEMP_ANSWER = "INSERT INTO temp_submission_answers (sub_answer_value, sub_page, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?, ?)";
+	public static final String INSERT_SCORE = "INSERT INTO form_scores (fk_form_id) VALUES (?)";	
 	
 	/*
 	 * read
@@ -41,6 +42,8 @@ public class SQLStatements
 	public static final String GET_SUBMISSION_ANSWER_BY_VALUE = "SELECT * FROM submission_answers WHERE fk_submission_id = ? AND sub_answer_value = ?";
 	public static final String GET_SUBMISSION_TEMP_ANSWERS_BY_PAGE = "SELECT * FROM temp_submission_answers INNER JOIN questions ON temp_submission_answers.fk_question_id = questions.question_id WHERE temp_submission_answers.fk_submission_id = ? AND sub_page = ?";
 	public static final String GET_SUBMISSION_TEMP_ANSWERS = "SELECT * FROM temp_submission_answers INNER JOIN questions ON temp_submission_answers.fk_question_id = questions.question_id WHERE temp_submission_answers.fk_submission_id = ?";
+	public static final String GET_SCORE = "SELECT * FROM form_scores WHERE score_id = ?";
+	public static final String GET_SCORES = "SELECT * FROM form_scores WHERE fk_form_id = ? ORDER BY score_range_begin ASC, score_range_end ASC";
 	
 	/*
 	 * update
@@ -50,6 +53,8 @@ public class SQLStatements
 	public static final String UPDATE_FORM = "UPDATE forms SET form_title = ?, form_pretty_url = ?, form_skin_url = ?, form_skin_selector = ? WHERE form_id = ?";
 	public static final String UPDATE_FORM_SUBMISSION_COUNT = "UPDATE forms SET form_submission_count = ? WHERE form_id = ?";
 	public static final String UPDATE_POSSIBLE_ANSWER_FOR_FORM = "UPDATE form_answers SET answer_label = ?, answer_value = ? WHERE answer_id = ?";
+	public static final String UPDATE_SCORE = "UPDATE form_scores SET score_range_begin = ?, score_range_end = ?, score_title = ?, score_summary = ? WHERE score_id = ?";
+	
 	/*
 	 * delete
 	 */
@@ -58,6 +63,8 @@ public class SQLStatements
 	public static final String DELETE_PAGE_BREAK = "UPDATE questions SET question_page = question_page - 1 WHERE question_page >= ?";	
 	public static final String DELETE_SUBMISSION_TEMP_ANSWERS = "DELETE FROM temp_submission_answers WHERE fk_submission_id = ? AND sub_page = ?";
 	public static final String DELETE_ANSWER_FOR_FORM = "DELETE FROM form_answers WHERE answer_id = ?";
+	public static final String DELETE_SCORE = "DELETE FROM form_scores WHERE score_id = ?";
+	
 	/*
 	 * copy to
 	 */

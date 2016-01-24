@@ -69,7 +69,18 @@
 							<element name="value" type="int" />
 						</sequence>
 					</complexType>
-				</element>		
+				</element>											
+				<element name="score" minOccurs="0" maxOccurs="unbounded">					
+					<complexType>
+						<sequence>
+							<element name="id" type="long" />
+							<element name="begin" type="int" />
+							<element name="end" type="int" />
+							<element name="title" type="string" />
+							<element name="summary" type="string" />
+						</sequence>
+					</complexType>
+				</element>	
 				<element name="submission" minOccurs="0" maxOccurs="unbounded">					
 					<complexType>
 						<sequence>
