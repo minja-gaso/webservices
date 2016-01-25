@@ -26,5 +26,6 @@ public interface AnswerDAO
 	/*
 	 * delete
 	 */
+	public void deleteAnswer(long answerID);
 	public void deleteAnswerForForm(long answerID);
 }

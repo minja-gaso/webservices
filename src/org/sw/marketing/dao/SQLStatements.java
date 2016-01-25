@@ -62,6 +62,7 @@ public class SQLStatements
 	public static final String DELETE_QUESTION = "DELETE FROM questions WHERE question_id = ?";
 	public static final String DELETE_PAGE_BREAK = "UPDATE questions SET question_page = question_page - 1 WHERE question_page >= ?";	
 	public static final String DELETE_SUBMISSION_TEMP_ANSWERS = "DELETE FROM temp_submission_answers WHERE fk_submission_id = ? AND sub_page = ?";
+	public static final String DELETE_ANSWER = "DELETE FROM answers WHERE answer_id = ?";
 	public static final String DELETE_ANSWER_FOR_FORM = "DELETE FROM form_answers WHERE answer_id = ?";
 	public static final String DELETE_SCORE = "DELETE FROM form_scores WHERE score_id = ?";
 	

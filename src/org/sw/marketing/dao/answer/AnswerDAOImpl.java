@@ -304,6 +304,31 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 			closeConnection(connection, statement, resultSet);
 		}
 	}
+
+	@Override
+	public void deleteAnswer(long answerID)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+	
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(SQLStatements.DELETE_ANSWER);
+			statement.setLong(1, answerID);
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
 	
 	@Override
 	public void deleteAnswerForForm(long answerID)
