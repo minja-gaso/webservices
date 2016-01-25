@@ -50,7 +50,7 @@ public class SQLStatements
 	 */
 	public static final String UPDATE_QUESTION = "UPDATE questions SET question_number = ?, question_type = ?, question_label = ?, question_page = ?, question_default_value = ?, question_filter = ?, question_max_character_limit = ?, question_max_word_limit = ?, is_question_required = ? WHERE question_id = ?";
 	public static final String UPDATE_QUESTION_NUMBER = "UPDATE questions SET question_number = question_number - 1 WHERE question_id = ?";
-	public static final String UPDATE_FORM = "UPDATE forms SET form_title = ?, form_pretty_url = ?, form_skin_url = ?, form_skin_selector = ? WHERE form_id = ?";
+	public static final String UPDATE_FORM = "UPDATE forms SET form_title = ?, form_status = ?, form_pretty_url = ?, form_skin_url = ?, form_skin_selector = ?, form_screen_public_form_intro = ?, form_screen_public_form_closing = ?, form_screen_thank_you = ?, form_screen_ended = ?, form_screen_max_submitted = ?, form_screen_not_started = ?, form_screen_one_submission = ?, form_max_submissions = ? WHERE form_id = ?";
 	public static final String UPDATE_FORM_SUBMISSION_COUNT = "UPDATE forms SET form_submission_count = ? WHERE form_id = ?";
 	public static final String UPDATE_POSSIBLE_ANSWER_FOR_FORM = "UPDATE form_answers SET answer_label = ?, answer_value = ? WHERE answer_id = ?";
 	public static final String UPDATE_SCORE = "UPDATE form_scores SET score_range_begin = ?, score_range_end = ?, score_title = ?, score_summary = ? WHERE score_id = ?";

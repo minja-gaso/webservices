@@ -169,7 +169,15 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 				int submissionCount = resultSet.getInt("form_submission_count");
 				String returnUrl = resultSet.getString("form_return_url");
 				String skinUrl = resultSet.getString("form_skin_url");
-				String skinSelector = resultSet.getString("form_skin_selector");
+				String skinSelector = resultSet.getString("form_skin_selector");				
+				String publicFormIntroMessage = resultSet.getString("form_screen_public_form_intro");
+				String publicFormClosingMessage = resultSet.getString("form_screen_public_form_closing");
+				String messageThankYou = resultSet.getString("form_screen_thank_you");		
+				String messageEnded = resultSet.getString("form_screen_ended");
+				String messageMaxSubmitted = resultSet.getString("form_screen_max_submitted");
+				String messageNotStarted = resultSet.getString("form_screen_not_started");	
+				String messageOneSubmission = resultSet.getString("form_screen_one_submission");	
+				int maxSubmissions = resultSet.getInt("form_max_submissions");
 				boolean deleted = resultSet.getBoolean("is_form_deleted");
 
 				form = new Form();
@@ -182,7 +190,15 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 				form.setSubmissionCount(submissionCount);
 				form.setReturnUrl(returnUrl);
 				form.setSkinUrl(skinUrl);
-				form.setSkinSelector(skinSelector);
+				form.setSkinSelector(skinSelector);				
+				form.setMessagePublicFormIntro(publicFormIntroMessage);
+				form.setMessagePublicFormClosing(publicFormClosingMessage);
+				form.setMessageThankYou(messageThankYou);
+				form.setMessageEnded(messageEnded);
+				form.setMessageMaxSubmitted(messageMaxSubmitted);
+				form.setMessageNotStarted(messageNotStarted);
+				form.setMessageOneSubmission(messageOneSubmission);		
+				form.setMaxSubmissions(maxSubmissions);
 				form.setDeleted(deleted);
 			}
 		}
@@ -222,11 +238,17 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 				String type = resultSet.getString("form_type");
 				String status = resultSet.getString("form_status");
 				String title = resultSet.getString("form_title");
-//				String prettyUrl = resultSet.getString("form_pretty_url");
 				int submissionCount = resultSet.getInt("form_submission_count");
 				String returnUrl = resultSet.getString("form_return_url");
 				String skinUrl = resultSet.getString("form_skin_url");
-				String skinSelector = resultSet.getString("form_skin_selector");
+				String skinSelector = resultSet.getString("form_skin_selector");				
+				String publicFormIntroMessage = resultSet.getString("form_screen_public_form_intro");
+				String publicFormClosingMessage = resultSet.getString("form_screen_public_form_closing");
+				String messageThankYou = resultSet.getString("form_screen_thank_you");		
+				String messageEnded = resultSet.getString("form_screen_ended");
+				String messageMaxSubmitted = resultSet.getString("form_screen_max_submitted");
+				String messageNotStarted = resultSet.getString("form_screen_not_started");	
+				String messageOneSubmission = resultSet.getString("form_screen_one_submission");				
 				boolean deleted = resultSet.getBoolean("is_form_deleted");
 
 				form = new Form();
@@ -239,7 +261,14 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 				form.setSubmissionCount(submissionCount);
 				form.setReturnUrl(returnUrl);
 				form.setSkinUrl(skinUrl);
-				form.setSkinSelector(skinSelector);
+				form.setSkinSelector(skinSelector);				
+				form.setMessagePublicFormIntro(publicFormIntroMessage);
+				form.setMessagePublicFormClosing(publicFormClosingMessage);
+				form.setMessageThankYou(messageThankYou);
+				form.setMessageEnded(messageEnded);
+				form.setMessageMaxSubmitted(messageMaxSubmitted);
+				form.setMessageNotStarted(messageNotStarted);
+				form.setMessageOneSubmission(messageOneSubmission);				
 				form.setDeleted(deleted);
 			}
 		}
@@ -363,10 +392,19 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(SQLStatements.UPDATE_FORM);
 			statement.setString(1, form.getTitle());
-			statement.setString(2, form.getPrettyUrl());
-			statement.setString(3, form.getSkinUrl());
-			statement.setString(4, form.getSkinSelector());
-			statement.setLong(5, form.getId());
+			statement.setString(2, form.getStatus());
+			statement.setString(3, form.getPrettyUrl());
+			statement.setString(4, form.getSkinUrl());
+			statement.setString(5, form.getSkinSelector());
+			statement.setString(6, form.getMessagePublicFormIntro());
+			statement.setString(7, form.getMessagePublicFormClosing());
+			statement.setString(8, form.getMessageThankYou());
+			statement.setString(9, form.getMessageEnded());
+			statement.setString(10, form.getMessageMaxSubmitted());
+			statement.setString(11, form.getMessageNotStarted());
+			statement.setString(12, form.getMessageOneSubmission());
+			statement.setInt(13, form.getMaxSubmissions());
+			statement.setLong(14, form.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
