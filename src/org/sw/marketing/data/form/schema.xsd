@@ -21,6 +21,8 @@
 						<sequence>
 							<element name="id" type="long" />
 							<element name="creationTimestamp" type="date" />
+							<element name="startDate" type="date" />
+							<element name="endDate" type="date" />
 							<element name="type" type="string" />
 							<element name="status" type="string" />
 							<element name="title" type="string" />

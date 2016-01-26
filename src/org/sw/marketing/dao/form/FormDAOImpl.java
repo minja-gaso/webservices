@@ -53,7 +53,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 				String skinSelector = resultSet.getString("form_skin_selector");
 
 				form = new Form();
-				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp));
+				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
 				form.setId(id);
 				form.setType(type);
 				form.setTitle(title);
@@ -116,7 +116,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 				String skinSelector = resultSet.getString("form_skin_selector");
 
 				form = new Form();
-				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp));
+				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
 				form.setId(id);
 				form.setType(type);
 				form.setTitle(title);
@@ -162,6 +162,8 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 			while (resultSet.next())
 			{
 				java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
+				java.util.Date startDate = resultSet.getDate("form_start_date");
+				java.util.Date endDate = resultSet.getDate("form_end_date");
 				String type = resultSet.getString("form_type");
 				String status = resultSet.getString("form_status");
 				String title = resultSet.getString("form_title");
@@ -181,7 +183,9 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 				boolean deleted = resultSet.getBoolean("is_form_deleted");
 
 				form = new Form();
-				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp));
+				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
+				form.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
+				form.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
 				form.setId(id);
 				form.setType(type);
 				form.setStatus(status);
@@ -235,6 +239,8 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 			{
 				long id = resultSet.getLong("form_id");
 				java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
+				java.util.Date startDate = resultSet.getDate("form_start_date");
+				java.util.Date endDate = resultSet.getDate("form_end_date");
 				String type = resultSet.getString("form_type");
 				String status = resultSet.getString("form_status");
 				String title = resultSet.getString("form_title");
@@ -252,7 +258,9 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 				boolean deleted = resultSet.getBoolean("is_form_deleted");
 
 				form = new Form();
-				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp));
+				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
+				form.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
+				form.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
 				form.setId(id);
 				form.setType(type);
 				form.setStatus(status);
@@ -404,7 +412,15 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 			statement.setString(11, form.getMessageNotStarted());
 			statement.setString(12, form.getMessageOneSubmission());
 			statement.setInt(13, form.getMaxSubmissions());
-			statement.setLong(14, form.getId());
+			
+			java.util.Date startDate = form.getStartDate().toGregorianCalendar().getTime();
+			java.sql.Date startDateSql = new java.sql.Date(startDate.getTime());
+			statement.setDate(14, startDateSql);
+			
+			java.util.Date endDate = form.getEndDate().toGregorianCalendar().getTime();
+			java.sql.Date endDateSql = new java.sql.Date(endDate.getTime());
+			statement.setDate(15, endDateSql);
+			statement.setLong(16, form.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
