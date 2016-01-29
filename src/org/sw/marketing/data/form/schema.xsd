@@ -38,6 +38,7 @@
 										<element name="id" type="long" />
 										<element name="number" type="int" />
 										<element name="type" type="string" />
+										<element name="header" type="string" />
 										<element name="label" type="string" />
 										<element name="page" type="int" />
 										<element name="defaultAnswer" type="string" />

@@ -50,9 +50,11 @@ public class TransformerHelper
 		StringWriter htmlWriter = new StringWriter();
 		try
 		{
-//			URIResolver uriResolver = new 
+			XsltResolver xsltResolver = new XsltResolver();
+			xsltResolver.setBaseUrl(urlResolverBaseUrl);
+			
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			transformerFactory.setURIResolver(new XsltResolver());
+			transformerFactory.setURIResolver(xsltResolver);
 			Transformer transformer = transformerFactory.newTransformer(new StreamSource(xslStream));
 			StreamResult streamResult = new StreamResult(htmlWriter);
 			transformer.transform(new StreamSource(new StringReader(xmlStr)), streamResult);

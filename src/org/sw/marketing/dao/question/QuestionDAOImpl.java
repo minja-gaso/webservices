@@ -225,6 +225,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 				long id = resultSet.getLong("question_id");
 				int number = resultSet.getInt("question_number");
 				String type = resultSet.getString("question_type");
+				String header = resultSet.getString("question_header");
 				String label = resultSet.getString("question_label");
 				int page = resultSet.getInt("question_page");
 				String defaultAnswer = resultSet.getString("question_default_value");
@@ -237,6 +238,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 				question.setId(id);
 				question.setNumber(number);
 				question.setType(type);
+				question.setHeader(header);
 				question.setLabel(label);
 				question.setPage(page);
 				question.setDefaultAnswer(defaultAnswer);
@@ -287,6 +289,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 				long id = resultSet.getLong("question_id");
 				int number = resultSet.getInt("question_number");
 				String type = resultSet.getString("question_type");
+				String header = resultSet.getString("question_header");
 				String label = resultSet.getString("question_label");
 				int page = resultSet.getInt("question_page");
 				String defaultAnswer = resultSet.getString("question_default_value");
@@ -299,6 +302,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 				question.setId(id);
 				question.setNumber(number);
 				question.setType(type);
+				question.setHeader(header);
 				question.setLabel(label);
 				question.setPage(page);
 				question.setDefaultAnswer(defaultAnswer);
@@ -343,6 +347,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 				long id = resultSet.getLong("question_id");
 				int number = resultSet.getInt("question_number");
 				String type = resultSet.getString("question_type");
+				String header = resultSet.getString("question_header");
 				String label = resultSet.getString("question_label");
 				int page = resultSet.getInt("question_page");
 				String defaultAnswer = resultSet.getString("question_default_value");
@@ -355,6 +360,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 				question.setId(id);
 				question.setNumber(number);
 				question.setType(type);
+				question.setHeader(header);
 				question.setLabel(label);
 				question.setPage(page);
 				question.setDefaultAnswer(defaultAnswer);
@@ -520,7 +526,8 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 			statement.setInt(7, question.getMaxCharacterLimit());
 			statement.setInt(8, question.getMaxWordLimit());
 			statement.setBoolean(9, question.isRequired());
-			statement.setLong(10, question.getId());
+			statement.setString(10, question.getHeader());
+			statement.setLong(11, question.getId());
 			statement.executeUpdate();			
 		}
 		catch (SQLException e)
