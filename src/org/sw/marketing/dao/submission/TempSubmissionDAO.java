@@ -7,7 +7,7 @@ public interface TempSubmissionDAO
 	/*
 	 * insert submission
 	 */
-	public long insert(long formID, String sessionID);
+	public long insert(long formID, String sessionID, String IP_ADDRESS);
 	
 	/*
 	 * read submissions

@@ -14,7 +14,7 @@ public class SQLStatements
 	public static final String INSERT_ANSWER_TO_FORM = "INSERT INTO form_answers (answer_label, answer_value, fk_form_id) VALUES (?, ?, ?)";	
 	public static final String INSERT_SUBMISSION = "INSERT INTO submissions (fk_form_id) VALUES (?)";
 	public static final String INSERT_SUBMISSION_ANSWER = "INSERT INTO submission_answers (sub_answer_value, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?)";
-	public static final String INSERT_SUBMISSION_TEMP = "INSERT INTO temp_submissions (fk_form_id, session_id) VALUES (?, ?)";
+	public static final String INSERT_SUBMISSION_TEMP = "INSERT INTO temp_submissions (fk_form_id, session_id, ip_address) VALUES (?, ?, ?::inet)";
 	public static final String INSERT_SUBMISSION_TEMP_ANSWER = "INSERT INTO temp_submission_answers (sub_answer_value, sub_page, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?, ?)";
 	public static final String INSERT_SCORE = "INSERT INTO form_scores (fk_form_id) VALUES (?)";	
 	

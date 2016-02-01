@@ -97,6 +97,7 @@
 					<complexType>
 						<sequence>
 							<element name="id" type="long" />
+							<element name="ip" type="string" />
 							<element name="page" type="int" />
 							<element name="userId" type="long" />
 							<element name="answer" minOccurs="0" maxOccurs="unbounded">					

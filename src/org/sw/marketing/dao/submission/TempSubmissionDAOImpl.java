@@ -1,5 +1,7 @@
 package org.sw.marketing.dao.submission;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -17,7 +19,7 @@ import org.sw.marketing.data.form.Data.Submission.Answer;
 public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 {
 	@Override
-	public long insert(long formID, String sessionID)
+	public long insert(long formID, String sessionID, String IP_ADDRESS)
 	{
 		long id = 0;
 		
@@ -32,6 +34,7 @@ public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 			statement = connection.prepareStatement(SQLStatements.INSERT_SUBMISSION_TEMP, Statement.RETURN_GENERATED_KEYS);
 			statement.setLong(1, formID);
 			statement.setString(2, sessionID);
+			statement.setObject(3, InetAddress.getLocalHost().getHostAddress());
 			statement.executeUpdate();
 			resultSet = statement.getGeneratedKeys();
 			
@@ -42,6 +45,11 @@ public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 		}
 		catch (SQLException e)
 		{
+			e.printStackTrace();
+		}
+		catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally
@@ -73,8 +81,11 @@ public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 			while (resultSet.next())
 			{
 				long id = resultSet.getLong("submission_id");
+				String ip = resultSet.getString("ip_address");
+				
 				submission = new Submission();
 				submission.setId(id);
+				submission.setIp(ip);
 			}
 		}
 		catch (SQLException e)
