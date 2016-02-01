@@ -69,6 +69,8 @@
 							<element name="messageNotStarted" type="string" />
 							<element name="messageOneSubmission" type="string" />
 							<element name="messageThankYou" type="string" />
+							<element name="started" type="boolean" />
+							<element name="ended" type="boolean" />
 							<element name="deleted" type="boolean" />
 						</sequence>
 					</complexType>
