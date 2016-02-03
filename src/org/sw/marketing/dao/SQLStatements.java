@@ -6,6 +6,7 @@ public class SQLStatements
 	 * create
 	 */
 	public static final String INSERT_USER = "INSERT INTO users (user_email, user_first_name, user_last_name, user_profile_image, is_user_active, is_user_admin) VALUES (?, ?, ?, ?, ?, ?)";
+<<<<<<< HEAD
 	public static final String INSERT_FORM = "INSERT INTO form.forms (fk_user_id) VALUES (?)";	
 	public static final String INSERT_FORM_SELF_ASSESSMENT = "INSERT INTO form.forms (form_type, fk_user_id) VALUES ('self_assessment', ?)";	
 	public static final String INSERT_QUESTION = "INSERT INTO form.questions (question_number, question_page, fk_form_id) VALUES (?, ?, ?)";
@@ -17,6 +18,19 @@ public class SQLStatements
 	public static final String INSERT_SUBMISSION_TEMP = "INSERT INTO form.temp_submissions (fk_form_id, session_id) VALUES (?, ?)";
 	public static final String INSERT_SUBMISSION_TEMP_ANSWER = "INSERT INTO form.temp_submission_answers (sub_answer_value, sub_page, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?, ?)";
 	public static final String INSERT_SCORE = "INSERT INTO form.form_scores (fk_form_id) VALUES (?)";	
+=======
+	public static final String INSERT_FORM = "INSERT INTO forms (fk_user_id) VALUES (?)";	
+	public static final String INSERT_FORM_SELF_ASSESSMENT = "INSERT INTO forms (form_type, fk_user_id) VALUES ('self_assessment', ?)";	
+	public static final String INSERT_QUESTION = "INSERT INTO questions (question_number, question_page, fk_form_id) VALUES (?, ?, ?)";
+	public static final String INSERT_QUESTION_SELF_ASSESSMENT = "INSERT INTO questions (question_type, question_number, question_page, fk_form_id) VALUES ('radio', ?, ?, ?)";
+	public static final String INSERT_ANSWER_TO_QUESTION = "INSERT INTO answers (answer_label, fk_question_id) VALUES (?, ?)";		
+	public static final String INSERT_ANSWER_TO_FORM = "INSERT INTO form_answers (answer_label, answer_value, fk_form_id) VALUES (?, ?, ?)";	
+	public static final String INSERT_SUBMISSION = "INSERT INTO submissions (fk_form_id) VALUES (?)";
+	public static final String INSERT_SUBMISSION_ANSWER = "INSERT INTO submission_answers (sub_answer_value, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?)";
+	public static final String INSERT_SUBMISSION_TEMP = "INSERT INTO temp_submissions (fk_form_id, session_id, ip_address) VALUES (?, ?, ?::inet)";
+	public static final String INSERT_SUBMISSION_TEMP_ANSWER = "INSERT INTO temp_submission_answers (sub_answer_value, sub_page, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?, ?)";
+	public static final String INSERT_SCORE = "INSERT INTO form_scores (fk_form_id) VALUES (?)";	
+>>>>>>> origin/master
 	
 	/*
 	 * read
