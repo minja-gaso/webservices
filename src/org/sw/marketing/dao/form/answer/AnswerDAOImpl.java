@@ -1,17 +1,13 @@
-package org.sw.marketing.dao.answer;
+package org.sw.marketing.dao.form.answer;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
-import org.sw.marketing.dao.SQLStatements;
+import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.form.Data;
-import org.sw.marketing.data.form.Data.Form;
-import org.sw.marketing.data.form.Data.Form.Question;
 import org.sw.marketing.data.form.Data.Form.Question.PossibleAnswer;
-import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 {
@@ -26,7 +22,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_ANSWER_TO_QUESTION);
+			statement = connection.prepareStatement(FormSQL.INSERT_ANSWER_TO_QUESTION);
 			statement.setString(1, answer.getLabel());
 			statement.setLong(2, questionId);
 			statement.executeUpdate();
@@ -51,7 +47,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_ANSWER_TO_FORM);
+			statement = connection.prepareStatement(FormSQL.INSERT_ANSWER_TO_FORM);
 			statement.setString(1, answer.getLabel());
 			statement.setInt(2, answer.getValue());
 			statement.setLong(3, formID);
@@ -80,7 +76,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_ANSWERS_FOR_QUESTION);
+			statement = connection.prepareStatement(FormSQL.GET_ANSWERS_FOR_QUESTION);
 			statement.setLong(1, questionId);
 			resultSet = statement.executeQuery();
 
@@ -127,7 +123,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_ANSWERS_FOR_FORM);
+			statement = connection.prepareStatement(FormSQL.GET_ANSWERS_FOR_FORM);
 			statement.setLong(1, formID);
 			resultSet = statement.executeQuery();
 
@@ -177,7 +173,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_ANSWER);
+			statement = connection.prepareStatement(FormSQL.GET_ANSWER);
 			statement.setLong(1, id);
 			resultSet = statement.executeQuery();
 
@@ -217,7 +213,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_ANSWER_FOR_FORM);
+			statement = connection.prepareStatement(FormSQL.GET_ANSWER_FOR_FORM);
 			statement.setLong(1, id);
 			resultSet = statement.executeQuery();
 
@@ -257,7 +253,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_ANSWER);
+			statement = connection.prepareStatement(FormSQL.GET_ANSWER);
 			statement.setLong(1, answerID);
 			resultSet = statement.executeQuery();
 
@@ -289,7 +285,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.UPDATE_POSSIBLE_ANSWER_FOR_FORM);
+			statement = connection.prepareStatement(FormSQL.UPDATE_POSSIBLE_ANSWER_FOR_FORM);
 			statement.setString(1, answer.getLabel());
 			statement.setInt(2, answer.getValue());
 			statement.setLong(3, answer.getId());
@@ -316,7 +312,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.DELETE_ANSWER);
+			statement = connection.prepareStatement(FormSQL.DELETE_ANSWER);
 			statement.setLong(1, answerID);
 			statement.executeUpdate();
 		}
@@ -341,7 +337,7 @@ public class AnswerDAOImpl extends BaseDAO implements AnswerDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.DELETE_ANSWER_FOR_FORM);
+			statement = connection.prepareStatement(FormSQL.DELETE_ANSWER_FOR_FORM);
 			statement.setLong(1, answerID);
 			statement.executeUpdate();
 		}

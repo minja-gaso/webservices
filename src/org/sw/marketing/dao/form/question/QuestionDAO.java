@@ -1,4 +1,4 @@
-package org.sw.marketing.dao.question;
+package org.sw.marketing.dao.form.question;
 
 import org.sw.marketing.data.form.Data.Form.Question;
 

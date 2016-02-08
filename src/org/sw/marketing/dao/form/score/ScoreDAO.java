@@ -1,4 +1,4 @@
-package org.sw.marketing.dao.score;
+package org.sw.marketing.dao.form.score;
 
 import org.sw.marketing.data.form.Data.Score;
 

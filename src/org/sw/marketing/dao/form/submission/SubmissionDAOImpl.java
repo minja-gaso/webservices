@@ -1,4 +1,4 @@
-package org.sw.marketing.dao.submission;
+package org.sw.marketing.dao.form.submission;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
-import org.sw.marketing.dao.SQLStatements;
+import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.form.Data.Submission;
 import org.sw.marketing.data.form.Data.Submission.Answer;
 
@@ -29,7 +29,7 @@ public class SubmissionDAOImpl extends BaseDAO implements SubmissionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_SUBMISSION, Statement.RETURN_GENERATED_KEYS);
+			statement = connection.prepareStatement(FormSQL.INSERT_SUBMISSION, Statement.RETURN_GENERATED_KEYS);
 			statement.setLong(1, formID);
 			statement.executeUpdate();
 			resultSet = statement.getGeneratedKeys();
@@ -64,7 +64,7 @@ public class SubmissionDAOImpl extends BaseDAO implements SubmissionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_SUBMISSIONS);
+			statement = connection.prepareStatement(FormSQL.GET_SUBMISSIONS);
 			statement.setLong(1, formID);
 			resultSet = statement.executeQuery();
 
@@ -130,7 +130,7 @@ public class SubmissionDAOImpl extends BaseDAO implements SubmissionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_SUBMISSIONS_FROM_START_TO_END_DATE);
+			statement = connection.prepareStatement(FormSQL.GET_SUBMISSIONS_FROM_START_TO_END_DATE);
 			statement.setLong(1, formID);
 			statement.setDate(2, sqlStartDate);
 			statement.setDate(3, sqEndDate);

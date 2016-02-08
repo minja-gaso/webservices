@@ -1,4 +1,4 @@
-package org.sw.marketing.dao.question;
+package org.sw.marketing.dao.form.question;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
-import org.sw.marketing.dao.SQLStatements;
+import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.form.Data.Form.Question;
 
 public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
@@ -24,7 +24,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_NEXT_NUMBER);
+			statement = connection.prepareStatement(FormSQL.GET_NEXT_NUMBER);
 			statement.setLong(1, formId);
 			resultSet = statement.executeQuery();
 	
@@ -58,7 +58,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_LATEST_PAGE);
+			statement = connection.prepareStatement(FormSQL.GET_LATEST_PAGE);
 			statement.setLong(1, formId);
 			resultSet = statement.executeQuery();
 	
@@ -92,7 +92,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_QUESTION);
+			statement = connection.prepareStatement(FormSQL.INSERT_QUESTION);
 			statement.setInt(1, questionNumber);
 			statement.setInt(2, page);
 			statement.setLong(3, formId);
@@ -129,7 +129,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_QUESTION_SELF_ASSESSMENT);
+			statement = connection.prepareStatement(FormSQL.INSERT_QUESTION_SELF_ASSESSMENT);
 			statement.setInt(1, questionNumber);
 			statement.setInt(2, page);
 			statement.setLong(3, formId);
@@ -164,7 +164,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.DELETE_PAGE_BREAK);
+			statement = connection.prepareStatement(FormSQL.DELETE_PAGE_BREAK);
 			statement.setInt(1, pageNumber);
 			statement.executeUpdate();
 		}
@@ -210,7 +210,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_QUESTIONS);
+			statement = connection.prepareStatement(FormSQL.GET_QUESTIONS);
 			statement.setLong(1, formId);
 			resultSet = statement.executeQuery();
 
@@ -273,7 +273,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_QUESTIONS_BY_PAGE);
+			statement = connection.prepareStatement(FormSQL.GET_QUESTIONS_BY_PAGE);
 			statement.setInt(1, formPage);
 			statement.setLong(2, formId);
 			resultSet = statement.executeQuery();
@@ -338,7 +338,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_QUESTION);
+			statement = connection.prepareStatement(FormSQL.GET_QUESTION);
 			statement.setLong(1, questionId);
 			resultSet = statement.executeQuery();
 
@@ -395,7 +395,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_QUESTION_BY_NUMBER);
+			statement = connection.prepareStatement(FormSQL.GET_QUESTION_BY_NUMBER);
 			statement.setInt(1, numberId);
 			resultSet = statement.executeQuery();
 
@@ -450,7 +450,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_QUESTION_COUNT_FOR_PAGE);
+			statement = connection.prepareStatement(FormSQL.GET_QUESTION_COUNT_FOR_PAGE);
 			statement.setInt(1, page);
 			resultSet = statement.executeQuery();
 	
@@ -484,7 +484,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_MOST_RECENT_QUESTION_NUMBER);
+			statement = connection.prepareStatement(FormSQL.GET_MOST_RECENT_QUESTION_NUMBER);
 			statement.setLong(1, formId);
 			resultSet = statement.executeQuery();
 	
@@ -516,7 +516,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.UPDATE_QUESTION);
+			statement = connection.prepareStatement(FormSQL.UPDATE_QUESTION);
 			statement.setInt(1, question.getNumber());
 			statement.setString(2, question.getType());
 			statement.setString(3, question.getLabel());
@@ -577,7 +577,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.DELETE_QUESTION);
+			statement = connection.prepareStatement(FormSQL.DELETE_QUESTION);
 			statement.setLong(1, questionId);
 			statement.executeUpdate();
 		}
@@ -602,7 +602,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.MOVE_DOWN_QUESTIONS);
+			statement = connection.prepareStatement(FormSQL.MOVE_DOWN_QUESTIONS);
 			statement.setInt(1, questionNumber);
 			statement.setLong(2, formId);
 			statement.executeUpdate();
@@ -628,7 +628,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.MOVE_UP_QUESTIONS);
+			statement = connection.prepareStatement(FormSQL.MOVE_UP_QUESTIONS);
 			statement.setInt(1, questionNumber);
 			statement.setLong(2, formId);
 			statement.executeUpdate();
@@ -654,7 +654,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.MOVE_DOWN_QUESTION);
+			statement = connection.prepareStatement(FormSQL.MOVE_DOWN_QUESTION);
 			statement.setInt(1, questionNumber);
 //			statement.setInt(2, formId);
 			statement.executeUpdate();
@@ -680,7 +680,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.MOVE_UP_QUESTION);
+			statement = connection.prepareStatement(FormSQL.MOVE_UP_QUESTION);
 			statement.setInt(1, questionNumber);
 //			statement.setInt(2, formId);
 			statement.executeUpdate();
@@ -706,7 +706,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_PAGE_BREAK);
+			statement = connection.prepareStatement(FormSQL.INSERT_PAGE_BREAK);
 			statement.setInt(1, questionNumber);
 //			statement.setInt(2, formId);
 			statement.executeUpdate();
@@ -732,7 +732,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.REMOVE_PAGE_BREAK);
+			statement = connection.prepareStatement(FormSQL.REMOVE_PAGE_BREAK);
 			statement.setInt(1, questionNumber);
 //			statement.setInt(2, formId);
 			statement.executeUpdate();
@@ -758,7 +758,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INCREMENT_PAGE);
+			statement = connection.prepareStatement(FormSQL.INCREMENT_PAGE);
 			statement.setInt(1, questionNumber);
 			statement.executeUpdate();
 		}
@@ -783,7 +783,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.DECREMENT_PAGE);
+			statement = connection.prepareStatement(FormSQL.DECREMENT_PAGE);
 			statement.setInt(1, questionNumber);
 			statement.executeUpdate();
 		}

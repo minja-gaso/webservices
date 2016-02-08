@@ -1,11 +1,11 @@
-package org.sw.marketing.dao.score;
+package org.sw.marketing.dao.form.score;
 
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
-import org.sw.marketing.dao.SQLStatements;
+import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.form.Data.Form;
 import org.sw.marketing.data.form.Data.Score;
 import org.sw.marketing.util.DateToXmlGregorianCalendar;
@@ -25,7 +25,7 @@ public class ScoreDAOImpl extends BaseDAO implements ScoreDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_SCORE, Statement.RETURN_GENERATED_KEYS);
+			statement = connection.prepareStatement(FormSQL.INSERT_SCORE, Statement.RETURN_GENERATED_KEYS);
 			statement.setLong(1, formID);
 			statement.executeUpdate();
 			resultSet = statement.getGeneratedKeys();
@@ -60,7 +60,7 @@ public class ScoreDAOImpl extends BaseDAO implements ScoreDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_SCORE);
+			statement = connection.prepareStatement(FormSQL.GET_SCORE);
 			statement.setLong(1, scoreID);
 			resultSet = statement.executeQuery();
 
@@ -105,7 +105,7 @@ public class ScoreDAOImpl extends BaseDAO implements ScoreDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_SCORES);
+			statement = connection.prepareStatement(FormSQL.GET_SCORES);
 			statement.setLong(1, formID);
 			resultSet = statement.executeQuery();
 
@@ -155,7 +155,7 @@ public class ScoreDAOImpl extends BaseDAO implements ScoreDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.UPDATE_SCORE);
+			statement = connection.prepareStatement(FormSQL.UPDATE_SCORE);
 			statement.setInt(1, score.getBegin());
 			statement.setInt(2, score.getEnd());
 			statement.setString(3, score.getTitle());
@@ -184,7 +184,7 @@ public class ScoreDAOImpl extends BaseDAO implements ScoreDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.DELETE_SCORE);
+			statement = connection.prepareStatement(FormSQL.DELETE_SCORE);
 			statement.setLong(1, scoreID);
 			statement.executeUpdate();
 		}

@@ -1,4 +1,4 @@
-package org.sw.marketing.dao.user;
+package org.sw.marketing.dao.form.user;
 
 import org.sw.marketing.data.form.Data.User;
 

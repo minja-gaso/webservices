@@ -1,4 +1,4 @@
-package org.sw.marketing.dao.submission;
+package org.sw.marketing.dao.form.submission;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
-import org.sw.marketing.dao.SQLStatements;
+import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.form.Data.Submission;
 import org.sw.marketing.data.form.Data.Submission.Answer;
 
@@ -31,7 +31,7 @@ public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_SUBMISSION_TEMP, Statement.RETURN_GENERATED_KEYS);
+			statement = connection.prepareStatement(FormSQL.INSERT_SUBMISSION_TEMP, Statement.RETURN_GENERATED_KEYS);
 			statement.setLong(1, formID);
 			statement.setString(2, sessionID);
 			statement.setObject(3, InetAddress.getLocalHost().getHostAddress());
@@ -73,7 +73,7 @@ public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_SUBMISSION_TEMP);
+			statement = connection.prepareStatement(FormSQL.GET_SUBMISSION_TEMP);
 			statement.setLong(1, formID);
 			statement.setString(2, SESSION_ID);
 			resultSet = statement.executeQuery();
@@ -111,7 +111,7 @@ public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.COPY_TO_SUBMISSIONS);
+			statement = connection.prepareStatement(FormSQL.COPY_TO_SUBMISSIONS);
 			statement.setString(1, SESSION_ID);
 			statement.setLong(2, formID);
 			statement.executeUpdate();
@@ -137,7 +137,7 @@ public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.DELETE_FROM_TEMP_SUBMISSIONS);
+			statement = connection.prepareStatement(FormSQL.DELETE_FROM_TEMP_SUBMISSIONS);
 			statement.setString(1, SESSION_ID);
 			statement.setLong(2, formID);
 			statement.executeUpdate();

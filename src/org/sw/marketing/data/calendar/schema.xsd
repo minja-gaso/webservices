@@ -26,6 +26,7 @@
 							<element name="prettyUrl" type="string" />
 							<element name="skinUrl" type="string" />
 							<element name="skinSelector" type="string" />
+							<!-- 
 							<element name="question" minOccurs="0" maxOccurs="unbounded">												
 								<complexType>
 									<sequence>
@@ -53,6 +54,7 @@
 									</sequence>
 								</complexType>
 							</element>
+							-->
 							<element name="messagePublicFormIntro" type="string" />
 							<element name="messagePublicFormClosing" type="string" />
 							<element name="deleted" type="boolean" />

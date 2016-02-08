@@ -1,4 +1,4 @@
-package org.sw.marketing.dao.answer;
+package org.sw.marketing.dao.form.answer;
 
 import org.sw.marketing.data.form.Data;
 import org.sw.marketing.data.form.Data.Form.Question.PossibleAnswer;

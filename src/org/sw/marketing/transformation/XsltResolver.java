@@ -27,7 +27,7 @@ public class XsltResolver implements URIResolver
 	{
 		try
 		{
-			URL url = new URL("http://localhost:8080/xsl/toolbox/forms/" + href);
+			URL url = new URL(baseUrl + href);
 			InputStream inputStream = url.openStream();
 			
 			return new StreamSource(inputStream);

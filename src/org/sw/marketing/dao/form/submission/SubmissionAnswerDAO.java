@@ -1,4 +1,4 @@
-package org.sw.marketing.dao.submission;
+package org.sw.marketing.dao.form.submission;
 
 import org.sw.marketing.data.form.Data.Form.Question;
 import org.sw.marketing.data.form.Data.Submission;

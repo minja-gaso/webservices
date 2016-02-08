@@ -4,11 +4,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
-import org.sw.marketing.dao.SQLStatements;
 import org.sw.marketing.data.form.Data;
 import org.sw.marketing.data.form.Data.Form;
 import org.sw.marketing.data.form.Data.User;
@@ -29,7 +26,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_FORMS);
+			statement = connection.prepareStatement(FormSQL.GET_FORMS);
 			statement.setLong(1, data.getUser().getId());
 			resultSet = statement.executeQuery();
 
@@ -92,7 +89,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_FORMS_SELF_ASSESSMENT);
+			statement = connection.prepareStatement(FormSQL.GET_FORMS_SELF_ASSESSMENT);
 			statement.setLong(1, data.getUser().getId());
 			resultSet = statement.executeQuery();
 
@@ -155,7 +152,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_FORM);
+			statement = connection.prepareStatement(FormSQL.GET_FORM);
 			statement.setLong(1, id);
 			resultSet = statement.executeQuery();
 
@@ -231,7 +228,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_FORM_BY_PRETTY_URL);
+			statement = connection.prepareStatement(FormSQL.GET_FORM_BY_PRETTY_URL);
 			statement.setString(1, prettyUrl);
 			resultSet = statement.executeQuery();
 
@@ -305,7 +302,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_FORM, Statement.RETURN_GENERATED_KEYS);
+			statement = connection.prepareStatement(FormSQL.INSERT_FORM, Statement.RETURN_GENERATED_KEYS);
 			statement.setLong(1, user.getId());
 			statement.executeUpdate();
 			resultSet = statement.getGeneratedKeys();
@@ -340,7 +337,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_FORM_SELF_ASSESSMENT, Statement.RETURN_GENERATED_KEYS);
+			statement = connection.prepareStatement(FormSQL.INSERT_FORM_SELF_ASSESSMENT, Statement.RETURN_GENERATED_KEYS);
 			statement.setLong(1, user.getId());
 			statement.executeUpdate();
 			resultSet = statement.getGeneratedKeys();
@@ -373,7 +370,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.DELETE_FORM);
+			statement = connection.prepareStatement(FormSQL.DELETE_FORM);
 			statement.setLong(1, formId);
 			statement.executeUpdate();
 		}
@@ -398,7 +395,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.UPDATE_FORM);
+			statement = connection.prepareStatement(FormSQL.UPDATE_FORM);
 			statement.setString(1, form.getTitle());
 			statement.setString(2, form.getStatus());
 			statement.setString(3, form.getPrettyUrl());
@@ -444,7 +441,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.UPDATE_FORM_SUBMISSION_COUNT);
+			statement = connection.prepareStatement(FormSQL.UPDATE_FORM_SUBMISSION_COUNT);
 			statement.setInt(1, count);
 			statement.setLong(2, formID);
 			statement.executeUpdate();

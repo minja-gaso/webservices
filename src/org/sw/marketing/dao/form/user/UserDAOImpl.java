@@ -1,13 +1,11 @@
-package org.sw.marketing.dao.user;
+package org.sw.marketing.dao.form.user;
 
 import java.sql.SQLException;
 
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
-import org.sw.marketing.dao.SQLStatements;
-import org.sw.marketing.data.form.Data.Form;
+import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.form.Data.User;
-import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class UserDAOImpl extends BaseDAO implements UserDAO
 {
@@ -23,7 +21,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.GET_USER_BY_EMAIL);
+			statement = connection.prepareStatement(FormSQL.GET_USER_BY_EMAIL);
 			statement.setString(1, email);
 			resultSet = statement.executeQuery();
 
@@ -88,7 +86,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SQLStatements.INSERT_USER);
+			statement = connection.prepareStatement(FormSQL.INSERT_USER);
 			statement.setString(1, email);
 			statement.setString(2, firstName);
 			statement.setString(3, lastName);
