@@ -26,35 +26,38 @@
 							<element name="prettyUrl" type="string" />
 							<element name="skinUrl" type="string" />
 							<element name="skinSelector" type="string" />
-							<!-- 
-							<element name="question" minOccurs="0" maxOccurs="unbounded">												
+							<element name="event" minOccurs="0" maxOccurs="unbounded">												
 								<complexType>
 									<sequence>
 										<element name="id" type="long" />
-										<element name="number" type="int" />
-										<element name="type" type="string" />
-										<element name="header" type="string" />
-										<element name="label" type="string" />
-										<element name="page" type="int" />
-										<element name="defaultAnswer" type="string" />
-										<element name="filter" type="string" />
-										<element name="maxCharacterLimit" type="int" />
-										<element name="maxWordLimit" type="int" />
-										<element name="required" type="boolean" />									
-										<element name="possibleAnswer" minOccurs="0" maxOccurs="unbounded">					
+										<element name="startDate" type="date" />
+										<element name="endDate" type="date" />
+										<element name="startTime" type="time" />
+										<element name="endTime" type="time" />
+										<element name="title" type="string" />
+										<element name="locationOwned" type="boolean" />
+										<element name="location" type="string" />
+										<element name="locationAdditional" type="string" />
+										<element name="description" type="string" />
+										<element name="speaker" type="string" />
+										<element name="registrationLabel" type="string" />
+										<element name="registrationUrl" type="string" />
+										<element name="contactName" type="string" />
+										<element name="contactPhone" type="string" />
+										<element name="contactEmail" type="string" />
+										<element name="cost" type="string" />										
+										<element name="tag" minOccurs="0" maxOccurs="unbounded">				
 											<complexType>
 												<sequence>
 													<element name="id" type="long" />
 													<element name="label" type="string" />
-													<element name="value" type="int" />
 												</sequence>
-											</complexType>
+											</complexType>										
 										</element>
 										<element name="fkId" type="int" />
 									</sequence>
 								</complexType>
 							</element>
-							-->
 							<element name="messagePublicFormIntro" type="string" />
 							<element name="messagePublicFormClosing" type="string" />
 							<element name="deleted" type="boolean" />
