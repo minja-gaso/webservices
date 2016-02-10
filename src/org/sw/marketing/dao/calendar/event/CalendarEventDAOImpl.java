@@ -84,6 +84,8 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				String contactPhone = resultSet.getString("event_contact_phone");
 				String contactEmail = resultSet.getString("event_contact_email");
 				String cost = resultSet.getString("event_cost");
+				String fileName = resultSet.getString("event_image_file_name");
+				String fileDescription = resultSet.getString("event_image_file_description");
 
 				event = new Event();
 				event.setId(id);
@@ -103,6 +105,8 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				event.setContactPhone(contactPhone);
 				event.setContactEmail(contactEmail);
 				event.setCost(cost);
+				event.setFileName(fileName);
+				event.setFileDescription(fileDescription);
 			}
 		}
 		catch (SQLException e)
@@ -177,7 +181,9 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 			statement.setString(14, event.getContactPhone());
 			statement.setString(15, event.getContactEmail());
 			statement.setString(16, event.getCost());
-			statement.setLong(17, event.getId());
+			statement.setString(17, event.getFileName());
+			statement.setString(18, event.getFileDescription());
+			statement.setLong(19, event.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -214,13 +220,26 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				{
 					events = new java.util.ArrayList<Event>();
 				}
-
+				
 				long id = resultSet.getLong("event_id");
 				java.util.Date startDate = resultSet.getTimestamp("event_start_date");
 				java.util.Date endDate = resultSet.getTimestamp("event_end_date");
 				java.sql.Time startTime = resultSet.getTime("event_start_time");
 				java.sql.Time endTime = resultSet.getTime("event_end_time");
 				String title = resultSet.getString("event_title");
+				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
+				String location = resultSet.getString("event_location");
+				String locationAdditional = resultSet.getString("event_location_additional_information");
+				String description = resultSet.getString("event_description");
+				String speaker = resultSet.getString("event_speaker");
+				String registrationLabel = resultSet.getString("event_registration_label");
+				String registrationUrl = resultSet.getString("event_registration_url");
+				String contactName = resultSet.getString("event_contact_name");
+				String contactPhone = resultSet.getString("event_contact_phone");
+				String contactEmail = resultSet.getString("event_contact_email");
+				String cost = resultSet.getString("event_cost");
+				String fileName = resultSet.getString("event_image_file_name");
+				String fileDescription = resultSet.getString("event_image_file_description");
 
 				event = new Event();
 				event.setId(id);
@@ -229,6 +248,19 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
 				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
 				event.setTitle(title);
+				event.setLocationOwned(locationOwned);
+				event.setLocation(location);
+				event.setLocationAdditional(locationAdditional);
+				event.setDescription(description);
+				event.setSpeaker(speaker);
+				event.setRegistrationLabel(registrationLabel);
+				event.setRegistrationUrl(registrationUrl);
+				event.setContactName(contactName);
+				event.setContactPhone(contactPhone);
+				event.setContactEmail(contactEmail);
+				event.setCost(cost);
+				event.setFileName(fileName);
+				event.setFileDescription(fileDescription);
 
 				events.add(event);
 			}

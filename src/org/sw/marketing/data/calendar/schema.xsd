@@ -54,6 +54,8 @@
 												</sequence>
 											</complexType>										
 										</element>
+										<element name="fileName" type="string" />
+										<element name="fileDescription" type="string" />
 										<element name="fkId" type="int" />
 									</sequence>
 								</complexType>
