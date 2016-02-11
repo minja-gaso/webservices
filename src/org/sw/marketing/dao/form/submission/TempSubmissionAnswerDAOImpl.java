@@ -1,16 +1,12 @@
 package org.sw.marketing.dao.form.submission;
 
 import java.sql.SQLException;
-import java.util.List;
-
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.form.Data.Form.Question;
-import org.sw.marketing.data.form.Data.Form;
 import org.sw.marketing.data.form.Data.Submission;
 import org.sw.marketing.data.form.Data.Submission.Answer;
-import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class TempSubmissionAnswerDAOImpl extends BaseDAO implements TempSubmissionAnswerDAO
 {

@@ -56,7 +56,27 @@
 										</element>
 										<element name="fileName" type="string" />
 										<element name="fileDescription" type="string" />
-										<element name="fkId" type="int" />
+										<element name="categoryId" type="long" />
+										<element name="fkId" type="long" />
+									</sequence>
+								</complexType>
+							</element>
+							<element name="role" minOccurs="0" maxOccurs="unbounded">												
+								<complexType>
+									<sequence>
+										<element name="id" type="long" />
+										<element name="type" type="string" />
+										<element name="email" type="string" />
+										<element name="fkCalendarId" type="long" />
+									</sequence>
+								</complexType>
+							</element>
+							<element name="category" minOccurs="0" maxOccurs="unbounded">												
+								<complexType>
+									<sequence>
+										<element name="id" type="long" />
+										<element name="label" type="string" />
+										<element name="fkCalendarId" type="long" />
 									</sequence>
 								</complexType>
 							</element>

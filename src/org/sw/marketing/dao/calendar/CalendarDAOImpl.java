@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
-import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.calendar.Data.Calendar;
 import org.sw.marketing.data.calendar.Data.User;
 import org.sw.marketing.util.DateToXmlGregorianCalendar;
@@ -14,7 +13,7 @@ import org.sw.marketing.util.DateToXmlGregorianCalendar;
 public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 {
 	@Override
-	public List<Calendar> getCalendars()
+	public List<Calendar> getCalendars(User user)
 	{
 		java.util.List<Calendar> calendars = null;
 		
@@ -27,6 +26,67 @@ public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(CalendarSQL.GET_CALENDARS);
+			statement.setString(1, user.getEmailAddress());
+			statement.setLong(2, user.getId());
+			resultSet = statement.executeQuery();
+
+			Calendar calendar = null;
+			while (resultSet.next())
+			{
+				if (calendars == null)
+				{
+					calendars = new java.util.ArrayList<Calendar>();
+				}
+
+				long id = resultSet.getLong("calendar_id");
+				java.util.Date timestamp = resultSet.getTimestamp("calendar_creation_timestamp");
+				String type = resultSet.getString("calendar_type");
+				String title = resultSet.getString("calendar_title");
+				String prettyUrl = resultSet.getString("calendar_pretty_url");
+				boolean deleted = resultSet.getBoolean("is_calendar_deleted");
+				String skinUrl = resultSet.getString("calendar_skin_url");
+				String skinSelector = resultSet.getString("calendar_skin_selector");
+
+				calendar = new Calendar();
+				calendar.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
+				calendar.setId(id);
+				calendar.setType(type);
+				calendar.setTitle(title);
+				calendar.setPrettyUrl(prettyUrl);
+				calendar.setDeleted(deleted);
+				calendar.setSkinUrl(skinUrl);
+				calendar.setSkinSelector(skinSelector);
+
+				calendars.add(calendar);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return calendars;
+	}
+	@Override
+	public List<Calendar> getCalendarsManage(User user)
+	{
+		java.util.List<Calendar> calendars = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(CalendarSQL.GET_CALENDARS_MANAGE);
+			statement.setString(1, user.getEmailAddress());
+			statement.setLong(2, user.getId());
 			resultSet = statement.executeQuery();
 
 			Calendar calendar = null;

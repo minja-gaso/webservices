@@ -7,7 +7,6 @@ import java.util.List;
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.calendar.CalendarSQL;
-import org.sw.marketing.data.calendar.Data.Calendar;
 import org.sw.marketing.data.calendar.Data.Calendar.Event;
 import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
@@ -86,6 +85,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				String cost = resultSet.getString("event_cost");
 				String fileName = resultSet.getString("event_image_file_name");
 				String fileDescription = resultSet.getString("event_image_file_description");
+				long categoryId = resultSet.getLong("fk_category_id");
 
 				event = new Event();
 				event.setId(id);
@@ -107,6 +107,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				event.setCost(cost);
 				event.setFileName(fileName);
 				event.setFileDescription(fileDescription);
+				event.setCategoryId(categoryId);
 			}
 		}
 		catch (SQLException e)
@@ -183,7 +184,8 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 			statement.setString(16, event.getCost());
 			statement.setString(17, event.getFileName());
 			statement.setString(18, event.getFileDescription());
-			statement.setLong(19, event.getId());
+			statement.setLong(19, event.getCategoryId());
+			statement.setLong(20, event.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)

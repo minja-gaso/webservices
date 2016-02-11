@@ -12,7 +12,6 @@ import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.form.Data.Submission;
-import org.sw.marketing.data.form.Data.Submission.Answer;
 
 public class SubmissionDAOImpl extends BaseDAO implements SubmissionDAO
 {

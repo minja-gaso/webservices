@@ -22,6 +22,8 @@ public class ReadFile
 			{
 				skinStr += line + "\n";
 			}
+			
+			reader.close();
 		}
 		catch (FileNotFoundException e)
 		{

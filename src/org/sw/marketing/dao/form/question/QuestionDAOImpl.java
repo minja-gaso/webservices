@@ -1,7 +1,6 @@
 package org.sw.marketing.dao.form.question;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import org.sw.marketing.dao.BaseDAO;

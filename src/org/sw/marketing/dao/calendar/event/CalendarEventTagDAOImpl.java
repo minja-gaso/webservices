@@ -1,15 +1,11 @@
 package org.sw.marketing.dao.calendar.event;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
-import org.sw.marketing.dao.calendar.CalendarSQL;
-import org.sw.marketing.data.calendar.Data.Calendar.Event;
 import org.sw.marketing.data.calendar.Data.Calendar.Event.Tag;
-import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class CalendarEventTagDAOImpl extends BaseDAO implements CalendarEventTagDAO
 {

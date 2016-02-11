@@ -6,9 +6,7 @@ import java.sql.Statement;
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.form.FormSQL;
-import org.sw.marketing.data.form.Data.Form;
 import org.sw.marketing.data.form.Data.Score;
-import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class ScoreDAOImpl extends BaseDAO implements ScoreDAO
 {

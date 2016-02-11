@@ -4,17 +4,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.form.FormSQL;
 import org.sw.marketing.data.form.Data.Submission;
-import org.sw.marketing.data.form.Data.Submission.Answer;
 
 public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 {
@@ -49,7 +42,6 @@ public class TempSubmissionDAOImpl extends BaseDAO implements TempSubmissionDAO
 		}
 		catch (UnknownHostException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally
