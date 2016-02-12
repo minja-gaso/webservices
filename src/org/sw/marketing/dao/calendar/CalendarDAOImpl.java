@@ -195,7 +195,8 @@ public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(CalendarSQL.GET_CALENDARS);
+			statement = connection.prepareStatement(CalendarSQL.GET_CALENDAR_BY_PRETTY_URL);
+			statement.setString(1, prettyUrl);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next())
