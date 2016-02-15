@@ -26,7 +26,7 @@
 							<element name="prettyUrl" type="string" />
 							<element name="skinUrl" type="string" />
 							<element name="skinSelector" type="string" />
-							<element name="event" minOccurs="0" maxOccurs="unbounded">												
+							<element name="event" minOccurs="0" maxOccurs="unbounded">											
 								<complexType>
 									<sequence>
 										<element name="id" type="long" />
@@ -55,8 +55,29 @@
 											</complexType>										
 										</element>
 										<element name="fileName" type="string" />
-										<element name="fileDescription" type="string" />
+										<element name="fileDescription" type="string" />									
+										<element name="eventRecurrence">				
+											<complexType>
+												<sequence>
+													<element name="recurring" type="boolean" />
+													<element name="recurringMonthly" type="boolean" />
+													<element name="type" type="string" />
+													<element name="limit" type="int" />
+													<element name="interval" type="int" />
+													<element name="by" type="string" />
+													<element name="monday" type="boolean" />
+													<element name="tuesday" type="boolean" />
+													<element name="wednesday" type="boolean" />
+													<element name="thursday" type="boolean" />
+													<element name="friday" type="boolean" />
+													<element name="saturday" type="boolean" />
+													<element name="sunday" type="boolean" />
+													<element name="exact" type="boolean" />
+												</sequence>
+											</complexType>										
+										</element>
 										<element name="categoryId" type="long" />
+										<element name="parentId" type="long" />
 										<element name="fkId" type="long" />
 									</sequence>
 								</complexType>
