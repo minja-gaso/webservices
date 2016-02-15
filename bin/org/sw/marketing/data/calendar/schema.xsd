@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		elementFormDefault="qualified">
+	<element name="data">
+		<complexType>
+			<sequence>
+				<element name="environment">
+					<complexType>
+						<sequence>
+							<element name="componentId" type="int" />
+							<element name="screenName" type="string" />
+							<element name="serverName" type="string" />
+							<element name="assets" type="string" />
+							<element name="contactName" type="string" />
+							<element name="contactEmail" type="string" />
+						</sequence>
+					</complexType>
+				</element>
+				<element name="calendar" minOccurs="0" maxOccurs="unbounded">					
+					<complexType>
+						<sequence>
+							<element name="id" type="long" />
+							<element name="creationTimestamp" type="date" />
+							<element name="type" type="string" />
+							<element name="title" type="string" />
+							<element name="prettyUrl" type="string" />
+							<element name="skinUrl" type="string" />
+							<element name="skinSelector" type="string" />
+							<element name="event" minOccurs="0" maxOccurs="unbounded">												
+								<complexType>
+									<sequence>
+										<element name="id" type="long" />
+										<element name="startDate" type="date" />
+										<element name="endDate" type="date" />
+										<element name="startTime" type="time" />
+										<element name="endTime" type="time" />
+										<element name="title" type="string" />
+										<element name="locationOwned" type="boolean" />
+										<element name="location" type="string" />
+										<element name="locationAdditional" type="string" />
+										<element name="description" type="string" />
+										<element name="speaker" type="string" />
+										<element name="registrationLabel" type="string" />
+										<element name="registrationUrl" type="string" />
+										<element name="contactName" type="string" />
+										<element name="contactPhone" type="string" />
+										<element name="contactEmail" type="string" />
+										<element name="cost" type="string" />										
+										<element name="tag" minOccurs="0" maxOccurs="unbounded">				
+											<complexType>
+												<sequence>
+													<element name="id" type="long" />
+													<element name="label" type="string" />
+												</sequence>
+											</complexType>										
+										</element>
+										<element name="fileName" type="string" />
+										<element name="fileDescription" type="string" />
+										<element name="categoryId" type="long" />
+										<element name="fkId" type="long" />
+									</sequence>
+								</complexType>
+							</element>
+							<element name="role" minOccurs="0" maxOccurs="unbounded">												
+								<complexType>
+									<sequence>
+										<element name="id" type="long" />
+										<element name="type" type="string" />
+										<element name="email" type="string" />
+										<element name="fkCalendarId" type="long" />
+									</sequence>
+								</complexType>
+							</element>
+							<element name="category" minOccurs="0" maxOccurs="unbounded">												
+								<complexType>
+									<sequence>
+										<element name="id" type="long" />
+										<element name="label" type="string" />
+										<element name="fkCalendarId" type="long" />
+									</sequence>
+								</complexType>
+							</element>
+							<element name="messagePublicFormIntro" type="string" />
+							<element name="messagePublicFormClosing" type="string" />
+							<element name="deleted" type="boolean" />
+						</sequence>
+					</complexType>
+				</element>
+				<element name="message" minOccurs="0" maxOccurs="unbounded">				
+					<complexType>
+						<sequence>
+							<element name="type" type="string" />
+							<element name="subtype" type="string" />
+							<element name="label" type="string" />
+							<element name="questionId" type="long" />
+							<element name="questionNumber" type="int" />
+							<element name="required" type="boolean" />
+						</sequence>
+					</complexType>				
+				</element>
+				<element name="user">
+					<complexType>
+						<sequence>
+							<element name="id" type="long" />
+							<element name="emailAddress" type="string" />
+							<element name="firstName" type="string" />
+							<element name="lastName" type="string" />
+							<element name="pictureUrl" type="string" />
+							<element name="active" type="boolean" />
+							<element name="admin" type="boolean" />
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>
