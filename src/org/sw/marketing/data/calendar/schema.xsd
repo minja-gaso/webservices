@@ -30,6 +30,7 @@
 								<complexType>
 									<sequence>
 										<element name="id" type="long" />
+										<element name="published" type="boolean" />
 										<element name="startDate" type="date" />
 										<element name="endDate" type="date" />
 										<element name="startTime" type="time" />
@@ -60,6 +61,7 @@
 											<complexType>
 												<sequence>
 													<element name="recurring" type="boolean" />
+													<element name="visibleOnListScreen" type="boolean" />
 													<element name="recurringMonthly" type="boolean" />
 													<element name="type" type="string" />
 													<element name="limit" type="int" />
@@ -103,6 +105,14 @@
 							</element>
 							<element name="messagePublicFormIntro" type="string" />
 							<element name="messagePublicFormClosing" type="string" />
+							<element name="currentView">
+								<complexType>
+									<sequence>
+										<element name="startDay" type="int" />
+										<element name="totalDays" type="int" />
+									</sequence>
+								</complexType>
+							</element>
 							<element name="deleted" type="boolean" />
 						</sequence>
 					</complexType>

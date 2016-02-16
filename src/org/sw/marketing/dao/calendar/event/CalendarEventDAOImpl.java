@@ -14,6 +14,31 @@ import org.sw.marketing.util.DateToXmlGregorianCalendar;
 public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 {	
 	@Override
+	public void delete(long eventID)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+		
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(CalendarSQL.DELETE_CALENDAR_EVENT);
+			statement.setLong(1, eventID);
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
+	
+	@Override
 	public void deleteRecurring(long eventID)
 	{
 		DAO dao = new BaseDAO();
@@ -189,6 +214,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 			while (resultSet.next())
 			{
 				long id = resultSet.getLong("event_id");
+				boolean published = resultSet.getBoolean("is_event_published");
 				java.util.Date startDate = resultSet.getTimestamp("event_start_date");
 				java.util.Date endDate = resultSet.getTimestamp("event_end_date");
 				java.sql.Time startTime = resultSet.getTime("event_start_time");
@@ -215,6 +241,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				 * recurring events object
 				 */
 				boolean recurring = resultSet.getBoolean("is_event_recurring");
+				boolean recurringVisibleOnListScreen = resultSet.getBoolean("is_event_recurring_visible_on_list_screen");
 				boolean recurringMonthly = resultSet.getBoolean("is_event_recurring_monthly");
 				String type = resultSet.getString("event_recurring_type");
 				int limit = resultSet.getInt("event_recurring_limit");
@@ -230,6 +257,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				boolean exact = resultSet.getBoolean("is_event_recurring_day_exact");
 				EventRecurrence recurrence = new EventRecurrence();
 				recurrence.setRecurring(recurring);
+				recurrence.setVisibleOnListScreen(recurringVisibleOnListScreen);
 				recurrence.setRecurringMonthly(recurringMonthly);
 				recurrence.setType(type);
 				recurrence.setLimit(limit);
@@ -246,6 +274,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 
 				event = new Event();
 				event.setId(id);
+				event.setPublished(published);
 				event.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
 				event.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
 				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
@@ -364,7 +393,9 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 			statement.setBoolean(31, recurrence.isSunday());
 			statement.setBoolean(32, recurrence.isRecurringMonthly());
 			statement.setLong(33, event.getParentId());
-			statement.setLong(34, event.getId());
+			statement.setBoolean(34, recurrence.isVisibleOnListScreen());
+			statement.setBoolean(35, event.isPublished());
+			statement.setLong(36, event.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -377,8 +408,6 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 		}
 	}
 	
-
-
 	@Override
 	public void updateCalendarRecurringEvent(Event event)
 	{
@@ -461,6 +490,32 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 			statement.setBoolean(31, recurrence.isSunday());
 			statement.setBoolean(32, recurrence.isRecurringMonthly());
 			statement.setLong(33, event.getId());
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
+	
+	@Override
+	public void updateCalendarRecurringEventVisibility(Event event)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement("UPDATE calendar.events SET is_event_recurring_visible_on_list_screen = ? WHERE event_parent_id = ?");
+			statement.setBoolean(1, event.getEventRecurrence().isVisibleOnListScreen());
+			statement.setLong(2, event.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -555,6 +610,209 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 
 		return events;
 	}
-	
+
+	@Override
+	public List<Event> getCalendarEventsToolbox(long calendarID)
+	{
+		java.util.List<Event> events = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(CalendarSQL.GET_CALENDAR_EVENTS_TOOLBOX);
+			statement.setLong(1, calendarID);
+			resultSet = statement.executeQuery();
+
+			Event event = null;
+			while (resultSet.next())
+			{
+				if (events == null)
+				{
+					events = new java.util.ArrayList<Event>();
+				}
+				
+				long id = resultSet.getLong("event_id");
+				boolean published = resultSet.getBoolean("is_event_published");
+				java.util.Date startDate = resultSet.getTimestamp("event_start_date");
+				java.util.Date endDate = resultSet.getTimestamp("event_end_date");
+				java.sql.Time startTime = resultSet.getTime("event_start_time");
+				java.sql.Time endTime = resultSet.getTime("event_end_time");
+				String title = resultSet.getString("event_title");
+				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
+				String location = resultSet.getString("event_location");
+				String locationAdditional = resultSet.getString("event_location_additional_information");
+				String description = resultSet.getString("event_description");
+				String speaker = resultSet.getString("event_speaker");
+				String registrationLabel = resultSet.getString("event_registration_label");
+				String registrationUrl = resultSet.getString("event_registration_url");
+				String contactName = resultSet.getString("event_contact_name");
+				String contactPhone = resultSet.getString("event_contact_phone");
+				String contactEmail = resultSet.getString("event_contact_email");
+				String cost = resultSet.getString("event_cost");
+				String fileName = resultSet.getString("event_image_file_name");
+				String fileDescription = resultSet.getString("event_image_file_description");
+				long parentId = resultSet.getLong("event_parent_id");
+
+				event = new Event();
+				event.setId(id);
+				event.setPublished(published);
+				event.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
+				event.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
+				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
+				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
+				event.setTitle(title);
+				event.setLocationOwned(locationOwned);
+				event.setLocation(location);
+				event.setLocationAdditional(locationAdditional);
+				event.setDescription(description);
+				event.setSpeaker(speaker);
+				event.setRegistrationLabel(registrationLabel);
+				event.setRegistrationUrl(registrationUrl);
+				event.setContactName(contactName);
+				event.setContactPhone(contactPhone);
+				event.setContactEmail(contactEmail);
+				event.setCost(cost);
+				event.setFileName(fileName);
+				event.setFileDescription(fileDescription);
+				event.setParentId(parentId);
+
+				events.add(event);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return events;
+	}
+
+	@Override
+	public List<Event> getCalendarRecurringEvents(long eventID)
+	{
+		java.util.List<Event> events = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(CalendarSQL.GET_CALENDAR_RECURRING_EVENTS);
+			statement.setLong(1, eventID);
+			resultSet = statement.executeQuery();
+
+			Event event = null;
+			while (resultSet.next())
+			{
+				if (events == null)
+				{
+					events = new java.util.ArrayList<Event>();
+				}
+				
+				long id = resultSet.getLong("event_id");
+				java.util.Date startDate = resultSet.getTimestamp("event_start_date");
+				java.util.Date endDate = resultSet.getTimestamp("event_end_date");
+				java.sql.Time startTime = resultSet.getTime("event_start_time");
+				java.sql.Time endTime = resultSet.getTime("event_end_time");
+				String title = resultSet.getString("event_title");
+				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
+				String location = resultSet.getString("event_location");
+				String locationAdditional = resultSet.getString("event_location_additional_information");
+				String description = resultSet.getString("event_description");
+				String speaker = resultSet.getString("event_speaker");
+				String registrationLabel = resultSet.getString("event_registration_label");
+				String registrationUrl = resultSet.getString("event_registration_url");
+				String contactName = resultSet.getString("event_contact_name");
+				String contactPhone = resultSet.getString("event_contact_phone");
+				String contactEmail = resultSet.getString("event_contact_email");
+				String cost = resultSet.getString("event_cost");
+				String fileName = resultSet.getString("event_image_file_name");
+				String fileDescription = resultSet.getString("event_image_file_description");
+				long parentId = resultSet.getLong("event_parent_id");
+				
+				/*
+				 * recurring events object
+				 */
+				boolean recurring = resultSet.getBoolean("is_event_recurring");
+				boolean recurringVisibleOnListScreen = resultSet.getBoolean("is_event_recurring_visible_on_list_screen");
+				boolean recurringMonthly = resultSet.getBoolean("is_event_recurring_monthly");
+				String type = resultSet.getString("event_recurring_type");
+				int limit = resultSet.getInt("event_recurring_limit");
+				int interval = resultSet.getInt("event_recurring_interval");
+				String intervalType = resultSet.getString("event_recurring_interval_type");
+				boolean monday = resultSet.getBoolean("is_event_recurring_monday");
+				boolean tuesday = resultSet.getBoolean("is_event_recurring_tuesday");
+				boolean wednesday = resultSet.getBoolean("is_event_recurring_wednesday");
+				boolean thursday = resultSet.getBoolean("is_event_recurring_thursday");
+				boolean friday = resultSet.getBoolean("is_event_recurring_friday");
+				boolean saturday = resultSet.getBoolean("is_event_recurring_saturday");
+				boolean sunday = resultSet.getBoolean("is_event_recurring_sunday");
+				boolean exact = resultSet.getBoolean("is_event_recurring_day_exact");
+				EventRecurrence recurrence = new EventRecurrence();
+				recurrence.setRecurring(recurring);
+				recurrence.setVisibleOnListScreen(recurringVisibleOnListScreen);
+				recurrence.setRecurringMonthly(recurringMonthly);
+				recurrence.setType(type);
+				recurrence.setLimit(limit);
+				recurrence.setInterval(interval);
+				recurrence.setIntervalType(intervalType);
+				recurrence.setMonday(monday);
+				recurrence.setTuesday(tuesday);
+				recurrence.setWednesday(wednesday);
+				recurrence.setThursday(thursday);
+				recurrence.setFriday(friday);
+				recurrence.setSaturday(saturday);
+				recurrence.setSunday(sunday);
+				recurrence.setExact(exact);
+
+				event = new Event();
+				event.setId(id);
+				event.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
+				event.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
+				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
+				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
+				event.setTitle(title);
+				event.setLocationOwned(locationOwned);
+				event.setLocation(location);
+				event.setLocationAdditional(locationAdditional);
+				event.setDescription(description);
+				event.setSpeaker(speaker);
+				event.setRegistrationLabel(registrationLabel);
+				event.setRegistrationUrl(registrationUrl);
+				event.setContactName(contactName);
+				event.setContactPhone(contactPhone);
+				event.setContactEmail(contactEmail);
+				event.setCost(cost);
+				event.setFileName(fileName);
+				event.setFileDescription(fileDescription);
+				event.setParentId(parentId);
+				event.setEventRecurrence(recurrence);
+
+				events.add(event);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return events;
+	}
 	
 }
