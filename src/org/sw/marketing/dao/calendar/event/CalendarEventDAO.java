@@ -10,6 +10,8 @@ public interface CalendarEventDAO
 	public long createCalendarEvent(long calendarID);
 	public long createCalendarEventRecurring(long calendarID, Event event);
 	
+	public long copyEvent(Event event);
+	
 	public Event getCalendarEvent(long eventID);
 
 	public void updateCalendarEvent(Event event);

@@ -64,7 +64,7 @@
 													<element name="type" type="string" />
 													<element name="limit" type="int" />
 													<element name="interval" type="int" />
-													<element name="by" type="string" />
+													<element name="intervalType" type="string" />
 													<element name="monday" type="boolean" />
 													<element name="tuesday" type="boolean" />
 													<element name="wednesday" type="boolean" />

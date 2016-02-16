@@ -132,6 +132,42 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 		
 		return id;
 	}
+	
+	@Override
+	public long copyEvent(Event event)
+	{
+		long id = 0;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+		
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(CalendarSQL.COPY_CALENDAR_EVENT, Statement.RETURN_GENERATED_KEYS);
+			statement.setLong(1, event.getId());
+			statement.setLong(2, event.getId());
+			statement.executeUpdate();
+			resultSet = statement.getGeneratedKeys();
+			
+			if(resultSet.next())
+			{
+				id = resultSet.getLong(1);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+		
+		return id;
+	}
 
 	@Override
 	public Event getCalendarEvent(long eventID)
@@ -183,7 +219,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				String type = resultSet.getString("event_recurring_type");
 				int limit = resultSet.getInt("event_recurring_limit");
 				int interval = resultSet.getInt("event_recurring_interval");
-				String by = resultSet.getString("event_recurring_by");
+				String intervalType = resultSet.getString("event_recurring_interval_type");
 				boolean monday = resultSet.getBoolean("is_event_recurring_monday");
 				boolean tuesday = resultSet.getBoolean("is_event_recurring_tuesday");
 				boolean wednesday = resultSet.getBoolean("is_event_recurring_wednesday");
@@ -198,7 +234,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				recurrence.setType(type);
 				recurrence.setLimit(limit);
 				recurrence.setInterval(interval);
-				recurrence.setBy(by);
+				recurrence.setIntervalType(intervalType);
 				recurrence.setMonday(monday);
 				recurrence.setTuesday(tuesday);
 				recurrence.setWednesday(wednesday);
@@ -318,7 +354,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 			statement.setString(21, recurrence.getType());
 			statement.setInt(22, recurrence.getLimit());
 			statement.setInt(23, recurrence.getInterval());
-			statement.setString(24, recurrence.getBy());
+			statement.setString(24, recurrence.getIntervalType());
 			statement.setBoolean(25, recurrence.isMonday());
 			statement.setBoolean(26, recurrence.isTuesday());
 			statement.setBoolean(27, recurrence.isWednesday());
@@ -415,7 +451,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 			statement.setString(21, recurrence.getType());
 			statement.setInt(22, recurrence.getLimit());
 			statement.setInt(23, recurrence.getInterval());
-			statement.setString(24, recurrence.getBy());
+			statement.setString(24, recurrence.getIntervalType());
 			statement.setBoolean(25, recurrence.isMonday());
 			statement.setBoolean(26, recurrence.isTuesday());
 			statement.setBoolean(27, recurrence.isWednesday());
