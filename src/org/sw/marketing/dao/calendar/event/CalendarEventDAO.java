@@ -8,7 +8,6 @@ public interface CalendarEventDAO
 	 * create
 	 */
 	public long createCalendarEvent(long calendarID);
-	public long createCalendarEventRecurring(long calendarID, Event event);
 	
 	/*
 	 * read
@@ -30,10 +29,11 @@ public interface CalendarEventDAO
 	 */
 	public void delete(long eventID);
 	public void deleteRecurring(long eventID);
-	public void deleteFirstRecurring(long eventID);
 	
 	/*
 	 * other
 	 */
 	public long copyEvent(Event event);	
+	
+	public java.util.List<Long> getMatchedEventsForSearch(String keyword);
 }

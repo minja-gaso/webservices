@@ -64,31 +64,6 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 	}
 	
 	@Override
-	public void deleteFirstRecurring(long eventID)
-	{
-		DAO dao = new BaseDAO();
-		java.sql.Connection connection = null;
-		java.sql.PreparedStatement statement = null;
-		java.sql.ResultSet resultSet = null;
-		
-		try
-		{
-			connection = dao.getConnection();
-			statement = connection.prepareStatement(CalendarSQL.DELETE_CALENDAR_EVENTS_FIRST_RECURRING);
-			statement.setLong(1, eventID);
-			statement.executeUpdate();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			closeConnection(connection, statement, resultSet);
-		}
-	}
-	
-	@Override
 	public long createCalendarEvent(long calendarID)
 	{
 		long id = 0;
@@ -122,42 +97,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 		
 		return id;
 	}
-	
-	@Override
-	public long createCalendarEventRecurring(long calendarID, Event event)
-	{
-		long id = 0;
 		
-		DAO dao = new BaseDAO();
-		java.sql.Connection connection = null;
-		java.sql.PreparedStatement statement = null;
-		java.sql.ResultSet resultSet = null;
-		
-		try
-		{
-			connection = dao.getConnection();
-			statement = connection.prepareStatement(CalendarSQL.INSERT_CALENDAR_EVENT, Statement.RETURN_GENERATED_KEYS);
-			statement.setLong(1, calendarID);
-			statement.executeUpdate();
-			resultSet = statement.getGeneratedKeys();
-			
-			if(resultSet.next())
-			{
-				id = resultSet.getLong(1);
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			closeConnection(connection, statement, resultSet);
-		}
-		
-		return id;
-	}
-	
 	@Override
 	public long copyEvent(Event event)
 	{
@@ -220,10 +160,12 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				java.sql.Time startTime = resultSet.getTime("event_start_time");
 				java.sql.Time endTime = resultSet.getTime("event_end_time");
 				String title = resultSet.getString("event_title");
+				String titleRecurringLabel = resultSet.getString("event_title_recurring_label");
 				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
 				String location = resultSet.getString("event_location");
 				String locationAdditional = resultSet.getString("event_location_additional_information");
 				String description = resultSet.getString("event_description");
+				String agenda = resultSet.getString("event_agenda");
 				String speaker = resultSet.getString("event_speaker");
 				String registrationLabel = resultSet.getString("event_registration_label");
 				String registrationUrl = resultSet.getString("event_registration_url");
@@ -280,10 +222,12 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
 				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
 				event.setTitle(title);
+				event.setTitleRecurringLabel(titleRecurringLabel);
 				event.setLocationOwned(locationOwned);
 				event.setLocation(location);
 				event.setLocationAdditional(locationAdditional);
 				event.setDescription(description);
+				event.setAgenda(agenda);
 				event.setSpeaker(speaker);
 				event.setRegistrationLabel(registrationLabel);
 				event.setRegistrationUrl(registrationUrl);
@@ -395,7 +339,9 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 			statement.setLong(33, event.getParentId());
 			statement.setBoolean(34, recurrence.isVisibleOnListScreen());
 			statement.setBoolean(35, event.isPublished());
-			statement.setLong(36, event.getId());
+			statement.setString(36, event.getTitleRecurringLabel());
+			statement.setString(37, event.getAgenda());
+			statement.setLong(38, event.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -489,6 +435,8 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 			statement.setBoolean(30, recurrence.isSaturday());
 			statement.setBoolean(31, recurrence.isSunday());
 			statement.setBoolean(32, recurrence.isRecurringMonthly());
+//			statement.setString(33, event.getTitleRecurringLabel());
+//			statement.setString(34, event.getAgenda());
 			statement.setLong(33, event.getId());
 			statement.executeUpdate();
 		}
@@ -559,10 +507,12 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				java.sql.Time startTime = resultSet.getTime("event_start_time");
 				java.sql.Time endTime = resultSet.getTime("event_end_time");
 				String title = resultSet.getString("event_title");
+				String titleRecurringLabel = resultSet.getString("event_title_recurring_label");
 				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
 				String location = resultSet.getString("event_location");
 				String locationAdditional = resultSet.getString("event_location_additional_information");
 				String description = resultSet.getString("event_description");
+				String agenda = resultSet.getString("event_agenda");
 				String speaker = resultSet.getString("event_speaker");
 				String registrationLabel = resultSet.getString("event_registration_label");
 				String registrationUrl = resultSet.getString("event_registration_url");
@@ -581,10 +531,12 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
 				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
 				event.setTitle(title);
+				event.setTitleRecurringLabel(titleRecurringLabel);
 				event.setLocationOwned(locationOwned);
 				event.setLocation(location);
 				event.setLocationAdditional(locationAdditional);
 				event.setDescription(description);
+				event.setAgenda(agenda);
 				event.setSpeaker(speaker);
 				event.setRegistrationLabel(registrationLabel);
 				event.setRegistrationUrl(registrationUrl);
@@ -647,6 +599,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				String location = resultSet.getString("event_location");
 				String locationAdditional = resultSet.getString("event_location_additional_information");
 				String description = resultSet.getString("event_description");
+				String agenda = resultSet.getString("event_agenda");
 				String speaker = resultSet.getString("event_speaker");
 				String registrationLabel = resultSet.getString("event_registration_label");
 				String registrationUrl = resultSet.getString("event_registration_url");
@@ -670,6 +623,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				event.setLocation(location);
 				event.setLocationAdditional(locationAdditional);
 				event.setDescription(description);
+				event.setAgenda(agenda);
 				event.setSpeaker(speaker);
 				event.setRegistrationLabel(registrationLabel);
 				event.setRegistrationUrl(registrationUrl);
@@ -727,10 +681,12 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				java.sql.Time startTime = resultSet.getTime("event_start_time");
 				java.sql.Time endTime = resultSet.getTime("event_end_time");
 				String title = resultSet.getString("event_title");
+				String titleRecurringLabel = resultSet.getString("event_title_recurring_label");
 				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
 				String location = resultSet.getString("event_location");
 				String locationAdditional = resultSet.getString("event_location_additional_information");
 				String description = resultSet.getString("event_description");
+				String agenda = resultSet.getString("event_agenda");
 				String speaker = resultSet.getString("event_speaker");
 				String registrationLabel = resultSet.getString("event_registration_label");
 				String registrationUrl = resultSet.getString("event_registration_url");
@@ -784,10 +740,12 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
 				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
 				event.setTitle(title);
+				event.setTitleRecurringLabel(titleRecurringLabel);
 				event.setLocationOwned(locationOwned);
 				event.setLocation(location);
 				event.setLocationAdditional(locationAdditional);
 				event.setDescription(description);
+				event.setAgenda(agenda);
 				event.setSpeaker(speaker);
 				event.setRegistrationLabel(registrationLabel);
 				event.setRegistrationUrl(registrationUrl);
@@ -813,6 +771,46 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 		}
 
 		return events;
+	}
+
+	
+	@Override
+	public List<Long> getMatchedEventsForSearch(String keyword)
+	{
+		java.util.List<Long> eventIDs = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement("SELECT * FROM (SELECT event_id, event_title, event_description, event_location, to_tsvector(event_title) || to_tsvector(event_description) || to_tsvector(event_location) as document FROM calendar.events GROUP BY event_id) p_search WHERE p_search.document @@ to_tsquery(?)");
+			statement.setString(1, keyword);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				if(eventIDs == null)
+				{
+					eventIDs = new java.util.ArrayList<Long>();
+				}
+				long id = resultSet.getLong("event_id");
+				eventIDs.add(id);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return eventIDs;
 	}
 	
 }

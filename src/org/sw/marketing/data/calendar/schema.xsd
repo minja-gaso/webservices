@@ -36,10 +36,12 @@
 										<element name="startTime" type="time" />
 										<element name="endTime" type="time" />
 										<element name="title" type="string" />
+										<element name="titleRecurringLabel" type="string" />
 										<element name="locationOwned" type="boolean" />
 										<element name="location" type="string" />
 										<element name="locationAdditional" type="string" />
 										<element name="description" type="string" />
+										<element name="agenda" type="string" />
 										<element name="speaker" type="string" />
 										<element name="registrationLabel" type="string" />
 										<element name="registrationUrl" type="string" />
@@ -81,6 +83,16 @@
 										<element name="categoryId" type="long" />
 										<element name="parentId" type="long" />
 										<element name="fkId" type="long" />
+										<element name="search" minOccurs="0" maxOccurs="unbounded">												
+											<complexType>
+												<sequence>
+													<element name="id" type="long" />
+													<element name="query" type="string" />
+													<element name="category" type="string" />
+													<element name="fkCalendarId" type="long" />
+												</sequence>
+											</complexType>
+										</element>
 									</sequence>
 								</complexType>
 							</element>
