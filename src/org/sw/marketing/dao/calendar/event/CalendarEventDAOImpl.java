@@ -562,6 +562,92 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 
 		return events;
 	}
+	@Override
+	public List<Event> getCalendarEventsByCategory(long categoryID)
+	{
+		java.util.List<Event> events = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(CalendarSQL.GET_CALENDAR_EVENTS_BY_CATEGORY);
+			statement.setLong(1, categoryID);
+			resultSet = statement.executeQuery();
+
+			Event event = null;
+			while (resultSet.next())
+			{
+				if (events == null)
+				{
+					events = new java.util.ArrayList<Event>();
+				}
+				
+				long id = resultSet.getLong("event_id");
+				java.util.Date startDate = resultSet.getTimestamp("event_start_date");
+				java.util.Date endDate = resultSet.getTimestamp("event_end_date");
+				java.sql.Time startTime = resultSet.getTime("event_start_time");
+				java.sql.Time endTime = resultSet.getTime("event_end_time");
+				String title = resultSet.getString("event_title");
+				String titleRecurringLabel = resultSet.getString("event_title_recurring_label");
+				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
+				String location = resultSet.getString("event_location");
+				String locationAdditional = resultSet.getString("event_location_additional_information");
+				String description = resultSet.getString("event_description");
+				String agenda = resultSet.getString("event_agenda");
+				String speaker = resultSet.getString("event_speaker");
+				String registrationLabel = resultSet.getString("event_registration_label");
+				String registrationUrl = resultSet.getString("event_registration_url");
+				String contactName = resultSet.getString("event_contact_name");
+				String contactPhone = resultSet.getString("event_contact_phone");
+				String contactEmail = resultSet.getString("event_contact_email");
+				String cost = resultSet.getString("event_cost");
+				String fileName = resultSet.getString("event_image_file_name");
+				String fileDescription = resultSet.getString("event_image_file_description");
+				long parentId = resultSet.getLong("event_parent_id");
+
+				event = new Event();
+				event.setId(id);
+				event.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
+				event.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
+				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
+				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
+				event.setTitle(title);
+				event.setTitleRecurringLabel(titleRecurringLabel);
+				event.setLocationOwned(locationOwned);
+				event.setLocation(location);
+				event.setLocationAdditional(locationAdditional);
+				event.setDescription(description);
+				event.setAgenda(agenda);
+				event.setSpeaker(speaker);
+				event.setRegistrationLabel(registrationLabel);
+				event.setRegistrationUrl(registrationUrl);
+				event.setContactName(contactName);
+				event.setContactPhone(contactPhone);
+				event.setContactEmail(contactEmail);
+				event.setCost(cost);
+				event.setFileName(fileName);
+				event.setFileDescription(fileDescription);
+				event.setParentId(parentId);
+
+				events.add(event);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return events;
+	}
 
 	@Override
 	public List<Event> getCalendarEventsToolbox(long calendarID)
@@ -787,7 +873,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement("SELECT * FROM (SELECT event_id, event_title, event_description, event_location, to_tsvector(event_title) || to_tsvector(event_description) || to_tsvector(event_location) as document FROM calendar.events GROUP BY event_id) p_search WHERE p_search.document @@ to_tsquery(?)");
+			statement = connection.prepareStatement(CalendarSQL.GET_CALENDAR_EVENTS_BY_SEARCH);
 			statement.setString(1, keyword);
 			resultSet = statement.executeQuery();
 

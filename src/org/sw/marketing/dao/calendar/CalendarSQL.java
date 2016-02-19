@@ -9,8 +9,10 @@ public class CalendarSQL
 	public static final String GET_CALENDAR = "SELECT * FROM calendar.calendars WHERE calendar_id = ?";
 	public static final String GET_CALENDAR_BY_PRETTY_URL = "SELECT * FROM calendar.calendars WHERE calendar_pretty_url = ?";
 	public static final String GET_CALENDAR_EVENTS = "SELECT * FROM calendar.events WHERE event_end_date >= current_date AND fk_calendar_id = ? AND is_event_published = true AND (is_event_recurring_visible_on_list_screen = true OR (is_event_recurring_visible_on_list_screen = false AND event_parent_id = 0)) ORDER BY event_start_date ASC, event_start_time ASC";
+	public static final String GET_CALENDAR_EVENTS_BY_CATEGORY = "SELECT * FROM calendar.events WHERE event_end_date >= current_date AND fk_category_id = ? AND is_event_published = true AND (is_event_recurring_visible_on_list_screen = true OR (is_event_recurring_visible_on_list_screen = false AND event_parent_id = 0)) ORDER BY event_start_date ASC, event_start_time ASC";
 	public static final String GET_CALENDAR_EVENTS_TOOLBOX = "SELECT * FROM calendar.events WHERE event_end_date >= current_date AND fk_calendar_id = ? ORDER BY event_start_date ASC, event_start_time ASC";
 	public static final String GET_CALENDAR_RECURRING_EVENTS = "SELECT * FROM calendar.events WHERE event_end_date >= current_date AND event_parent_id = ? ORDER BY event_start_date ASC";
+	public static final String GET_CALENDAR_EVENTS_BY_SEARCH = "SELECT * FROM (SELECT event_id, event_end_date, event_title, event_description, event_location, to_tsvector(event_title) || to_tsvector(event_description) || to_tsvector(event_location) as document FROM calendar.events GROUP BY event_id ORDER BY event_start_date ASC, event_start_time ASC) p_search WHERE p_search.document @@ to_tsquery(?) AND event_end_date >= current_date";
 	public static final String GET_CALENDAR_EVENT = "SELECT * FROM calendar.events WHERE event_id = ?";
 	public static final String GET_CALENDAR_ROLES = "SELECT * FROM calendar.roles WHERE fk_calendar_id = ?";
 	public static final String GET_CALENDAR_ROLE_UNIQUE_CHECK = "SELECT * FROM calendar.roles WHERE role_type = ? AND role_email = ? AND fk_calendar_id = ?";

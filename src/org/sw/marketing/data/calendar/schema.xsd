@@ -83,16 +83,6 @@
 										<element name="categoryId" type="long" />
 										<element name="parentId" type="long" />
 										<element name="fkId" type="long" />
-										<element name="search" minOccurs="0" maxOccurs="unbounded">												
-											<complexType>
-												<sequence>
-													<element name="id" type="long" />
-													<element name="query" type="string" />
-													<element name="category" type="string" />
-													<element name="fkCalendarId" type="long" />
-												</sequence>
-											</complexType>
-										</element>
 									</sequence>
 								</complexType>
 							</element>
@@ -111,6 +101,16 @@
 									<sequence>
 										<element name="id" type="long" />
 										<element name="label" type="string" />
+										<element name="fkCalendarId" type="long" />
+									</sequence>
+								</complexType>
+							</element>
+							<element name="search">												
+								<complexType>
+									<sequence>
+										<element name="id" type="long" />
+										<element name="query" type="string" />
+										<element name="categoryId" type="long" />
 										<element name="fkCalendarId" type="long" />
 									</sequence>
 								</complexType>

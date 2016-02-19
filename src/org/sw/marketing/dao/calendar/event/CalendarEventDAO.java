@@ -14,6 +14,7 @@ public interface CalendarEventDAO
 	 */
 	public Event getCalendarEvent(long eventID);
 	public java.util.List<Event> getCalendarEvents(long calendarID);
+	public java.util.List<Event> getCalendarEventsByCategory(long categoryID);
 	public java.util.List<Event> getCalendarEventsToolbox(long calendarID);
 	public java.util.List<Event> getCalendarRecurringEvents(long calendarID);
 	
