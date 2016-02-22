@@ -4,7 +4,7 @@ public class CalendarSQL
 {
 	public static final String GET_USER_BY_EMAIL = "SELECT * FROM users WHERE user_email = ?";
 //	public static final String GET_CALENDARS = "SELECT * FROM calendar.calendars WHERE is_calendar_deleted = false";
-	public static final String GET_CALENDARS = "SELECT * FROM calendar.calendars LEFT JOIN calendar.roles ON role_email = ? AND fk_calendar_id = calendar_id WHERE role_type = 'admin' or fk_user_id = ?  AND is_calendar_deleted = false";
+	public static final String GET_CALENDARS = "SELECT * FROM calendar.calendars LEFT JOIN calendar.roles ON role_email = ? AND fk_calendar_id = calendar_id WHERE (role_type = 'admin' or fk_user_id = ?) AND is_calendar_deleted = false";
 	public static final String GET_CALENDARS_MANAGE = "SELECT DISTINCT calendar_id, calendar_creation_timestamp, calendar_type, calendar_title, calendar_pretty_url, calendar_skin_url, calendar_skin_selector, calendar_screen_public_calendar_intro, calendar_screen_public_calendar_closing, is_calendar_deleted, fk_user_id FROM calendar.calendars LEFT JOIN calendar.roles ON role_email = ? AND fk_calendar_id = calendar_id WHERE role_type = 'admin' OR role_type = 'manager' or fk_user_id = ? AND is_calendar_deleted = false";
 	public static final String GET_CALENDAR = "SELECT * FROM calendar.calendars WHERE calendar_id = ?";
 	public static final String GET_CALENDAR_BY_PRETTY_URL = "SELECT * FROM calendar.calendars WHERE calendar_pretty_url = ?";
