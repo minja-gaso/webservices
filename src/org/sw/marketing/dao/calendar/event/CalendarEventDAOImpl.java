@@ -1,5 +1,6 @@
 package org.sw.marketing.dao.calendar.event;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.calendar.CalendarSQL;
 import org.sw.marketing.data.calendar.Data.Calendar.Event;
+import org.sw.marketing.data.calendar.Data.Calendar.Search;
 import org.sw.marketing.data.calendar.Data.Calendar.Event.EventRecurrence;
 import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
@@ -153,94 +155,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 
 			while (resultSet.next())
 			{
-				long id = resultSet.getLong("event_id");
-				boolean published = resultSet.getBoolean("is_event_published");
-				java.util.Date startDate = resultSet.getTimestamp("event_start_date");
-				java.util.Date endDate = resultSet.getTimestamp("event_end_date");
-				java.sql.Time startTime = resultSet.getTime("event_start_time");
-				java.sql.Time endTime = resultSet.getTime("event_end_time");
-				String title = resultSet.getString("event_title");
-				String titleRecurringLabel = resultSet.getString("event_title_recurring_label");
-				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
-				String location = resultSet.getString("event_location");
-				String locationAdditional = resultSet.getString("event_location_additional_information");
-				String description = resultSet.getString("event_description");
-				String agenda = resultSet.getString("event_agenda");
-				String speaker = resultSet.getString("event_speaker");
-				String registrationLabel = resultSet.getString("event_registration_label");
-				String registrationUrl = resultSet.getString("event_registration_url");
-				String contactName = resultSet.getString("event_contact_name");
-				String contactPhone = resultSet.getString("event_contact_phone");
-				String contactEmail = resultSet.getString("event_contact_email");
-				String cost = resultSet.getString("event_cost");
-				String fileName = resultSet.getString("event_image_file_name");
-				String fileDescription = resultSet.getString("event_image_file_description");
-				long parentId = resultSet.getLong("event_parent_id");
-				long categoryId = resultSet.getLong("fk_category_id");
-				long calendarId = resultSet.getLong("fk_calendar_id");
-				
-				/*
-				 * recurring events object
-				 */
-				boolean recurring = resultSet.getBoolean("is_event_recurring");
-				boolean recurringVisibleOnListScreen = resultSet.getBoolean("is_event_recurring_visible_on_list_screen");
-				boolean recurringMonthly = resultSet.getBoolean("is_event_recurring_monthly");
-				String type = resultSet.getString("event_recurring_type");
-				int limit = resultSet.getInt("event_recurring_limit");
-				int interval = resultSet.getInt("event_recurring_interval");
-				String intervalType = resultSet.getString("event_recurring_interval_type");
-				boolean monday = resultSet.getBoolean("is_event_recurring_monday");
-				boolean tuesday = resultSet.getBoolean("is_event_recurring_tuesday");
-				boolean wednesday = resultSet.getBoolean("is_event_recurring_wednesday");
-				boolean thursday = resultSet.getBoolean("is_event_recurring_thursday");
-				boolean friday = resultSet.getBoolean("is_event_recurring_friday");
-				boolean saturday = resultSet.getBoolean("is_event_recurring_saturday");
-				boolean sunday = resultSet.getBoolean("is_event_recurring_sunday");
-				boolean exact = resultSet.getBoolean("is_event_recurring_day_exact");
-				EventRecurrence recurrence = new EventRecurrence();
-				recurrence.setRecurring(recurring);
-				recurrence.setVisibleOnListScreen(recurringVisibleOnListScreen);
-				recurrence.setRecurringMonthly(recurringMonthly);
-				recurrence.setType(type);
-				recurrence.setLimit(limit);
-				recurrence.setInterval(interval);
-				recurrence.setIntervalType(intervalType);
-				recurrence.setMonday(monday);
-				recurrence.setTuesday(tuesday);
-				recurrence.setWednesday(wednesday);
-				recurrence.setThursday(thursday);
-				recurrence.setFriday(friday);
-				recurrence.setSaturday(saturday);
-				recurrence.setSunday(sunday);
-				recurrence.setExact(exact);
-
-				event = new Event();
-				event.setId(id);
-				event.setPublished(published);
-				event.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
-				event.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
-				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
-				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
-				event.setTitle(title);
-				event.setTitleRecurringLabel(titleRecurringLabel);
-				event.setLocationOwned(locationOwned);
-				event.setLocation(location);
-				event.setLocationAdditional(locationAdditional);
-				event.setDescription(description);
-				event.setAgenda(agenda);
-				event.setSpeaker(speaker);
-				event.setRegistrationLabel(registrationLabel);
-				event.setRegistrationUrl(registrationUrl);
-				event.setContactName(contactName);
-				event.setContactPhone(contactPhone);
-				event.setContactEmail(contactEmail);
-				event.setCost(cost);
-				event.setFileName(fileName);
-				event.setFileDescription(fileDescription);
-				event.setParentId(parentId);
-				event.setCategoryId(categoryId);
-				event.setEventRecurrence(recurrence);
-				event.setFkId(calendarId);
+				event = getEvent(resultSet);
 			}
 		}
 		catch (SQLException e)
@@ -501,6 +416,48 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 					events = new java.util.ArrayList<Event>();
 				}
 				
+				event = getEvent(resultSet);
+
+				events.add(event);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return events;
+	}
+	@Override
+	public List<Event> getCalendarEventsByCategory(Search search)
+	{
+		java.util.List<Event> events = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(CalendarSQL.GET_CALENDAR_EVENTS_BY_CATEGORY);
+			statement.setLong(1, search.getCategoryId());
+			statement.setLong(2, search.getFkCalendarId());
+			resultSet = statement.executeQuery();
+
+			Event event = null;
+			while (resultSet.next())
+			{
+				if (events == null)
+				{
+					events = new java.util.ArrayList<Event>();
+				}
+				
 				long id = resultSet.getLong("event_id");
 				java.util.Date startDate = resultSet.getTimestamp("event_start_date");
 				java.util.Date endDate = resultSet.getTimestamp("event_end_date");
@@ -562,8 +519,9 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 
 		return events;
 	}
+	
 	@Override
-	public List<Event> getCalendarEventsByCategory(long categoryID)
+	public List<Event> getCalendarEventsByTag(Search search)
 	{
 		java.util.List<Event> events = null;
 		
@@ -576,7 +534,8 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(CalendarSQL.GET_CALENDAR_EVENTS_BY_CATEGORY);
-			statement.setLong(1, categoryID);
+			statement.setLong(1, search.getTagId());
+			statement.setLong(2, search.getFkCalendarId());
 			resultSet = statement.executeQuery();
 
 			Event event = null;
@@ -674,53 +633,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 					events = new java.util.ArrayList<Event>();
 				}
 				
-				long id = resultSet.getLong("event_id");
-				boolean published = resultSet.getBoolean("is_event_published");
-				java.util.Date startDate = resultSet.getTimestamp("event_start_date");
-				java.util.Date endDate = resultSet.getTimestamp("event_end_date");
-				java.sql.Time startTime = resultSet.getTime("event_start_time");
-				java.sql.Time endTime = resultSet.getTime("event_end_time");
-				String title = resultSet.getString("event_title");
-				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
-				String location = resultSet.getString("event_location");
-				String locationAdditional = resultSet.getString("event_location_additional_information");
-				String description = resultSet.getString("event_description");
-				String agenda = resultSet.getString("event_agenda");
-				String speaker = resultSet.getString("event_speaker");
-				String registrationLabel = resultSet.getString("event_registration_label");
-				String registrationUrl = resultSet.getString("event_registration_url");
-				String contactName = resultSet.getString("event_contact_name");
-				String contactPhone = resultSet.getString("event_contact_phone");
-				String contactEmail = resultSet.getString("event_contact_email");
-				String cost = resultSet.getString("event_cost");
-				String fileName = resultSet.getString("event_image_file_name");
-				String fileDescription = resultSet.getString("event_image_file_description");
-				long parentId = resultSet.getLong("event_parent_id");
-
-				event = new Event();
-				event.setId(id);
-				event.setPublished(published);
-				event.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
-				event.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
-				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
-				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
-				event.setTitle(title);
-				event.setLocationOwned(locationOwned);
-				event.setLocation(location);
-				event.setLocationAdditional(locationAdditional);
-				event.setDescription(description);
-				event.setAgenda(agenda);
-				event.setSpeaker(speaker);
-				event.setRegistrationLabel(registrationLabel);
-				event.setRegistrationUrl(registrationUrl);
-				event.setContactName(contactName);
-				event.setContactPhone(contactPhone);
-				event.setContactEmail(contactEmail);
-				event.setCost(cost);
-				event.setFileName(fileName);
-				event.setFileDescription(fileDescription);
-				event.setParentId(parentId);
-
+				event = getEvent(resultSet);
 				events.add(event);
 			}
 		}
@@ -761,89 +674,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 					events = new java.util.ArrayList<Event>();
 				}
 				
-				long id = resultSet.getLong("event_id");
-				java.util.Date startDate = resultSet.getTimestamp("event_start_date");
-				java.util.Date endDate = resultSet.getTimestamp("event_end_date");
-				java.sql.Time startTime = resultSet.getTime("event_start_time");
-				java.sql.Time endTime = resultSet.getTime("event_end_time");
-				String title = resultSet.getString("event_title");
-				String titleRecurringLabel = resultSet.getString("event_title_recurring_label");
-				boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
-				String location = resultSet.getString("event_location");
-				String locationAdditional = resultSet.getString("event_location_additional_information");
-				String description = resultSet.getString("event_description");
-				String agenda = resultSet.getString("event_agenda");
-				String speaker = resultSet.getString("event_speaker");
-				String registrationLabel = resultSet.getString("event_registration_label");
-				String registrationUrl = resultSet.getString("event_registration_url");
-				String contactName = resultSet.getString("event_contact_name");
-				String contactPhone = resultSet.getString("event_contact_phone");
-				String contactEmail = resultSet.getString("event_contact_email");
-				String cost = resultSet.getString("event_cost");
-				String fileName = resultSet.getString("event_image_file_name");
-				String fileDescription = resultSet.getString("event_image_file_description");
-				long parentId = resultSet.getLong("event_parent_id");
-				
-				/*
-				 * recurring events object
-				 */
-				boolean recurring = resultSet.getBoolean("is_event_recurring");
-				boolean recurringVisibleOnListScreen = resultSet.getBoolean("is_event_recurring_visible_on_list_screen");
-				boolean recurringMonthly = resultSet.getBoolean("is_event_recurring_monthly");
-				String type = resultSet.getString("event_recurring_type");
-				int limit = resultSet.getInt("event_recurring_limit");
-				int interval = resultSet.getInt("event_recurring_interval");
-				String intervalType = resultSet.getString("event_recurring_interval_type");
-				boolean monday = resultSet.getBoolean("is_event_recurring_monday");
-				boolean tuesday = resultSet.getBoolean("is_event_recurring_tuesday");
-				boolean wednesday = resultSet.getBoolean("is_event_recurring_wednesday");
-				boolean thursday = resultSet.getBoolean("is_event_recurring_thursday");
-				boolean friday = resultSet.getBoolean("is_event_recurring_friday");
-				boolean saturday = resultSet.getBoolean("is_event_recurring_saturday");
-				boolean sunday = resultSet.getBoolean("is_event_recurring_sunday");
-				boolean exact = resultSet.getBoolean("is_event_recurring_day_exact");
-				EventRecurrence recurrence = new EventRecurrence();
-				recurrence.setRecurring(recurring);
-				recurrence.setVisibleOnListScreen(recurringVisibleOnListScreen);
-				recurrence.setRecurringMonthly(recurringMonthly);
-				recurrence.setType(type);
-				recurrence.setLimit(limit);
-				recurrence.setInterval(interval);
-				recurrence.setIntervalType(intervalType);
-				recurrence.setMonday(monday);
-				recurrence.setTuesday(tuesday);
-				recurrence.setWednesday(wednesday);
-				recurrence.setThursday(thursday);
-				recurrence.setFriday(friday);
-				recurrence.setSaturday(saturday);
-				recurrence.setSunday(sunday);
-				recurrence.setExact(exact);
-
-				event = new Event();
-				event.setId(id);
-				event.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
-				event.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
-				event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
-				event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
-				event.setTitle(title);
-				event.setTitleRecurringLabel(titleRecurringLabel);
-				event.setLocationOwned(locationOwned);
-				event.setLocation(location);
-				event.setLocationAdditional(locationAdditional);
-				event.setDescription(description);
-				event.setAgenda(agenda);
-				event.setSpeaker(speaker);
-				event.setRegistrationLabel(registrationLabel);
-				event.setRegistrationUrl(registrationUrl);
-				event.setContactName(contactName);
-				event.setContactPhone(contactPhone);
-				event.setContactEmail(contactEmail);
-				event.setCost(cost);
-				event.setFileName(fileName);
-				event.setFileDescription(fileDescription);
-				event.setParentId(parentId);
-				event.setEventRecurrence(recurrence);
-
+				event = getEvent(resultSet);
 				events.add(event);
 			}
 		}
@@ -859,7 +690,7 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 		return events;
 	}
 
-	
+
 	@Override
 	public List<Long> getMatchedEventsForSearch(String keyword)
 	{
@@ -898,5 +729,138 @@ public class CalendarEventDAOImpl extends BaseDAO implements CalendarEventDAO
 
 		return eventIDs;
 	}
+
+	@Override
+	public List<Long> getMatchedEventsForTag(Search search)
+	{
+		java.util.List<Long> eventIDs = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(CalendarSQL.GET_CALENDAR_EVENTS_BY_TAG);
+			statement.setLong(1, search.getTagId());
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				if(eventIDs == null)
+				{
+					eventIDs = new java.util.ArrayList<Long>();
+				}
+				long id = resultSet.getLong("fk_event_id");
+				eventIDs.add(id);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return eventIDs;
+	}
 	
+	
+	public Event getEvent(ResultSet resultSet) throws SQLException
+	{	
+		long id = resultSet.getLong("event_id");
+		boolean published = resultSet.getBoolean("is_event_published");
+		java.util.Date startDate = resultSet.getTimestamp("event_start_date");
+		java.util.Date endDate = resultSet.getTimestamp("event_end_date");
+		java.sql.Time startTime = resultSet.getTime("event_start_time");
+		java.sql.Time endTime = resultSet.getTime("event_end_time");
+		String title = resultSet.getString("event_title");
+		String titleRecurringLabel = resultSet.getString("event_title_recurring_label");
+		boolean locationOwned = resultSet.getBoolean("is_event_location_owned");
+		String location = resultSet.getString("event_location");
+		String locationAdditional = resultSet.getString("event_location_additional_information");
+		String description = resultSet.getString("event_description");
+		String agenda = resultSet.getString("event_agenda");
+		String speaker = resultSet.getString("event_speaker");
+		String registrationLabel = resultSet.getString("event_registration_label");
+		String registrationUrl = resultSet.getString("event_registration_url");
+		String contactName = resultSet.getString("event_contact_name");
+		String contactPhone = resultSet.getString("event_contact_phone");
+		String contactEmail = resultSet.getString("event_contact_email");
+		String cost = resultSet.getString("event_cost");
+		String fileName = resultSet.getString("event_image_file_name");
+		String fileDescription = resultSet.getString("event_image_file_description");
+		long parentId = resultSet.getLong("event_parent_id");
+		long categoryId = resultSet.getLong("fk_category_id");
+		long calendarId = resultSet.getLong("fk_calendar_id");
+		
+		/*
+		 * recurring events object
+		 */
+		boolean recurring = resultSet.getBoolean("is_event_recurring");
+		boolean recurringVisibleOnListScreen = resultSet.getBoolean("is_event_recurring_visible_on_list_screen");
+		boolean recurringMonthly = resultSet.getBoolean("is_event_recurring_monthly");
+		String type = resultSet.getString("event_recurring_type");
+		int limit = resultSet.getInt("event_recurring_limit");
+		int interval = resultSet.getInt("event_recurring_interval");
+		String intervalType = resultSet.getString("event_recurring_interval_type");
+		boolean monday = resultSet.getBoolean("is_event_recurring_monday");
+		boolean tuesday = resultSet.getBoolean("is_event_recurring_tuesday");
+		boolean wednesday = resultSet.getBoolean("is_event_recurring_wednesday");
+		boolean thursday = resultSet.getBoolean("is_event_recurring_thursday");
+		boolean friday = resultSet.getBoolean("is_event_recurring_friday");
+		boolean saturday = resultSet.getBoolean("is_event_recurring_saturday");
+		boolean sunday = resultSet.getBoolean("is_event_recurring_sunday");
+		boolean exact = resultSet.getBoolean("is_event_recurring_day_exact");
+		EventRecurrence recurrence = new EventRecurrence();
+		recurrence.setRecurring(recurring);
+		recurrence.setVisibleOnListScreen(recurringVisibleOnListScreen);
+		recurrence.setRecurringMonthly(recurringMonthly);
+		recurrence.setType(type);
+		recurrence.setLimit(limit);
+		recurrence.setInterval(interval);
+		recurrence.setIntervalType(intervalType);
+		recurrence.setMonday(monday);
+		recurrence.setTuesday(tuesday);
+		recurrence.setWednesday(wednesday);
+		recurrence.setThursday(thursday);
+		recurrence.setFriday(friday);
+		recurrence.setSaturday(saturday);
+		recurrence.setSunday(sunday);
+		recurrence.setExact(exact);
+
+		Event event = new Event();
+		event.setId(id);
+		event.setPublished(published);
+		event.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
+		event.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
+		event.setStartTime(DateToXmlGregorianCalendar.convert(startTime, false));
+		event.setEndTime(DateToXmlGregorianCalendar.convert(endTime, false));
+		event.setTitle(title);
+		event.setTitleRecurringLabel(titleRecurringLabel);
+		event.setLocationOwned(locationOwned);
+		event.setLocation(location);
+		event.setLocationAdditional(locationAdditional);
+		event.setDescription(description);
+		event.setAgenda(agenda);
+		event.setSpeaker(speaker);
+		event.setRegistrationLabel(registrationLabel);
+		event.setRegistrationUrl(registrationUrl);
+		event.setContactName(contactName);
+		event.setContactPhone(contactPhone);
+		event.setContactEmail(contactEmail);
+		event.setCost(cost);
+		event.setFileName(fileName);
+		event.setFileDescription(fileDescription);
+		event.setParentId(parentId);
+		event.setCategoryId(categoryId);
+		event.setFkId(calendarId);
+		event.setEventRecurrence(recurrence);
+		
+		return event;
+	}
 }

@@ -93,7 +93,7 @@ public class SkinReader
 		try
 		{
 			urlInputStream = new URL(urlStr).openStream();
-			document = Jsoup.parse(urlInputStream, "CP1252", urlStr);
+			document = Jsoup.parse(urlInputStream, "ISO-8859-1", urlStr);
 			String url = document.baseUri();
 			boolean isHttp = false;
 			boolean isHttps = false;
@@ -132,7 +132,10 @@ public class SkinReader
 			}
 			for(Element srcElement : document.select("button, img, input, script"))
 			{
-				srcElement.attr("src", srcElement.absUrl("src"));
+				if(srcElement.attr("src") != null && srcElement.absUrl("src").length() > 0)
+				{
+					srcElement.attr("src", srcElement.absUrl("src"));
+				}
 			}
 			for(Element style : document.select("style"))
 			{
@@ -144,6 +147,12 @@ public class SkinReader
 			if(document.select("title").size() > 0)
 			{
 				document.select("title").first().html("{TITLE}");
+			}
+			
+			if(document.select("head").size() > 0)
+			{
+				String headContent = document.select("head").first().html();
+				document.select("head").first().html(headContent + "{CSS}");
 			}
 			
 			document.select(selector).html("{CONTENT}");

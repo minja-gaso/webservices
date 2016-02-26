@@ -158,6 +158,7 @@ public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 				boolean deleted = resultSet.getBoolean("is_calendar_deleted");
 				String skinUrl = resultSet.getString("calendar_skin_url");
 				String skinSelector = resultSet.getString("calendar_skin_selector");
+				String skinCss = resultSet.getString("calendar_css");
 
 				calendar = new Calendar();
 				calendar.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
@@ -168,6 +169,7 @@ public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 				calendar.setDeleted(deleted);
 				calendar.setSkinUrl(skinUrl);
 				calendar.setSkinSelector(skinSelector);
+				calendar.setSkinCssOverrides(skinCss);
 			}
 		}
 		catch (SQLException e)
@@ -208,6 +210,7 @@ public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 				boolean deleted = resultSet.getBoolean("is_calendar_deleted");
 				String skinUrl = resultSet.getString("calendar_skin_url");
 				String skinSelector = resultSet.getString("calendar_skin_selector");
+				String skinCss = resultSet.getString("calendar_css");
 
 				calendar = new Calendar();
 				calendar.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
@@ -218,6 +221,7 @@ public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 				calendar.setDeleted(deleted);
 				calendar.setSkinUrl(skinUrl);
 				calendar.setSkinSelector(skinSelector);
+				calendar.setSkinCssOverrides(skinCss);
 			}
 		}
 		catch (SQLException e)
@@ -283,7 +287,8 @@ public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 			statement.setString(2, calendar.getPrettyUrl());
 			statement.setString(3, calendar.getSkinUrl());
 			statement.setString(4, calendar.getSkinSelector());
-			statement.setLong(5, calendar.getId());
+			statement.setString(5, calendar.getSkinCssOverrides());
+			statement.setLong(6, calendar.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)

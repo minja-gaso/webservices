@@ -410,6 +410,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 				int maxCharacterLimit = resultSet.getInt("question_max_character_limit");
 				int maxWordLimit = resultSet.getInt("question_max_word_limit");
 				boolean required = resultSet.getBoolean("is_question_required");
+				String header = resultSet.getString("question_header");
 
 				question = new Question();
 				question.setId(id);
@@ -422,6 +423,7 @@ public class QuestionDAOImpl extends BaseDAO implements QuestionDAO
 				question.setMaxCharacterLimit(maxCharacterLimit);
 				question.setMaxWordLimit(maxWordLimit);
 				question.setRequired(required);
+				question.setHeader(header);
 			}
 		}
 		catch (SQLException e)

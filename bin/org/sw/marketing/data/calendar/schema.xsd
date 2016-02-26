@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
 		elementFormDefault="qualified">
+	<include schemaLocation="../skin/schema.xsd" />
 	<element name="data">
 		<complexType>
 			<sequence>
@@ -19,6 +20,7 @@
 				<element name="calendar" minOccurs="0" maxOccurs="unbounded">					
 					<complexType>
 						<sequence>
+							<element name="skin" type="skin" />
 							<element name="id" type="long" />
 							<element name="creationTimestamp" type="date" />
 							<element name="type" type="string" />
@@ -26,6 +28,7 @@
 							<element name="prettyUrl" type="string" />
 							<element name="skinUrl" type="string" />
 							<element name="skinSelector" type="string" />
+							<element name="skinCssOverrides" type="string" />
 							<element name="event" minOccurs="0" maxOccurs="unbounded">											
 								<complexType>
 									<sequence>
@@ -111,7 +114,10 @@
 										<element name="id" type="long" />
 										<element name="query" type="string" />
 										<element name="categoryId" type="long" />
+										<element name="tagId" type="long" />
+										<element name="tagName" type="string" />
 										<element name="fkCalendarId" type="long" />
+										<element name="fkEventId" type="long" />
 									</sequence>
 								</complexType>
 							</element>

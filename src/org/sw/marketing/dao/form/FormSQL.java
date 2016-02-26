@@ -15,7 +15,7 @@ public class FormSQL
 	public static final String INSERT_ANSWER_TO_FORM = "INSERT INTO form.form_answers (answer_label, answer_value, fk_form_id) VALUES (?, ?, ?)";	
 	public static final String INSERT_SUBMISSION = "INSERT INTO form.submissions (fk_form_id) VALUES (?)";
 	public static final String INSERT_SUBMISSION_ANSWER = "INSERT INTO form.submission_answers (sub_answer_value, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?)";
-	public static final String INSERT_SUBMISSION_TEMP = "INSERT INTO form.temp_submissions (fk_form_id, session_id) VALUES (?, ?)";
+	public static final String INSERT_SUBMISSION_TEMP = "INSERT INTO form.temp_submissions (fk_form_id, session_id, ip_address) VALUES (?, ?, ?::inet)";
 	public static final String INSERT_SUBMISSION_TEMP_ANSWER = "INSERT INTO form.temp_submission_answers (sub_answer_value, sub_page, is_sub_answer_multiple_choice, fk_question_id, fk_submission_id) VALUES (?, ?, ?, ?, ?)";
 	public static final String INSERT_SCORE = "INSERT INTO form.form_scores (fk_form_id) VALUES (?)";	
 	
@@ -38,11 +38,11 @@ public class FormSQL
 	public static final String GET_SUBMISSION_TEMP = "SELECT * FROM form.temp_submissions WHERE fk_form_id = ? AND session_id = ?";
 	public static final String GET_SUBMISSIONS = "SELECT * FROM form.submissions WHERE fk_form_id = ?";
 	public static final String GET_SUBMISSIONS_FROM_START_TO_END_DATE = "SELECT * FROM form.submissions WHERE fk_form_id = ? AND submission_timestamp::date >= ? AND submission_timestamp::date <= ?";
-	public static final String GET_SUBMISSION_ANSWERS = "SELECT * FROM form.submission_answers INNER JOIN questions ON submission_answers.fk_question_id = questions.question_id WHERE submission_answers.fk_submission_id = ?";
+	public static final String GET_SUBMISSION_ANSWERS = "SELECT * FROM form.submission_answers INNER JOIN form.questions ON submission_answers.fk_question_id = questions.question_id WHERE submission_answers.fk_submission_id = ?";
 	public static final String GET_SUBMISSION_ANSWER = "SELECT * FROM form.submission_answers WHERE fk_submission_id = ? AND fk_question_id = ?";
 	public static final String GET_SUBMISSION_ANSWER_BY_VALUE = "SELECT * FROM form.submission_answers WHERE fk_submission_id = ? AND sub_answer_value = ?";
-	public static final String GET_SUBMISSION_TEMP_ANSWERS_BY_PAGE = "SELECT * FROM form.temp_submission_answers INNER JOIN questions ON temp_submission_answers.fk_question_id = questions.question_id WHERE temp_submission_answers.fk_submission_id = ? AND sub_page = ?";
-	public static final String GET_SUBMISSION_TEMP_ANSWERS = "SELECT * FROM form.temp_submission_answers INNER JOIN questions ON temp_submission_answers.fk_question_id = questions.question_id WHERE temp_submission_answers.fk_submission_id = ?";
+	public static final String GET_SUBMISSION_TEMP_ANSWERS_BY_PAGE = "SELECT * FROM form.temp_submission_answers INNER JOIN form.questions ON temp_submission_answers.fk_question_id = questions.question_id WHERE temp_submission_answers.fk_submission_id = ? AND sub_page = ?";
+	public static final String GET_SUBMISSION_TEMP_ANSWERS = "SELECT * FROM form.temp_submission_answers INNER JOIN form.questions ON temp_submission_answers.fk_question_id = questions.question_id WHERE temp_submission_answers.fk_submission_id = ?";
 	public static final String GET_SCORE = "SELECT * FROM form.form_scores WHERE score_id = ?";
 	public static final String GET_SCORES = "SELECT * FROM form.form_scores WHERE fk_form_id = ? ORDER BY score_range_begin ASC, score_range_end ASC";
 	
@@ -78,8 +78,8 @@ public class FormSQL
 	/*
 	 * utility statements
 	 */
-	public static final String GET_NEXT_NUMBER = "SELECT form.question_number FROM questions WHERE fk_form_id = ? ORDER BY question_number DESC LIMIT 1";
-	public static final String GET_LATEST_PAGE = "SELECT form.question_page FROM questions WHERE fk_form_id = ? ORDER BY question_page DESC LIMIT 1";
+	public static final String GET_NEXT_NUMBER = "SELECT question_number FROM form.questions WHERE fk_form_id = ? ORDER BY question_number DESC LIMIT 1";
+	public static final String GET_LATEST_PAGE = "SELECT question_page FROM form.questions WHERE fk_form_id = ? ORDER BY question_page DESC LIMIT 1";
 	public static final String GET_MOST_RECENT_QUESTION_NUMBER = "SELECT COALESCE(MAX(question_number), 0) AS most_recent_question_number FROM form.questions WHERE fk_form_id = ?";
 	public static final String GET_QUESTION_COUNT_FOR_PAGE = "SELECT count(*) AS question_count_for_page FROM form.questions WHERE question_page = ?";
 	public static final String MOVE_DOWN_QUESTION = "UPDATE form.questions SET question_number = question_number + 1 WHERE question_id = ?";

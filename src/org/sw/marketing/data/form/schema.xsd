@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" 
-		elementFormDefault="qualified">
+<schema 
+	targetNamespace="http://sample/namespace" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="unqualified" 
+    attributeFormDefault="unqualified"
+    version="1.0"> 
+	<include schemaLocation="../skin/schema.xsd" />
 	<element name="data">
 		<complexType>
 			<sequence>
+				<element name="skin" type="namespace:skinType" />
 				<element name="environment">
 					<complexType>
 						<sequence>

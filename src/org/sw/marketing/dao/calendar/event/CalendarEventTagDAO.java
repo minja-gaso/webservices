@@ -4,7 +4,7 @@ import org.sw.marketing.data.calendar.Data.Calendar.Event.Tag;
 
 public interface CalendarEventTagDAO
 {
-	public void addTag(String tag, long eventID);
+	public void addTag(String tag, long eventID, long calendarID);
 	
 	public void deleteTags(long eventID);
 	

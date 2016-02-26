@@ -10,7 +10,7 @@ import org.sw.marketing.data.calendar.Data.Calendar.Event.Tag;
 public class CalendarEventTagDAOImpl extends BaseDAO implements CalendarEventTagDAO
 {
 	@Override
-	public void addTag(String tag, long eventID)
+	public void addTag(String tag, long eventID, long calendarID)
 	{		
 		DAO dao = new BaseDAO();
 		java.sql.Connection connection = null;
@@ -20,9 +20,10 @@ public class CalendarEventTagDAOImpl extends BaseDAO implements CalendarEventTag
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement("INSERT INTO calendar.event_tags (event_tag_name, fk_event_id) VALUES (?, ?)");
+			statement = connection.prepareStatement("INSERT INTO calendar.event_tags (event_tag_name, fk_event_id, fk_calendar_id) VALUES (?, ?, ?)");
 			statement.setString(1, tag);
 			statement.setLong(2, eventID);
+			statement.setLong(3, calendarID);
 			statement.executeUpdate();
 		}
 		catch (SQLException e)

@@ -1,6 +1,7 @@
 package org.sw.marketing.dao.calendar.event;
 
 import org.sw.marketing.data.calendar.Data.Calendar.Event;
+import org.sw.marketing.data.calendar.Data.Calendar.Search;
 
 public interface CalendarEventDAO
 {
@@ -14,7 +15,8 @@ public interface CalendarEventDAO
 	 */
 	public Event getCalendarEvent(long eventID);
 	public java.util.List<Event> getCalendarEvents(long calendarID);
-	public java.util.List<Event> getCalendarEventsByCategory(long categoryID);
+	public java.util.List<Event> getCalendarEventsByCategory(Search search);
+	public java.util.List<Event> getCalendarEventsByTag(Search search);
 	public java.util.List<Event> getCalendarEventsToolbox(long calendarID);
 	public java.util.List<Event> getCalendarRecurringEvents(long calendarID);
 	
@@ -35,6 +37,7 @@ public interface CalendarEventDAO
 	 * other
 	 */
 	public long copyEvent(Event event);	
-	
+
 	public java.util.List<Long> getMatchedEventsForSearch(String keyword);
+	public java.util.List<Long> getMatchedEventsForTag(Search search);
 }

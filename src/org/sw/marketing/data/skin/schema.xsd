@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+	targetNamespace="http://sample/namespace" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="unqualified" 
+    attributeFormDefault="unqualified"
+    version="1.0"> 
+    
+    <complexType name="skinType"> 
+        <sequence maxOccurs="unbounded">
+            <element name="id" type="integer" nillable="false"/>
+            <element name="name" type="string"/>
+        </sequence> 
+    </complexType>
+</schema>
