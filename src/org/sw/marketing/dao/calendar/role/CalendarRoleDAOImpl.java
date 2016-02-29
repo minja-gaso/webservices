@@ -6,7 +6,7 @@ import java.util.List;
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.calendar.CalendarSQL;
-import org.sw.marketing.data.calendar.Data.Calendar.Role;
+import org.sw.marketing.data.calendar.Role;
 
 public class CalendarRoleDAOImpl extends BaseDAO implements CalendarRoleDAO
 {
@@ -24,7 +24,7 @@ public class CalendarRoleDAOImpl extends BaseDAO implements CalendarRoleDAO
 			statement = connection.prepareStatement(CalendarSQL.INSERT_ROLE);
 			statement.setString(1, role.getType());
 			statement.setString(2, role.getEmail());
-			statement.setLong(3, role.getFkCalendarId());
+			statement.setLong(3, role.getFkId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -78,7 +78,7 @@ public class CalendarRoleDAOImpl extends BaseDAO implements CalendarRoleDAO
 			statement = connection.prepareStatement(CalendarSQL.GET_CALENDAR_ROLE_UNIQUE_CHECK);
 			statement.setString(1, role.getType());
 			statement.setString(2, role.getEmail());
-			statement.setLong(3, role.getFkCalendarId());
+			statement.setLong(3, role.getFkId());
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next())
@@ -92,7 +92,7 @@ public class CalendarRoleDAOImpl extends BaseDAO implements CalendarRoleDAO
 				uniqueRole.setId(id);
 				uniqueRole.setType(type);
 				uniqueRole.setEmail(email);
-				uniqueRole.setFkCalendarId(fkCalendarId);
+				uniqueRole.setFkId(fkCalendarId);
 			}
 		}
 		catch (SQLException e)
@@ -141,7 +141,7 @@ public class CalendarRoleDAOImpl extends BaseDAO implements CalendarRoleDAO
 				role.setId(id);
 				role.setType(type);
 				role.setEmail(email);
-				role.setFkCalendarId(fkCalendarId);
+				role.setFkId(fkCalendarId);
 				
 				roles.add(role);
 			}

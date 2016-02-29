@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="environment">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="componentId" type="xs:long" />
+				<xs:element name="screenName" type="xs:string" />
+				<xs:element name="serverName" type="xs:string" />
+				<xs:element name="assets" type="xs:string" />
+				<xs:element name="contactName" type="xs:string" />
+				<xs:element name="contactEmail" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

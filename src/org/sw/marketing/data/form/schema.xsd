@@ -1,160 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema 
-	targetNamespace="http://sample/namespace" 
-	xmlns="http://www.w3.org/2001/XMLSchema" 
-    elementFormDefault="unqualified" 
-    attributeFormDefault="unqualified"
-    version="1.0"> 
-	<include schemaLocation="../skin/schema.xsd" />
-	<element name="data">
-		<complexType>
-			<sequence>
-				<element name="skin" type="namespace:skinType" />
-				<element name="environment">
-					<complexType>
-						<sequence>
-							<element name="componentId" type="int" />
-							<element name="screenName" type="string" />
-							<element name="serverName" type="string" />
-							<element name="assets" type="string" />
-							<element name="contactName" type="string" />
-							<element name="contactEmail" type="string" />
-						</sequence>
-					</complexType>
-				</element>
-				<element name="form" minOccurs="0" maxOccurs="unbounded">					
-					<complexType>
-						<sequence>
-							<element name="id" type="long" />
-							<element name="creationTimestamp" type="date" />
-							<element name="startDate" type="date" />
-							<element name="endDate" type="date" />
-							<element name="type" type="string" />
-							<element name="status" type="string" />
-							<element name="title" type="string" />
-							<element name="prettyUrl" type="string" />
-							<element name="maxSubmissions" type="int" />
-							<element name="submissionCount" type="int" />
-							<element name="returnUrl" type="string" />
-							<element name="skinUrl" type="string" />
-							<element name="skinSelector" type="string" />
-							<element name="question" minOccurs="0" maxOccurs="unbounded">												
-								<complexType>
-									<sequence>
-										<element name="id" type="long" />
-										<element name="number" type="int" />
-										<element name="type" type="string" />
-										<element name="header" type="string" />
-										<element name="label" type="string" />
-										<element name="page" type="int" />
-										<element name="defaultAnswer" type="string" />
-										<element name="filter" type="string" />
-										<element name="maxCharacterLimit" type="int" />
-										<element name="maxWordLimit" type="int" />
-										<element name="required" type="boolean" />									
-										<element name="possibleAnswer" minOccurs="0" maxOccurs="unbounded">					
-											<complexType>
-												<sequence>
-													<element name="id" type="long" />
-													<element name="label" type="string" />
-													<element name="value" type="int" />
-												</sequence>
-											</complexType>
-										</element>
-										<element name="fkId" type="int" />
-									</sequence>
-								</complexType>
-							</element>
-							<element name="currentPage" type="int" />
-							<element name="lastPage" type="int" />
-							<element name="score" type="int" />
-							<element name="messagePublicFormIntro" type="string" />
-							<element name="messagePublicFormClosing" type="string" />
-							<element name="messageEnded" type="string" />
-							<element name="messageMaxSubmitted" type="string" />
-							<element name="messageNotStarted" type="string" />
-							<element name="messageOneSubmission" type="string" />
-							<element name="messageThankYou" type="string" />
-							<element name="started" type="boolean" />
-							<element name="ended" type="boolean" />
-							<element name="deleted" type="boolean" />
-						</sequence>
-					</complexType>
-				</element>											
-				<element name="possibleAnswer" minOccurs="0" maxOccurs="unbounded">					
-					<complexType>
-						<sequence>
-							<element name="id" type="long" />
-							<element name="label" type="string" />
-							<element name="value" type="int" />
-						</sequence>
-					</complexType>
-				</element>											
-				<element name="score" minOccurs="0" maxOccurs="unbounded">					
-					<complexType>
-						<sequence>
-							<element name="id" type="long" />
-							<element name="begin" type="int" />
-							<element name="end" type="int" />
-							<element name="title" type="string" />
-							<element name="summary" type="string" />
-						</sequence>
-					</complexType>
-				</element>	
-				<element name="submission" minOccurs="0" maxOccurs="unbounded">					
-					<complexType>
-						<sequence>
-							<element name="id" type="long" />
-							<element name="ip" type="string" />
-							<element name="page" type="int" />
-							<element name="userId" type="long" />
-							<element name="answer" minOccurs="0" maxOccurs="unbounded">					
-								<complexType>
-									<sequence>
-										<element name="questionId" type="long" />
-										<element name="multipleChoice" type="boolean" />
-										<element name="answerValue" type="string" />
-										<element name="answerLabel" type="string" />
-									</sequence>
-								</complexType>
-							</element>
-						</sequence>
-					</complexType>
-				</element>				
-				<element name="message" minOccurs="0" maxOccurs="unbounded">				
-					<complexType>
-						<sequence>
-							<element name="type" type="string" />
-							<element name="subtype" type="string" />
-							<element name="label" type="string" />
-							<element name="questionId" type="long" />
-							<element name="questionNumber" type="int" />
-							<element name="required" type="boolean" />
-						</sequence>
-					</complexType>				
-				</element>
-				<element name="user">
-					<complexType>
-						<sequence>
-							<element name="id" type="long" />
-							<element name="emailAddress" type="string" />
-							<element name="firstName" type="string" />
-							<element name="lastName" type="string" />
-							<element name="pictureUrl" type="string" />
-							<element name="active" type="boolean" />
-							<element name="admin" type="boolean" />
-						</sequence>
-					</complexType>
-				</element>
-				<element name="analytics">
-					<complexType>
-						<sequence>
-							<element name="startDateStr" type="string" />
-							<element name="endDateStr" type="string" />
-						</sequence>
-					</complexType>
-				</element>
-			</sequence>
-		</complexType>
-	</element>
-</schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"> 
+	<xs:include schemaLocation="../user/schema.xsd" />
+	<xs:include schemaLocation="../message/schema.xsd" />
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="environment">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="componentId" type="xs:int" />
+							<xs:element name="screenName" type="xs:string" />
+							<xs:element name="serverName" type="xs:string" />
+							<xs:element name="assets" type="xs:string" />
+							<xs:element name="contactName" type="xs:string" />
+							<xs:element name="contactEmail" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="form" minOccurs="0" maxOccurs="unbounded">					
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:long" />
+							<xs:element name="creationTimestamp" type="xs:date" />
+							<xs:element name="startDate" type="xs:date" />
+							<xs:element name="endDate" type="xs:date" />
+							<xs:element name="type" type="xs:string" />
+							<xs:element name="status" type="xs:string" />
+							<xs:element name="title" type="xs:string" />
+							<xs:element name="prettyUrl" type="xs:string" />
+							<xs:element name="maxSubmissions" type="xs:int" />
+							<xs:element name="submissionCount" type="xs:int" />
+							<xs:element name="returnUrl" type="xs:string" />
+							<xs:element name="skinUrl" type="xs:string" />
+							<xs:element name="skinSelector" type="xs:string" />
+							<xs:element name="question" minOccurs="0" maxOccurs="unbounded">												
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="number" type="xs:int" />
+										<xs:element name="type" type="xs:string" />
+										<xs:element name="header" type="xs:string" />
+										<xs:element name="label" type="xs:string" />
+										<xs:element name="page" type="xs:int" />
+										<xs:element name="defaultAnswer" type="xs:string" />
+										<xs:element name="filter" type="xs:string" />
+										<xs:element name="maxCharacterLimit" type="xs:int" />
+										<xs:element name="maxWordLimit" type="xs:int" />
+										<xs:element name="required" type="xs:boolean" />									
+										<xs:element name="possibleAnswer" minOccurs="0" maxOccurs="unbounded">					
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="id" type="xs:long" />
+													<xs:element name="label" type="xs:string" />
+													<xs:element name="value" type="xs:int" />
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="fkId" type="xs:int" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="currentPage" type="xs:int" />
+							<xs:element name="lastPage" type="xs:int" />
+							<xs:element name="score" type="xs:int" />
+							<xs:element name="messagePublicFormIntro" type="xs:string" />
+							<xs:element name="messagePublicFormClosing" type="xs:string" />
+							<xs:element name="messageEnded" type="xs:string" />
+							<xs:element name="messageMaxSubmitted" type="xs:string" />
+							<xs:element name="messageNotStarted" type="xs:string" />
+							<xs:element name="messageOneSubmission" type="xs:string" />
+							<xs:element name="messageThankYou" type="xs:string" />
+							<xs:element name="started" type="xs:boolean" />
+							<xs:element name="ended" type="xs:boolean" />
+							<xs:element name="deleted" type="xs:boolean" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>											
+				<xs:element name="possibleAnswer" minOccurs="0" maxOccurs="unbounded">					
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:long" />
+							<xs:element name="label" type="xs:string" />
+							<xs:element name="value" type="xs:int" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>											
+				<xs:element name="score" minOccurs="0" maxOccurs="unbounded">					
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:long" />
+							<xs:element name="begin" type="xs:int" />
+							<xs:element name="end" type="xs:int" />
+							<xs:element name="title" type="xs:string" />
+							<xs:element name="summary" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>	
+				<xs:element name="submission" minOccurs="0" maxOccurs="unbounded">					
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:long" />
+							<xs:element name="ip" type="xs:string" />
+							<xs:element name="page" type="xs:int" />
+							<xs:element name="userId" type="xs:long" />
+							<xs:element name="answer" minOccurs="0" maxOccurs="unbounded">					
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="questionId" type="xs:long" />
+										<xs:element name="multipleChoice" type="xs:boolean" />
+										<xs:element name="answerValue" type="xs:string" />
+										<xs:element name="answerLabel" type="xs:string" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>		
+				<xs:element name="analytics">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="startDateStr" type="xs:string" />
+							<xs:element name="endDateStr" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element ref="message" />				
+                <xs:element ref="user" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+	<element name="message">		
+        <complexType>
+			<sequence>				
+				<element name="type" type="string" />
+				<element name="subtype" type="string" />
+				<element name="label" type="string" />
+				<element name="questionId" type="long" />
+				<element name="questionNumber" type="int" />
+				<element name="required" type="boolean" />
+			</sequence>
+		</complexType>
+    </element>
+</schema>

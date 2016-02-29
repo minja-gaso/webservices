@@ -1,167 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" 
-		elementFormDefault="qualified">
-	<include schemaLocation="../skin/schema.xsd" />
-	<element name="data">
-		<complexType>
-			<sequence>
-				<element name="environment">
-					<complexType>
-						<sequence>
-							<element name="componentId" type="int" />
-							<element name="screenName" type="string" />
-							<element name="serverName" type="string" />
-							<element name="assets" type="string" />
-							<element name="contactName" type="string" />
-							<element name="contactEmail" type="string" />
-						</sequence>
-					</complexType>
-				</element>
-				<element name="calendar" minOccurs="0" maxOccurs="unbounded">					
-					<complexType>
-						<sequence>
-							<element name="skin" type="skin" />
-							<element name="id" type="long" />
-							<element name="creationTimestamp" type="date" />
-							<element name="type" type="string" />
-							<element name="title" type="string" />
-							<element name="prettyUrl" type="string" />
-							<element name="skinUrl" type="string" />
-							<element name="skinSelector" type="string" />
-							<element name="skinCssOverrides" type="string" />
-							<element name="event" minOccurs="0" maxOccurs="unbounded">											
-								<complexType>
-									<sequence>
-										<element name="id" type="long" />
-										<element name="published" type="boolean" />
-										<element name="startDate" type="date" />
-										<element name="endDate" type="date" />
-										<element name="startTime" type="time" />
-										<element name="endTime" type="time" />
-										<element name="title" type="string" />
-										<element name="titleRecurringLabel" type="string" />
-										<element name="locationOwned" type="boolean" />
-										<element name="location" type="string" />
-										<element name="locationAdditional" type="string" />
-										<element name="description" type="string" />
-										<element name="agenda" type="string" />
-										<element name="speaker" type="string" />
-										<element name="registrationLabel" type="string" />
-										<element name="registrationUrl" type="string" />
-										<element name="contactName" type="string" />
-										<element name="contactPhone" type="string" />
-										<element name="contactEmail" type="string" />
-										<element name="cost" type="string" />										
-										<element name="tag" minOccurs="0" maxOccurs="unbounded">				
-											<complexType>
-												<sequence>
-													<element name="id" type="long" />
-													<element name="label" type="string" />
-												</sequence>
-											</complexType>										
-										</element>
-										<element name="fileName" type="string" />
-										<element name="fileDescription" type="string" />									
-										<element name="eventRecurrence">				
-											<complexType>
-												<sequence>
-													<element name="recurring" type="boolean" />
-													<element name="visibleOnListScreen" type="boolean" />
-													<element name="recurringMonthly" type="boolean" />
-													<element name="type" type="string" />
-													<element name="limit" type="int" />
-													<element name="interval" type="int" />
-													<element name="intervalType" type="string" />
-													<element name="monday" type="boolean" />
-													<element name="tuesday" type="boolean" />
-													<element name="wednesday" type="boolean" />
-													<element name="thursday" type="boolean" />
-													<element name="friday" type="boolean" />
-													<element name="saturday" type="boolean" />
-													<element name="sunday" type="boolean" />
-													<element name="exact" type="boolean" />
-												</sequence>
-											</complexType>										
-										</element>
-										<element name="categoryId" type="long" />
-										<element name="parentId" type="long" />
-										<element name="fkId" type="long" />
-									</sequence>
-								</complexType>
-							</element>
-							<element name="role" minOccurs="0" maxOccurs="unbounded">												
-								<complexType>
-									<sequence>
-										<element name="id" type="long" />
-										<element name="type" type="string" />
-										<element name="email" type="string" />
-										<element name="fkCalendarId" type="long" />
-									</sequence>
-								</complexType>
-							</element>
-							<element name="category" minOccurs="0" maxOccurs="unbounded">												
-								<complexType>
-									<sequence>
-										<element name="id" type="long" />
-										<element name="label" type="string" />
-										<element name="fkCalendarId" type="long" />
-									</sequence>
-								</complexType>
-							</element>
-							<element name="search">												
-								<complexType>
-									<sequence>
-										<element name="id" type="long" />
-										<element name="query" type="string" />
-										<element name="categoryId" type="long" />
-										<element name="tagId" type="long" />
-										<element name="tagName" type="string" />
-										<element name="fkCalendarId" type="long" />
-										<element name="fkEventId" type="long" />
-									</sequence>
-								</complexType>
-							</element>
-							<element name="messagePublicFormIntro" type="string" />
-							<element name="messagePublicFormClosing" type="string" />
-							<element name="currentView">
-								<complexType>
-									<sequence>
-										<element name="month" type="int" />
-										<element name="startDay" type="int" />
-										<element name="totalDays" type="int" />
-									</sequence>
-								</complexType>
-							</element>
-							<element name="deleted" type="boolean" />
-						</sequence>
-					</complexType>
-				</element>
-				<element name="message" minOccurs="0" maxOccurs="unbounded">				
-					<complexType>
-						<sequence>
-							<element name="type" type="string" />
-							<element name="subtype" type="string" />
-							<element name="label" type="string" />
-							<element name="questionId" type="long" />
-							<element name="questionNumber" type="int" />
-							<element name="required" type="boolean" />
-						</sequence>
-					</complexType>				
-				</element>
-				<element name="user">
-					<complexType>
-						<sequence>
-							<element name="id" type="long" />
-							<element name="emailAddress" type="string" />
-							<element name="firstName" type="string" />
-							<element name="lastName" type="string" />
-							<element name="pictureUrl" type="string" />
-							<element name="active" type="boolean" />
-							<element name="admin" type="boolean" />
-						</sequence>
-					</complexType>
-				</element>
-			</sequence>
-		</complexType>
-	</element>
-</schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="../environment/schema.xsd" />
+	<xs:include schemaLocation="../role/schema.xsd" />
+	<xs:include schemaLocation="../user/schema.xsd" />
+	<xs:include schemaLocation="../message/schema.xsd" />
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="environment" />
+				<xs:element name="calendar" minOccurs="0" maxOccurs="unbounded">					
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:long" />
+							<xs:element name="creationTimestamp" type="xs:date" />
+							<xs:element name="type" type="xs:string" />
+							<xs:element name="title" type="xs:string" />
+							<xs:element name="prettyUrl" type="xs:string" />
+							<xs:element name="skinUrl" type="xs:string" />
+							<xs:element name="skinSelector" type="xs:string" />
+							<xs:element name="skinCssOverrides" type="xs:string" />
+							<xs:element name="event" minOccurs="0" maxOccurs="unbounded">											
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="published" type="xs:boolean" />
+										<xs:element name="startDate" type="xs:date" />
+										<xs:element name="endDate" type="xs:date" />
+										<xs:element name="startTime" type="xs:time" />
+										<xs:element name="endTime" type="xs:time" />
+										<xs:element name="title" type="xs:string" />
+										<xs:element name="titleRecurringLabel" type="xs:string" />
+										<xs:element name="locationOwned" type="xs:boolean" />
+										<xs:element name="location" type="xs:string" />
+										<xs:element name="locationAdditional" type="xs:string" />
+										<xs:element name="description" type="xs:string" />
+										<xs:element name="agenda" type="xs:string" />
+										<xs:element name="speaker" type="xs:string" />
+										<xs:element name="registrationLabel" type="xs:string" />
+										<xs:element name="registrationUrl" type="xs:string" />
+										<xs:element name="contactName" type="xs:string" />
+										<xs:element name="contactPhone" type="xs:string" />
+										<xs:element name="contactEmail" type="xs:string" />
+										<xs:element name="cost" type="xs:string" />										
+										<xs:element name="tag" minOccurs="0" maxOccurs="unbounded">				
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="id" type="xs:long" />
+													<xs:element name="label" type="xs:string" />
+												</xs:sequence>
+											</xs:complexType>										
+										</xs:element>
+										<xs:element name="fileName" type="xs:string" />
+										<xs:element name="fileDescription" type="xs:string" />									
+										<xs:element name="eventRecurrence">				
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="recurring" type="xs:boolean" />
+													<xs:element name="visibleOnListScreen" type="xs:boolean" />
+													<xs:element name="recurringMonthly" type="xs:boolean" />
+													<xs:element name="type" type="xs:string" />
+													<xs:element name="limit" type="xs:int" />
+													<xs:element name="interval" type="xs:int" />
+													<xs:element name="intervalType" type="xs:string" />
+													<xs:element name="monday" type="xs:boolean" />
+													<xs:element name="tuesday" type="xs:boolean" />
+													<xs:element name="wednesday" type="xs:boolean" />
+													<xs:element name="thursday" type="xs:boolean" />
+													<xs:element name="friday" type="xs:boolean" />
+													<xs:element name="saturday" type="xs:boolean" />
+													<xs:element name="sunday" type="xs:boolean" />
+													<xs:element name="exact" type="xs:boolean" />
+												</xs:sequence>
+											</xs:complexType>										
+										</xs:element>
+										<xs:element name="categoryId" type="xs:long" />
+										<xs:element name="parentId" type="xs:long" />
+										<xs:element name="fkId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="role" minOccurs="0" maxOccurs="unbounded" />
+							<xs:element name="category" minOccurs="0" maxOccurs="unbounded">												
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="label" type="xs:string" />
+										<xs:element name="fkCalendarId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="search">												
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="query" type="xs:string" />
+										<xs:element name="categoryId" type="xs:long" />
+										<xs:element name="tagId" type="xs:long" />
+										<xs:element name="tagName" type="xs:string" />
+										<xs:element name="fkCalendarId" type="xs:long" />
+										<xs:element name="fkEventId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="messagePublicFormIntro" type="xs:string" />
+							<xs:element name="messagePublicFormClosing" type="xs:string" />
+							<xs:element name="currentView">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="month" type="xs:int" />
+										<xs:element name="startDay" type="xs:int" />
+										<xs:element name="totalDays" type="xs:int" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="deleted" type="xs:boolean" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element ref="message" minOccurs="0" maxOccurs="unbounded" />				
+                <xs:element ref="user" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

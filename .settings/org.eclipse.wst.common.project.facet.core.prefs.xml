@@ -1,7 +1,7 @@
 <root>
   <facet id="jpt.jaxb">
     <node name="classgen">
-      <attribute name="package" value="org.sw.marketing.data.calendar"/>
+      <attribute name="package" value="org.sw.marketing.data.skin"/>
     </node>
   </facet>
 </root>

@@ -7,7 +7,7 @@ import java.util.List;
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.data.calendar.Data.Calendar;
-import org.sw.marketing.data.calendar.Data.User;
+import org.sw.marketing.data.calendar.User;
 import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
@@ -158,7 +158,7 @@ public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 				boolean deleted = resultSet.getBoolean("is_calendar_deleted");
 				String skinUrl = resultSet.getString("calendar_skin_url");
 				String skinSelector = resultSet.getString("calendar_skin_selector");
-				String skinCss = resultSet.getString("calendar_css");
+				//String skinCss = resultSet.getString("calendar_css");
 
 				calendar = new Calendar();
 				calendar.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
@@ -169,7 +169,7 @@ public class CalendarDAOImpl extends BaseDAO implements CalendarDAO
 				calendar.setDeleted(deleted);
 				calendar.setSkinUrl(skinUrl);
 				calendar.setSkinSelector(skinSelector);
-				calendar.setSkinCssOverrides(skinCss);
+				//calendar.setSkinCssOverrides(skinCss);
 			}
 		}
 		catch (SQLException e)

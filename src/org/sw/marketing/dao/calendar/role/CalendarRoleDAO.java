@@ -1,6 +1,6 @@
 package org.sw.marketing.dao.calendar.role;
 
-import org.sw.marketing.data.calendar.Data.Calendar.Role;
+import org.sw.marketing.data.calendar.Role;
 
 public interface CalendarRoleDAO
 {

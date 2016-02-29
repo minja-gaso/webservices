@@ -7,7 +7,6 @@ import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.calendar.CalendarSQL;
 import org.sw.marketing.data.calendar.Data.Calendar.Category;
-import org.sw.marketing.data.calendar.Data.Calendar.Role;
 
 public class CalendarCategoryDAOImpl extends BaseDAO implements CalendarCategoryDAO
 {

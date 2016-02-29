@@ -1,7 +1,7 @@
 package org.sw.marketing.dao.calendar;
 
 import org.sw.marketing.data.calendar.Data.Calendar;
-import org.sw.marketing.data.calendar.Data.User;
+import org.sw.marketing.data.calendar.User;
 
 public interface CalendarDAO
 {

@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema 
-	targetNamespace="http://sample/namespace" 
-	xmlns="http://www.w3.org/2001/XMLSchema" 
-    elementFormDefault="unqualified" 
-    attributeFormDefault="unqualified"
-    version="1.0"> 
-    
-    <complexType name="skinType"> 
-        <sequence maxOccurs="unbounded">
-            <element name="id" type="integer" nillable="false"/>
-            <element name="name" type="string"/>
-        </sequence> 
-    </complexType>
-</schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="../environment/schema.xsd" />
+	<xs:include schemaLocation="../user/schema.xsd" />
+	<xs:include schemaLocation="../message/schema.xsd" />
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="environment" />
+				<xs:element name="skin" minOccurs="0" maxOccurs="unbounded">					
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:long" />
+							<xs:element name="creationTimestamp" type="xs:date" />
+							<xs:element name="title" type="xs:string" />
+							<xs:element name="editable" type="xs:boolean" />
+							<xs:element name="skinUrl" type="xs:string" />
+							<xs:element name="skinSelector" type="xs:string" />
+							<xs:element name="skinCssOverrides" type="xs:string" />							
+							<xs:element name="role" minOccurs="0" maxOccurs="unbounded">												
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="type" type="xs:string" />
+										<xs:element name="email" type="xs:string" />
+										<xs:element name="fkCalendarId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="deleted" type="xs:boolean" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element ref="message" minOccurs="0" maxOccurs="unbounded" />				
+                <xs:element ref="user" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

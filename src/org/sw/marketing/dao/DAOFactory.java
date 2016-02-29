@@ -1,7 +1,5 @@
 package org.sw.marketing.dao;
 
-import org.sw.marketing.dao.calendar.CalendarDAO;
-import org.sw.marketing.dao.calendar.CalendarDAOImpl;
 import org.sw.marketing.dao.form.FormDAO;
 import org.sw.marketing.dao.form.FormDAOImpl;
 import org.sw.marketing.dao.form.answer.AnswerDAO;
@@ -58,10 +56,5 @@ public class DAOFactory
 	public static TempSubmissionAnswerDAO getTempSubmissionAnswerDAO()
 	{
 		return new TempSubmissionAnswerDAOImpl();
-	}
-	
-	public static CalendarDAO getCalendarDAO()
-	{
-		return new CalendarDAOImpl();
 	}
 }
