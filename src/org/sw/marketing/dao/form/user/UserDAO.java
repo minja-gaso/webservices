@@ -1,6 +1,6 @@
 package org.sw.marketing.dao.form.user;
 
-import org.sw.marketing.data.form.Data.User;
+import org.sw.marketing.data.form.User;
 
 public interface UserDAO
 {

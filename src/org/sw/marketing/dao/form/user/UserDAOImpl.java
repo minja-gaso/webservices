@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.form.FormSQL;
-import org.sw.marketing.data.form.Data.User;
+import org.sw.marketing.data.form.User;
 
 public class UserDAOImpl extends BaseDAO implements UserDAO
 {

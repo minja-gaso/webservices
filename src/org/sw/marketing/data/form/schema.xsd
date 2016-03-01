@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"> 
-	<xs:include schemaLocation="../user/schema.xsd" />
-	<xs:include schemaLocation="../message/schema.xsd" />
+	<xs:include schemaLocation="../environmentSchema/schema.xsd" />
+	<xs:include schemaLocation="../skinSchema/schema.xsd" />
+	<xs:include schemaLocation="../roleSchema/schema.xsd" />
+	<xs:include schemaLocation="../userSchema/schema.xsd" />
+	<xs:include schemaLocation="../messageSchema/schema.xsd" />
 	<xs:element name="data">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="environment">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="componentId" type="xs:int" />
-							<xs:element name="screenName" type="xs:string" />
-							<xs:element name="serverName" type="xs:string" />
-							<xs:element name="assets" type="xs:string" />
-							<xs:element name="contactName" type="xs:string" />
-							<xs:element name="contactEmail" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
+				<xs:element ref="environment" />
 				<xs:element name="form" minOccurs="0" maxOccurs="unbounded">					
 					<xs:complexType>
 						<xs:sequence>
@@ -124,7 +116,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-                <xs:element ref="message" />				
+                <xs:element ref="message" minOccurs="0" maxOccurs="unbounded" />				
                 <xs:element ref="user" />
 			</xs:sequence>
 		</xs:complexType>

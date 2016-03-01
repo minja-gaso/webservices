@@ -8,7 +8,7 @@ import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.data.form.Data;
 import org.sw.marketing.data.form.Data.Form;
-import org.sw.marketing.data.form.Data.User;
+import org.sw.marketing.data.form.User;
 import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class FormDAOImpl extends BaseDAO implements FormDAO

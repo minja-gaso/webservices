@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="skin">					
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+				<xs:element name="creationTimestamp" type="xs:date" />
+				<xs:element name="title" type="xs:string" />
+				<xs:element name="editable" type="xs:boolean" />
+				<xs:element name="skinUrl" type="xs:string" />
+				<xs:element name="skinSelector" type="xs:string" />
+				<xs:element name="skinCssOverrides" type="xs:string" />		
+				<xs:element name="skinHtml" type="xs:string" />		
+				<xs:element name="role" minOccurs="0" maxOccurs="unbounded">												
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:long" />
+							<xs:element name="type" type="xs:string" />
+							<xs:element name="email" type="xs:string" />
+							<xs:element name="fkId" type="xs:long" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="calendarCss" type="xs:string" />	
+				<xs:element name="formCss" type="xs:string" />	
+				<xs:element name="selectedApp" type="xs:string" />		
+				<xs:element name="deleted" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

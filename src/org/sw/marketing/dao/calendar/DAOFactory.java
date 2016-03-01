@@ -10,6 +10,8 @@ import org.sw.marketing.dao.calendar.event.CalendarEventTagDAO;
 import org.sw.marketing.dao.calendar.event.CalendarEventTagDAOImpl;
 import org.sw.marketing.dao.calendar.role.CalendarRoleDAO;
 import org.sw.marketing.dao.calendar.role.CalendarRoleDAOImpl;
+import org.sw.marketing.dao.calendar.skin.CalendarSkinDAO;
+import org.sw.marketing.dao.calendar.skin.CalendarSkinDAOImpl;
 import org.sw.marketing.dao.calendar.user.UserDAO;
 import org.sw.marketing.dao.calendar.user.UserDAOImpl;
 
@@ -38,5 +40,9 @@ public class DAOFactory
 	public static CalendarCategoryDAO getCalendarCategoryDAO()
 	{
 		return new CalendarCategoryDAOImpl();
+	}
+	public static CalendarSkinDAO getCalendarSkinDAO()
+	{
+		return new CalendarSkinDAOImpl();
 	}
 }
