@@ -1,5 +1,6 @@
 package org.sw.marketing.dao.form;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -13,6 +14,84 @@ import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class FormDAOImpl extends BaseDAO implements FormDAO
 {
+	public Form getResultSetForms(ResultSet resultSet) throws SQLException
+	{
+		long id = resultSet.getLong("form_id");
+		java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
+		String type = resultSet.getString("form_type");
+		String title = resultSet.getString("form_title");
+		String status = resultSet.getString("form_status");
+		String prettyUrl = resultSet.getString("form_pretty_url");
+		boolean deleted = resultSet.getBoolean("is_form_deleted");
+		int submissionCount = resultSet.getInt("form_submission_count");
+		long fkSkinId = resultSet.getLong("fk_skin_id");
+		
+		Form form = new Form();
+		form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
+		form.setId(id);
+		form.setType(type);
+		form.setTitle(title);
+		form.setStatus(status);
+		form.setPrettyUrl(prettyUrl);
+		form.setDeleted(deleted);
+		form.setSubmissionCount(submissionCount);
+		form.setFkSkinId(fkSkinId);
+		
+		return form;
+	}
+	
+	public Form getResultSetForm(ResultSet resultSet) throws SQLException
+	{
+		long id = resultSet.getLong("form_id");
+		java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
+		java.util.Date startDate = resultSet.getDate("form_start_date");
+		java.util.Date endDate = resultSet.getDate("form_end_date");
+		String type = resultSet.getString("form_type");
+		String status = resultSet.getString("form_status");
+		String title = resultSet.getString("form_title");
+		String prettyUrl = resultSet.getString("form_pretty_url");
+		int submissionCount = resultSet.getInt("form_submission_count");
+		String returnUrl = resultSet.getString("form_return_url");
+//		String skinUrl = resultSet.getString("form_skin_url");
+//		String skinSelector = resultSet.getString("form_skin_selector");				
+		String publicFormIntroMessage = resultSet.getString("form_screen_public_form_intro");
+		String publicFormClosingMessage = resultSet.getString("form_screen_public_form_closing");
+		String messageThankYou = resultSet.getString("form_screen_thank_you");		
+		String messageEnded = resultSet.getString("form_screen_ended");
+		String messageMaxSubmitted = resultSet.getString("form_screen_max_submitted");
+		String messageNotStarted = resultSet.getString("form_screen_not_started");	
+		String messageOneSubmission = resultSet.getString("form_screen_one_submission");	
+		int maxSubmissions = resultSet.getInt("form_max_submissions");
+		boolean deleted = resultSet.getBoolean("is_form_deleted");
+		long fkSkinId = resultSet.getLong("fk_skin_id");
+
+		Form form = new Form();
+		form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
+		form.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
+		form.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
+		form.setId(id);
+		form.setType(type);
+		form.setStatus(status);
+		form.setTitle(title);
+		form.setPrettyUrl(prettyUrl);
+		form.setSubmissionCount(submissionCount);
+		form.setReturnUrl(returnUrl);
+//		form.setSkinUrl(skinUrl);
+//		form.setSkinSelector(skinSelector);				
+		form.setMessagePublicFormIntro(publicFormIntroMessage);
+		form.setMessagePublicFormClosing(publicFormClosingMessage);
+		form.setMessageThankYou(messageThankYou);
+		form.setMessageEnded(messageEnded);
+		form.setMessageMaxSubmitted(messageMaxSubmitted);
+		form.setMessageNotStarted(messageNotStarted);
+		form.setMessageOneSubmission(messageOneSubmission);		
+		form.setMaxSubmissions(maxSubmissions);
+		form.setDeleted(deleted);
+		form.setFkSkinId(fkSkinId);
+		
+		return form;
+	}
+	
 	@Override
 	public List<Form> getForms(Data data)
 	{
@@ -38,29 +117,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 					formList = new java.util.ArrayList<Form>();
 				}
 
-				long id = resultSet.getLong("form_id");
-				java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
-				String type = resultSet.getString("form_type");
-				String title = resultSet.getString("form_title");
-				String status = resultSet.getString("form_status");
-				String prettyUrl = resultSet.getString("form_pretty_url");
-				boolean deleted = resultSet.getBoolean("is_form_deleted");
-				int submissionCount = resultSet.getInt("form_submission_count");
-				String skinUrl = resultSet.getString("form_skin_url");
-				String skinSelector = resultSet.getString("form_skin_selector");
-
-				form = new Form();
-				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
-				form.setId(id);
-				form.setType(type);
-				form.setTitle(title);
-				form.setStatus(status);
-				form.setPrettyUrl(prettyUrl);
-				form.setDeleted(deleted);
-				form.setSubmissionCount(submissionCount);
-				form.setSkinUrl(skinUrl);
-				form.setSkinSelector(skinSelector);
-
+				form = getResultSetForms(resultSet);
 				formList.add(form);
 			}
 		}
@@ -101,29 +158,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 					formList = new java.util.ArrayList<Form>();
 				}
 
-				long id = resultSet.getLong("form_id");
-				java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
-				String type = resultSet.getString("form_type");
-				String title = resultSet.getString("form_title");
-				String status = resultSet.getString("form_status");
-				String prettyUrl = resultSet.getString("form_pretty_url");
-				boolean deleted = resultSet.getBoolean("is_form_deleted");
-				int submissionCount = resultSet.getInt("form_submission_count");
-				String skinUrl = resultSet.getString("form_skin_url");
-				String skinSelector = resultSet.getString("form_skin_selector");
-
-				form = new Form();
-				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
-				form.setId(id);
-				form.setType(type);
-				form.setTitle(title);
-				form.setStatus(status);
-				form.setPrettyUrl(prettyUrl);
-				form.setDeleted(deleted);
-				form.setSubmissionCount(submissionCount);
-				form.setSkinUrl(skinUrl);
-				form.setSkinSelector(skinSelector);
-
+				form = getResultSetForms(resultSet);
 				formList.add(form);
 			}
 		}
@@ -158,49 +193,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 
 			while (resultSet.next())
 			{
-				java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
-				java.util.Date startDate = resultSet.getDate("form_start_date");
-				java.util.Date endDate = resultSet.getDate("form_end_date");
-				String type = resultSet.getString("form_type");
-				String status = resultSet.getString("form_status");
-				String title = resultSet.getString("form_title");
-				String prettyUrl = resultSet.getString("form_pretty_url");
-				int submissionCount = resultSet.getInt("form_submission_count");
-				String returnUrl = resultSet.getString("form_return_url");
-				String skinUrl = resultSet.getString("form_skin_url");
-				String skinSelector = resultSet.getString("form_skin_selector");				
-				String publicFormIntroMessage = resultSet.getString("form_screen_public_form_intro");
-				String publicFormClosingMessage = resultSet.getString("form_screen_public_form_closing");
-				String messageThankYou = resultSet.getString("form_screen_thank_you");		
-				String messageEnded = resultSet.getString("form_screen_ended");
-				String messageMaxSubmitted = resultSet.getString("form_screen_max_submitted");
-				String messageNotStarted = resultSet.getString("form_screen_not_started");	
-				String messageOneSubmission = resultSet.getString("form_screen_one_submission");	
-				int maxSubmissions = resultSet.getInt("form_max_submissions");
-				boolean deleted = resultSet.getBoolean("is_form_deleted");
-
-				form = new Form();
-				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
-				form.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
-				form.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
-				form.setId(id);
-				form.setType(type);
-				form.setStatus(status);
-				form.setTitle(title);
-				form.setPrettyUrl(prettyUrl);
-				form.setSubmissionCount(submissionCount);
-				form.setReturnUrl(returnUrl);
-				form.setSkinUrl(skinUrl);
-				form.setSkinSelector(skinSelector);				
-				form.setMessagePublicFormIntro(publicFormIntroMessage);
-				form.setMessagePublicFormClosing(publicFormClosingMessage);
-				form.setMessageThankYou(messageThankYou);
-				form.setMessageEnded(messageEnded);
-				form.setMessageMaxSubmitted(messageMaxSubmitted);
-				form.setMessageNotStarted(messageNotStarted);
-				form.setMessageOneSubmission(messageOneSubmission);		
-				form.setMaxSubmissions(maxSubmissions);
-				form.setDeleted(deleted);
+				form = getResultSetForm(resultSet);
 			}
 		}
 		catch (SQLException e)
@@ -234,47 +227,7 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 
 			while (resultSet.next())
 			{
-				long id = resultSet.getLong("form_id");
-				java.util.Date timestamp = resultSet.getTimestamp("form_creation_timestamp");
-				java.util.Date startDate = resultSet.getDate("form_start_date");
-				java.util.Date endDate = resultSet.getDate("form_end_date");
-				String type = resultSet.getString("form_type");
-				String status = resultSet.getString("form_status");
-				String title = resultSet.getString("form_title");
-				int submissionCount = resultSet.getInt("form_submission_count");
-				String returnUrl = resultSet.getString("form_return_url");
-				String skinUrl = resultSet.getString("form_skin_url");
-				String skinSelector = resultSet.getString("form_skin_selector");				
-				String publicFormIntroMessage = resultSet.getString("form_screen_public_form_intro");
-				String publicFormClosingMessage = resultSet.getString("form_screen_public_form_closing");
-				String messageThankYou = resultSet.getString("form_screen_thank_you");		
-				String messageEnded = resultSet.getString("form_screen_ended");
-				String messageMaxSubmitted = resultSet.getString("form_screen_max_submitted");
-				String messageNotStarted = resultSet.getString("form_screen_not_started");	
-				String messageOneSubmission = resultSet.getString("form_screen_one_submission");				
-				boolean deleted = resultSet.getBoolean("is_form_deleted");
-
-				form = new Form();
-				form.setCreationTimestamp(DateToXmlGregorianCalendar.convert(timestamp, false));
-				form.setStartDate(DateToXmlGregorianCalendar.convert(startDate, false));
-				form.setEndDate(DateToXmlGregorianCalendar.convert(endDate, false));
-				form.setId(id);
-				form.setType(type);
-				form.setStatus(status);
-				form.setTitle(title);
-				form.setPrettyUrl(prettyUrl);
-				form.setSubmissionCount(submissionCount);
-				form.setReturnUrl(returnUrl);
-				form.setSkinUrl(skinUrl);
-				form.setSkinSelector(skinSelector);				
-				form.setMessagePublicFormIntro(publicFormIntroMessage);
-				form.setMessagePublicFormClosing(publicFormClosingMessage);
-				form.setMessageThankYou(messageThankYou);
-				form.setMessageEnded(messageEnded);
-				form.setMessageMaxSubmitted(messageMaxSubmitted);
-				form.setMessageNotStarted(messageNotStarted);
-				form.setMessageOneSubmission(messageOneSubmission);				
-				form.setDeleted(deleted);
+				form = getResultSetForm(resultSet);
 			}
 		}
 		catch (SQLException e)
@@ -399,25 +352,25 @@ public class FormDAOImpl extends BaseDAO implements FormDAO
 			statement.setString(1, form.getTitle());
 			statement.setString(2, form.getStatus());
 			statement.setString(3, form.getPrettyUrl());
-			statement.setString(4, form.getSkinUrl());
-			statement.setString(5, form.getSkinSelector());
-			statement.setString(6, form.getMessagePublicFormIntro());
-			statement.setString(7, form.getMessagePublicFormClosing());
-			statement.setString(8, form.getMessageThankYou());
-			statement.setString(9, form.getMessageEnded());
-			statement.setString(10, form.getMessageMaxSubmitted());
-			statement.setString(11, form.getMessageNotStarted());
-			statement.setString(12, form.getMessageOneSubmission());
-			statement.setInt(13, form.getMaxSubmissions());
+			statement.setLong(4, form.getFkSkinId());
+//			statement.setString(5, form.getSkinSelector());
+			statement.setString(5, form.getMessagePublicFormIntro());
+			statement.setString(6, form.getMessagePublicFormClosing());
+			statement.setString(7, form.getMessageThankYou());
+			statement.setString(8, form.getMessageEnded());
+			statement.setString(9, form.getMessageMaxSubmitted());
+			statement.setString(10, form.getMessageNotStarted());
+			statement.setString(11, form.getMessageOneSubmission());
+			statement.setInt(12, form.getMaxSubmissions());
 			
 			java.util.Date startDate = form.getStartDate().toGregorianCalendar().getTime();
 			java.sql.Date startDateSql = new java.sql.Date(startDate.getTime());
-			statement.setDate(14, startDateSql);
+			statement.setDate(13, startDateSql);
 			
 			java.util.Date endDate = form.getEndDate().toGregorianCalendar().getTime();
 			java.sql.Date endDateSql = new java.sql.Date(endDate.getTime());
-			statement.setDate(15, endDateSql);
-			statement.setLong(16, form.getId());
+			statement.setDate(14, endDateSql);
+			statement.setLong(15, form.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)

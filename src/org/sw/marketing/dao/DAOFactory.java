@@ -6,8 +6,12 @@ import org.sw.marketing.dao.form.answer.AnswerDAO;
 import org.sw.marketing.dao.form.answer.AnswerDAOImpl;
 import org.sw.marketing.dao.form.question.QuestionDAO;
 import org.sw.marketing.dao.form.question.QuestionDAOImpl;
+import org.sw.marketing.dao.form.role.FormRoleDAO;
+import org.sw.marketing.dao.form.role.FormRoleDAOImpl;
 import org.sw.marketing.dao.form.score.ScoreDAO;
 import org.sw.marketing.dao.form.score.ScoreDAOImpl;
+import org.sw.marketing.dao.form.skin.FormSkinDAO;
+import org.sw.marketing.dao.form.skin.FormSkinDAOImpl;
 import org.sw.marketing.dao.form.submission.SubmissionAnswerDAO;
 import org.sw.marketing.dao.form.submission.SubmissionAnswerDAOImpl;
 import org.sw.marketing.dao.form.submission.SubmissionDAO;
@@ -28,6 +32,10 @@ public class DAOFactory
 	public static FormDAO getFormDAO()
 	{
 		return new FormDAOImpl();
+	}	
+	public static FormSkinDAO getFormSkinDAO()
+	{
+		return new FormSkinDAOImpl();
 	}
 	public static QuestionDAO getQuestionDAO()
 	{
@@ -56,5 +64,8 @@ public class DAOFactory
 	public static TempSubmissionAnswerDAO getTempSubmissionAnswerDAO()
 	{
 		return new TempSubmissionAnswerDAOImpl();
+	}
+	public static FormRoleDAO getFormRoleDAO(){
+		return new FormRoleDAOImpl();
 	}
 }

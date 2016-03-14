@@ -23,8 +23,11 @@
 							<xs:element name="maxSubmissions" type="xs:int" />
 							<xs:element name="submissionCount" type="xs:int" />
 							<xs:element name="returnUrl" type="xs:string" />
+							<!-- 
 							<xs:element name="skinUrl" type="xs:string" />
 							<xs:element name="skinSelector" type="xs:string" />
+							 -->
+							<xs:element name="fkSkinId" type="xs:long" />
 							<xs:element name="question" minOccurs="0" maxOccurs="unbounded">												
 								<xs:complexType>
 									<xs:sequence>
@@ -64,6 +67,7 @@
 							<xs:element name="messageThankYou" type="xs:string" />
 							<xs:element name="started" type="xs:boolean" />
 							<xs:element name="ended" type="xs:boolean" />
+							<xs:element ref="role" minOccurs="0" maxOccurs="unbounded" />
 							<xs:element name="deleted" type="xs:boolean" />
 						</xs:sequence>
 					</xs:complexType>
@@ -116,6 +120,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+                <xs:element ref="skin" minOccurs="0" maxOccurs="unbounded" />	
                 <xs:element ref="message" minOccurs="0" maxOccurs="unbounded" />				
                 <xs:element ref="user" />
 			</xs:sequence>
