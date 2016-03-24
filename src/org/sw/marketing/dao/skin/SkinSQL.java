@@ -12,5 +12,6 @@ public class SkinSQL
 	
 	public static final String UPDATE_SKIN = "UPDATE skin.skins SET skin_title = ?, skin_url = ?, skin_selector = ?, skin_css_overrides = ?, is_skin_editable = ?, skin_html = ?, skin_calendar_css = ?, skin_form_css = ? WHERE skin_id = ?";
 
+	public static final String DELETE_SKIN = "DELETE FROM skin.skins WHERE skin_id = ?";
 	public static final String DELETE_ROLE = "DELETE FROM skin.roles WHERE role_id = ?";	
 }

@@ -1,6 +1,7 @@
 package org.sw.marketing.dao.skin;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import org.sw.marketing.dao.BaseDAO;
@@ -141,7 +142,7 @@ public class SkinDAOImpl extends BaseDAO implements SkinDAO
 		try
 		{
 			connection = dao.getConnection();
-			statement = connection.prepareStatement(SkinSQL.INSERT_SKIN);
+			statement = connection.prepareStatement(SkinSQL.INSERT_SKIN, Statement.RETURN_GENERATED_KEYS);
 			statement.setLong(1, data.getUser().getId());
 			statement.executeUpdate();
 			resultSet = statement.getGeneratedKeys();
@@ -196,4 +197,27 @@ public class SkinDAOImpl extends BaseDAO implements SkinDAO
 		}
 	}
 
+	public void deleteSkin(long skinID)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(SkinSQL.DELETE_SKIN);
+			statement.setLong(1, skinID);
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
 }

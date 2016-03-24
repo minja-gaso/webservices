@@ -11,4 +11,6 @@ public interface SkinDAO
 	public long createSkin(Data data);
 	
 	public void updateSkin(Skin skin);
+	
+	public void deleteSkin(long skinID);
 }
