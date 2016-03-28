@@ -83,6 +83,7 @@ public class FormSkinDAOImpl extends BaseDAO implements FormSkinDAO
 				String html = resultSet.getString("skin_html");
 				String overridesCss = resultSet.getString("skin_css_overrides");
 				String calendarCss = resultSet.getString("skin_calendar_css");
+				String formCss = resultSet.getString("skin_form_css");
 
 				skin = new Skin();
 				skin.setId(id);
@@ -90,6 +91,7 @@ public class FormSkinDAOImpl extends BaseDAO implements FormSkinDAO
 				skin.setSkinHtml(html);
 				skin.setSkinCssOverrides(overridesCss);
 				skin.setCalendarCss(calendarCss);
+				skin.setFormCss(formCss);
 			}
 		}
 		catch (SQLException e)
