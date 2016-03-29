@@ -1,7 +1,7 @@
 <root>
   <facet id="jpt.jaxb">
     <node name="classgen">
-      <attribute name="package" value="org.sw.marketing.data.form"/>
+      <attribute name="package" value="org.sw.marketing.data.blog"/>
     </node>
   </facet>
 </root>

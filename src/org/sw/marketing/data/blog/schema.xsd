@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="../environmentSchema/schema.xsd" />
+	<xs:include schemaLocation="../skinSchema/schema.xsd" />
+	<xs:include schemaLocation="../roleSchema/schema.xsd" />
+	<xs:include schemaLocation="../userSchema/schema.xsd" />
+	<xs:include schemaLocation="../messageSchema/schema.xsd" />
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="environment" />
+				<xs:element name="blog" minOccurs="0" maxOccurs="unbounded">					
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:long" />
+							<xs:element name="creationTimestamp" type="xs:date" />
+							<xs:element name="title" type="xs:string" />
+							<xs:element name="prettyUrl" type="xs:string" />
+							<xs:element name="fkSkinId" type="xs:long" />
+							<xs:element name="topic" minOccurs="0" maxOccurs="unbounded">											
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="published" type="xs:boolean" />
+										<xs:element name="publishDate" type="xs:date" />
+										<xs:element name="publishTime" type="xs:time" />
+										<xs:element name="title" type="xs:string" />
+										<xs:element name="description" type="xs:string" />
+										<xs:element name="tag" minOccurs="0" maxOccurs="unbounded">				
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="id" type="xs:long" />
+													<xs:element name="label" type="xs:string" />
+												</xs:sequence>
+											</xs:complexType>										
+										</xs:element>
+										<xs:element name="fkId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="role" minOccurs="0" maxOccurs="unbounded" />
+							<xs:element name="category" minOccurs="0" maxOccurs="unbounded">												
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="label" type="xs:string" />
+										<xs:element name="fkBlogId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="search">												
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="query" type="xs:string" />
+										<xs:element name="categoryId" type="xs:long" />
+										<xs:element name="tagId" type="xs:long" />
+										<xs:element name="tagName" type="xs:string" />
+										<xs:element name="fkBlogId" type="xs:long" />
+										<xs:element name="fkTopicId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="messagePublicFormIntro" type="xs:string" />
+							<xs:element name="messagePublicFormClosing" type="xs:string" />
+							<xs:element name="deleted" type="xs:boolean" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element ref="skin" minOccurs="0" maxOccurs="unbounded" />	
+                <xs:element ref="message" minOccurs="0" maxOccurs="unbounded" />				
+                <xs:element ref="user" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
