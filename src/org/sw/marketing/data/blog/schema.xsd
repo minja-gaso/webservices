@@ -25,12 +25,24 @@
 										<xs:element name="publishDate" type="xs:date" />
 										<xs:element name="publishTime" type="xs:time" />
 										<xs:element name="title" type="xs:string" />
-										<xs:element name="description" type="xs:string" />
+										<xs:element name="summary" type="xs:string" />
+										<xs:element name="article" type="xs:string" />
 										<xs:element name="tag" minOccurs="0" maxOccurs="unbounded">				
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="id" type="xs:long" />
 													<xs:element name="label" type="xs:string" />
+												</xs:sequence>
+											</xs:complexType>										
+										</xs:element>
+										<xs:element name="file" minOccurs="0" maxOccurs="unbounded">				
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="id" type="xs:long" />
+													<xs:element name="type" type="xs:string" />
+													<xs:element name="name" type="xs:string" />
+													<xs:element name="description" type="xs:string" />
+													<xs:element name="fkTopicId" type="xs:long" />
 												</xs:sequence>
 											</xs:complexType>										
 										</xs:element>

@@ -1,5 +1,7 @@
 package org.sw.marketing.dao.blog;
 
+import org.sw.marketing.dao.blog.file.BlogTopicFileDAO;
+import org.sw.marketing.dao.blog.file.BlogTopicFileDAOImpl;
 import org.sw.marketing.dao.blog.role.BlogRoleDAO;
 import org.sw.marketing.dao.blog.role.BlogRoleDAOImpl;
 import org.sw.marketing.dao.blog.skin.BlogSkinDAO;
@@ -36,5 +38,9 @@ public class DAOFactory
 	public static BlogSkinDAO getBlogSkinDAO()
 	{
 		return new BlogSkinDAOImpl();
+	}
+	public static BlogTopicFileDAO getBlogTopicFileDAO()
+	{
+		return new BlogTopicFileDAOImpl();
 	}
 }

@@ -207,9 +207,10 @@ public class BlogTopicDAOImpl extends BaseDAO implements BlogTopicDAO
 			statement.setTime(2, sqlTime);
 			
 			statement.setString(3, topic.getTitle());
-			statement.setString(4, topic.getDescription());		
-			statement.setBoolean(5, topic.isPublished());
-			statement.setLong(6, topic.getId());
+			statement.setString(4, topic.getSummary());		
+			statement.setString(5, topic.getArticle());
+			statement.setBoolean(6, topic.isPublished());
+			statement.setLong(7, topic.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -688,7 +689,8 @@ public class BlogTopicDAOImpl extends BaseDAO implements BlogTopicDAO
 		java.util.Date publishedDate = resultSet.getTimestamp("topic_publish_date");
 		java.sql.Time publishedTime = resultSet.getTime("topic_publish_time");
 		String title = resultSet.getString("topic_title");
-		String description = resultSet.getString("topic_description");
+		String summary = resultSet.getString("topic_summary");
+		String article = resultSet.getString("topic_article");
 		long blogId = resultSet.getLong("fk_blog_id");
 
 		Topic topic = new Topic();
@@ -697,7 +699,8 @@ public class BlogTopicDAOImpl extends BaseDAO implements BlogTopicDAO
 		topic.setPublishDate(DateToXmlGregorianCalendar.convert(publishedDate, false));
 		topic.setPublishTime(DateToXmlGregorianCalendar.convert(publishedTime, false));
 		topic.setTitle(title);
-		topic.setDescription(description);
+		topic.setSummary(summary);
+		topic.setArticle(article);
 		topic.setFkId(blogId);
 		
 		return topic;
