@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="../environmentSchema/schema.xsd" />
+	<xs:include schemaLocation="../skinSchema/schema.xsd" />
+	<xs:include schemaLocation="../roleSchema/schema.xsd" />
+	<xs:include schemaLocation="../userSchema/schema.xsd" />
+	<xs:include schemaLocation="../messageSchema/schema.xsd" />
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="environment" />
+				<xs:element name="website" minOccurs="0" maxOccurs="unbounded">					
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:long" />
+							<xs:element name="creationTimestamp" type="xs:date" />
+							<xs:element name="title" type="xs:string" />
+							<xs:element name="vanityUrl" type="xs:string" />
+							<xs:element name="fkSkinId" type="xs:long" />
+							<xs:element name="template" minOccurs="0" maxOccurs="unbounded">											
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="title" type="xs:string" />
+										<xs:element name="html" type="xs:string" />
+										<xs:element name="fkSiteId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="page" minOccurs="0" maxOccurs="unbounded">											
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="title" type="xs:string" />
+										<xs:element name="url" type="xs:string" />
+										<xs:element name="html" type="xs:string" />
+										<xs:element name="fkTemplateId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>  
+							<xs:element name="css" type="xs:string" />
+							<xs:element ref="role" minOccurs="0" maxOccurs="unbounded" />
+							<xs:element name="deleted" type="xs:boolean" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element ref="message" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
