@@ -32,12 +32,24 @@
 									<xs:sequence>
 										<xs:element name="id" type="xs:long" />
 										<xs:element name="title" type="xs:string" />
+										<xs:element name="subtitle" type="xs:string" />
 										<xs:element name="url" type="xs:string" />
 										<xs:element name="html" type="xs:string" />
 										<xs:element name="fkTemplateId" type="xs:long" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>  
+							<xs:element name="file" minOccurs="0" maxOccurs="unbounded">				
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="type" type="xs:string" />
+										<xs:element name="name" type="xs:string" />
+										<xs:element name="description" type="xs:string" />
+										<xs:element name="fkTopicId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>										
+							</xs:element>
 							<xs:element name="css" type="xs:string" />
 							<xs:element ref="role" minOccurs="0" maxOccurs="unbounded" />
 							<xs:element name="deleted" type="xs:boolean" />

@@ -172,6 +172,31 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 	}
 	
 	@Override
+	public void deleteWebsite(long id)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.DELETE_WEBSITE);
+			statement.setLong(1, id);
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
+	
+	@Override
 	public java.util.List<Template> getWebsiteTemplates()
 	{
 		java.util.List<Template> templates = null;
@@ -324,6 +349,31 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 	}
 	
 	@Override
+	public void deleteWebsiteTemplate(long id)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.DELETE_WEBSITE_TEMPLATE);
+			statement.setLong(1, id);
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
+	
+	@Override
 	public java.util.List<Page> getWebsitePages()
 	{
 		java.util.List<Page> pages = null;
@@ -396,12 +446,14 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 			{
 				long id = resultSet.getLong("page_id");
 				String title = resultSet.getString("page_title");
+				String subtitle = resultSet.getString("page_subtitle");
 				String html = resultSet.getString("page_html");
 				long fkTemplateId = resultSet.getLong("fk_template_id");
 
 				page = new Page();
 				page.setId(id);
 				page.setTitle(title);
+				page.setSubtitle(subtitle);
 				page.setHtml(html);
 				page.setFkTemplateId(fkTemplateId);
 			}
@@ -431,9 +483,10 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(WebsiteSQL.UPDATE_WEBSITE_PAGE);
 			statement.setString(1, page.getTitle());
-			statement.setString(2, page.getHtml());
-			statement.setLong(3, page.getFkTemplateId());
-			statement.setLong(4, page.getId());
+			statement.setString(2, page.getSubtitle());
+			statement.setString(3, page.getHtml());
+			statement.setLong(4, page.getFkTemplateId());
+			statement.setLong(5, page.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -478,5 +531,30 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 		}
 		
 		return id;
+	}
+	
+	@Override
+	public void deleteWebsitePage(long id)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.DELETE_WEBSITE_PAGE);
+			statement.setLong(1, id);
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
 	}
 }

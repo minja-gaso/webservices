@@ -10,14 +10,17 @@ public interface WebsiteDAO
 	public Website getWebsite(long id);
 	public void updateWebsite(Website website);
 	public long createWebsite();
+	public void deleteWebsite(long id);
 	
 	public java.util.List<Template> getWebsiteTemplates();
 	public Template getWebsiteTemplate(long id);
 	public void updateWebsiteTemplate(Template template);
 	public long createWebsiteTemplate();
+	public void deleteWebsiteTemplate(long id);
 
 	public java.util.List<Page> getWebsitePages();
 	public Page getWebsitePage(long id);
 	public void updateWebsitePage(Page page);
 	public long createWebsitePage();
+	public void deleteWebsitePage(long id);
 }
