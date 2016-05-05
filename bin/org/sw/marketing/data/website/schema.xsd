@@ -50,6 +50,7 @@
 									</xs:sequence>
 								</xs:complexType>										
 							</xs:element>
+							<xs:element name="footer" type="xs:string" />
 							<xs:element name="css" type="xs:string" />
 							<xs:element ref="role" minOccurs="0" maxOccurs="unbounded" />
 							<xs:element name="deleted" type="xs:boolean" />

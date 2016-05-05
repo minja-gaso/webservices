@@ -4,7 +4,7 @@ public class WebsiteSQL
 {
 	public final static String GET_WEBSITES = "SELECT * FROM sitebuilder.site WHERE is_site_deleted = false ORDER BY site_title ASC";
 	public final static String GET_WEBSITE = "SELECT * FROM sitebuilder.site WHERE site_id = ?";
-	public final static String UPDATE_WEBSITE = "UPDATE sitebuilder.site SET site_title = ?, site_url = ?, site_css = ? WHERE site_id = ?";
+	public final static String UPDATE_WEBSITE = "UPDATE sitebuilder.site SET site_title = ?, site_url = ?, site_footer = ?, site_css = ? WHERE site_id = ?";
 	public final static String CREATE_WEBSITE = "INSERT INTO sitebuilder.site DEFAULT VALUES";
 	public final static String DELETE_WEBSITE = "UPDATE sitebuilder.site SET is_site_deleted = true WHERE site_id = ?";
 
@@ -19,4 +19,5 @@ public class WebsiteSQL
 	public final static String UPDATE_WEBSITE_PAGE = "UPDATE sitebuilder.page SET page_title = ?, page_subtitle = ?, page_html = ?, fk_template_id = ? WHERE page_id = ?";
 	public final static String CREATE_WEBSITE_PAGE = "INSERT INTO sitebuilder.page DEFAULT VALUES";
 	public final static String DELETE_WEBSITE_PAGE = "DELETE FROM sitebuilder.page WHERE page_id = ?";
+	public static final String COPY_WEBSITE_PAGE = "INSERT INTO sitebuilder.page_archive (page_archive_creation_timestamp, page_archive_title, page_archive_subtitle, page_archive_html, fk_page_id) SELECT page_creation_timestamp, page_title, page_subtitle, page_html, page_id FROM sitebuilder.page WHERE page_id = ?";
 }

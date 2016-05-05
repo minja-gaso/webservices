@@ -6,6 +6,7 @@ import java.sql.Statement;
 import org.sw.marketing.dao.BaseDAO;
 import org.sw.marketing.dao.DAO;
 import org.sw.marketing.dao.blog.BlogSQL;
+import org.sw.marketing.dao.calendar.CalendarSQL;
 import org.sw.marketing.data.skin.Skin;
 import org.sw.marketing.data.website.Data.Website;
 import org.sw.marketing.data.website.Data.Website.Page;
@@ -85,6 +86,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 				java.util.Date timestamp = resultSet.getTimestamp("site_creation_timestamp");
 				String title = resultSet.getString("site_title");
 				String url = resultSet.getString("site_url");
+				String footer = resultSet.getString("site_footer");
 				String css = resultSet.getString("site_css");
 				boolean deleted = resultSet.getBoolean("is_site_deleted");
 
@@ -93,6 +95,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 				website.setId(id);
 				website.setTitle(title);
 				website.setVanityUrl(url);
+				website.setFooter(footer);
 				website.setCss(css);
 				website.setDeleted(deleted);
 			}
@@ -123,8 +126,9 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 			statement = connection.prepareStatement(WebsiteSQL.UPDATE_WEBSITE);
 			statement.setString(1, website.getTitle());
 			statement.setString(2, website.getVanityUrl());
-			statement.setString(3, website.getCss());
-			statement.setLong(4, website.getId());
+			statement.setString(3, website.getFooter());
+			statement.setString(4, website.getCss());
+			statement.setLong(5, website.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
@@ -556,5 +560,39 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 		{
 			closeConnection(connection, statement, resultSet);
 		}
+	}
+
+	public long archiveWebsitePage(Page page)
+	{
+		long id = 0;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+		
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.COPY_WEBSITE_PAGE, Statement.RETURN_GENERATED_KEYS);
+			statement.setLong(1, page.getId());
+			statement.executeUpdate();
+			resultSet = statement.getGeneratedKeys();
+			
+			if(resultSet.next())
+			{
+				id = resultSet.getLong(1);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+		
+		return id;
 	}
 }

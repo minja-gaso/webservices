@@ -23,4 +23,5 @@ public interface WebsiteDAO
 	public void updateWebsitePage(Page page);
 	public long createWebsitePage();
 	public void deleteWebsitePage(long id);
+	public long archiveWebsitePage(Page page);
 }
