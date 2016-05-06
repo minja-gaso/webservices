@@ -9,6 +9,7 @@ import org.sw.marketing.dao.blog.BlogSQL;
 import org.sw.marketing.dao.calendar.CalendarSQL;
 import org.sw.marketing.data.skin.Skin;
 import org.sw.marketing.data.website.Data.Website;
+import org.sw.marketing.data.website.Data.Website.ArchivePage;
 import org.sw.marketing.data.website.Data.Website.Page;
 import org.sw.marketing.data.website.Data.Website.Template;
 import org.sw.marketing.util.DateToXmlGregorianCalendar;
@@ -201,7 +202,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 	}
 	
 	@Override
-	public java.util.List<Template> getWebsiteTemplates()
+	public java.util.List<Template> getWebsiteTemplates(long siteID)
 	{
 		java.util.List<Template> templates = null;
 		
@@ -214,6 +215,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(WebsiteSQL.GET_WEBSITE_TEMPLATES);
+			statement.setLong(1, siteID);
 			resultSet = statement.executeQuery();
 
 			Template template = null;
@@ -249,7 +251,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 	}
 	
 	@Override
-	public Template getWebsiteTemplate(long templateID)
+	public Template getWebsiteTemplate(long templateID, long siteID)
 	{
 		Template template = null;
 		
@@ -263,6 +265,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(WebsiteSQL.GET_WEBSITE_TEMPLATE);
 			statement.setLong(1, templateID);
+			statement.setLong(2, siteID);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next())
@@ -319,7 +322,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 	}
 	
 	@Override
-	public long createWebsiteTemplate()
+	public long createWebsiteTemplate(long websiteID)
 	{
 		long id = 0;
 		
@@ -332,6 +335,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(WebsiteSQL.CREATE_WEBSITE_TEMPLATE, Statement.RETURN_GENERATED_KEYS);
+			statement.setLong(1, websiteID);
 			statement.executeUpdate();
 			resultSet = statement.getGeneratedKeys();
 			
@@ -378,7 +382,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 	}
 	
 	@Override
-	public java.util.List<Page> getWebsitePages()
+	public java.util.List<Page> getWebsitePages(long siteID)
 	{
 		java.util.List<Page> pages = null;
 		
@@ -391,6 +395,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(WebsiteSQL.GET_WEBSITE_PAGES);
+			statement.setLong(1, siteID);
 			resultSet = statement.executeQuery();
 
 			Page page = null;
@@ -430,7 +435,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 	}
 	
 	@Override
-	public Page getWebsitePage(long pageID)
+	public Page getWebsitePage(long pageID, long siteID)
 	{
 		Page page = null;
 		
@@ -444,11 +449,13 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(WebsiteSQL.GET_WEBSITE_PAGE);
 			statement.setLong(1, pageID);
+			statement.setLong(2, siteID);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next())
 			{
 				long id = resultSet.getLong("page_id");
+				java.util.Date creationTimestamp = resultSet.getTimestamp("page_creation_timestamp");
 				String title = resultSet.getString("page_title");
 				String subtitle = resultSet.getString("page_subtitle");
 				String html = resultSet.getString("page_html");
@@ -456,6 +463,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 
 				page = new Page();
 				page.setId(id);
+				page.setCreationTimestamp(DateToXmlGregorianCalendar.convert(creationTimestamp, false));
 				page.setTitle(title);
 				page.setSubtitle(subtitle);
 				page.setHtml(html);
@@ -504,7 +512,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 	}
 	
 	@Override
-	public long createWebsitePage()
+	public long createWebsitePage(long siteID)
 	{
 		long id = 0;
 		
@@ -517,6 +525,7 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(WebsiteSQL.CREATE_WEBSITE_PAGE, Statement.RETURN_GENERATED_KEYS);
+			statement.setLong(1, siteID);
 			statement.executeUpdate();
 			resultSet = statement.getGeneratedKeys();
 			
@@ -594,5 +603,140 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 		}
 		
 		return id;
+	}
+	
+
+	@Override
+	public Page getWebsitePageArchive(long id)
+	{
+		Page page = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.GET_WEBSITE_PAGE_ARCHIVE);
+			statement.setLong(1, id);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				long archiveId = resultSet.getLong("page_archive_id");
+//				String archiveUrl = resultSet.getString("page_archive_url");
+				java.util.Date archiveDate = resultSet.getTimestamp("page_archive_creation_timestamp");
+				String archiveTitle = resultSet.getString("page_archive_title");
+				String archiveSubtitle = resultSet.getString("page_archive_subtitle");
+				String archiveHtml = resultSet.getString("page_archive_html");
+
+				page = new Page();
+				page.setId(archiveId);
+//				page.setUrl(archiveUrl);
+				page.setCreationTimestamp(DateToXmlGregorianCalendar.convert(archiveDate, false));
+				page.setTitle(archiveTitle);
+				page.setSubtitle(archiveSubtitle);
+				page.setHtml(archiveHtml);
+
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return page;
+	}
+	
+
+	@Override
+	public java.util.List<ArchivePage> getWebsitePageArchives(long id)
+	{
+		java.util.List<ArchivePage> pages = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.GET_WEBSITE_PAGE_ARCHIVES);
+			statement.setLong(1, id);
+			resultSet = statement.executeQuery();
+
+			ArchivePage page = null;
+			while (resultSet.next())
+			{
+				if (pages == null)
+				{
+					pages = new java.util.ArrayList<ArchivePage>();
+				}
+
+				long archiveId = resultSet.getLong("page_archive_id");
+//				String archiveUrl = resultSet.getString("page_archive_url");
+				java.util.Date archiveDate = resultSet.getTimestamp("page_archive_creation_timestamp");
+				String archiveTitle = resultSet.getString("page_archive_title");
+				String archiveSubtitle = resultSet.getString("page_archive_subtitle");
+				String archiveHtml = resultSet.getString("page_archive_html");
+				long fkId = resultSet.getLong("fk_page_id");
+
+				page = new ArchivePage();
+				page.setId(archiveId);
+//				page.setUrl(archiveUrl);
+				page.setCreationTimestamp(DateToXmlGregorianCalendar.convert(archiveDate, false));
+				page.setTitle(archiveTitle);
+				page.setSubtitle(archiveSubtitle);
+				page.setHtml(archiveHtml);
+				page.setFkPageId(fkId);
+
+				pages.add(page);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return pages;
+	}
+	
+	@Override
+	public void applyArchivePage(Page page)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.APPLY_ARCHIVE_PAGE);
+			statement.setString(1, page.getTitle());
+			statement.setString(2, page.getSubtitle());
+			statement.setString(3, page.getHtml());
+			statement.setLong(4, page.getId());
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
 	}
 }

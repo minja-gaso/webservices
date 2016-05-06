@@ -31,6 +31,7 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="id" type="xs:long" />
+										<xs:element name="creationTimestamp" type="xs:dateTime" />
 										<xs:element name="title" type="xs:string" />
 										<xs:element name="subtitle" type="xs:string" />
 										<xs:element name="url" type="xs:string" />
@@ -39,6 +40,19 @@
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>  
+							<xs:element name="archivePage" minOccurs="0" maxOccurs="unbounded">											
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id" type="xs:long" />
+										<xs:element name="creationTimestamp" type="xs:dateTime" />
+										<xs:element name="title" type="xs:string" />
+										<xs:element name="subtitle" type="xs:string" />
+										<xs:element name="url" type="xs:string" />
+										<xs:element name="html" type="xs:string" />
+										<xs:element name="fkPageId" type="xs:long" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>   
 							<xs:element name="file" minOccurs="0" maxOccurs="unbounded">				
 								<xs:complexType>
 									<xs:sequence>
