@@ -8,6 +8,7 @@
 	<xs:element name="data">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element name="admin" type="xs:boolean" />
 				<xs:element ref="environment" />
 				<xs:element name="website" minOccurs="0" maxOccurs="unbounded">					
 					<xs:complexType>
@@ -36,7 +37,29 @@
 										<xs:element name="subtitle" type="xs:string" />
 										<xs:element name="url" type="xs:string" />
 										<xs:element name="html" type="xs:string" />
-										<xs:element name="fkTemplateId" type="xs:long" />
+										<xs:element name="fkTemplateId" type="xs:long" />										
+										<xs:element name="component" minOccurs="0" maxOccurs="unbounded">											
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="id" type="xs:long" />
+													<xs:element name="orderNumber" type="xs:int" />	
+													<xs:element name="type" type="xs:string" />
+													<xs:element name="title" type="xs:string" />
+													<xs:element name="fkPageId" type="xs:long" />										
+													<xs:element name="item" minOccurs="0" maxOccurs="unbounded">											
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="id" type="xs:long" />
+																<xs:element name="orderNumber" type="xs:int" />	
+																<xs:element name="title" type="xs:string" />
+																<xs:element name="html" type="xs:string" />
+																<xs:element name="fkComponentId" type="xs:long" />
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>  

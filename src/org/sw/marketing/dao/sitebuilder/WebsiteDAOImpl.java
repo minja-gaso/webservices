@@ -12,6 +12,8 @@ import org.sw.marketing.data.website.Data.Website;
 import org.sw.marketing.data.website.Data.Website.ArchivePage;
 import org.sw.marketing.data.website.Data.Website.Page;
 import org.sw.marketing.data.website.Data.Website.Template;
+import org.sw.marketing.data.website.Data.Website.Page.Component;
+import org.sw.marketing.data.website.Data.Website.Page.Component.Item;
 import org.sw.marketing.util.DateToXmlGregorianCalendar;
 
 public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
@@ -728,6 +730,462 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 			statement.setString(2, page.getSubtitle());
 			statement.setString(3, page.getHtml());
 			statement.setLong(4, page.getId());
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
+
+	@Override
+	public java.util.List<Component> getComponents(long fkPageId)
+	{
+		java.util.List<Component> components = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.GET_COMPONENTS);
+			statement.setLong(1, fkPageId);
+			resultSet = statement.executeQuery();
+
+			Component component = null;
+			while (resultSet.next())
+			{
+				if (components == null)
+				{
+					components = new java.util.ArrayList<Component>();
+				}
+
+				long id = resultSet.getLong("component_id");
+				int orderNumber = resultSet.getInt("component_order_number");
+				String type = resultSet.getString("component_type");
+				String title = resultSet.getString("component_title");
+				long fkId = resultSet.getLong("fk_page_id");
+
+				component = new Component();
+				component.setId(id);
+				component.setOrderNumber(orderNumber);
+				component.setType(type);
+				component.setTitle(title);
+				component.setFkPageId(fkId);
+
+				components.add(component);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return components;
+	}
+	
+	@Override
+	public Component getComponent(long id)
+	{
+		Component component = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.GET_COMPONENT);
+			statement.setLong(1, id);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				int orderNumber = resultSet.getInt("component_order_number");
+				String type = resultSet.getString("component_type");
+				String title = resultSet.getString("component_title");
+				long fkId = resultSet.getLong("fk_page_id");
+
+				component = new Component();
+				component.setId(id);
+				component.setOrderNumber(orderNumber);
+				component.setType(type);
+				component.setTitle(title);
+				component.setFkPageId(fkId);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return component;
+	}
+
+	@Override
+	public Component getComponentByOrderNumber(int orderNumber)
+	{
+		Component component = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.GET_COMPONENT_BY_ORDER_NUMBER);
+			statement.setLong(1, orderNumber);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				long id = resultSet.getLong("component_id");
+				String type = resultSet.getString("component_type");
+				String title = resultSet.getString("component_title");
+				long fkId = resultSet.getLong("fk_page_id");
+
+				component = new Component();
+				component.setId(id);
+				component.setOrderNumber(orderNumber);
+				component.setType(type);
+				component.setTitle(title);
+				component.setFkPageId(fkId);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return component;
+	}
+	
+	public long createComponent(String type, long fkPageId)
+	{
+		long id = 0;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.CREATE_COMPONENT, Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, type);
+			statement.setLong(2, fkPageId);
+			statement.executeUpdate();
+			resultSet = statement.getGeneratedKeys();
+			
+			if(resultSet.next())
+			{
+				id = resultSet.getLong(1);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+		
+		return id;
+	}	
+	
+	@Override
+	public void updateComponent(Component component)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.UPDATE_COMPONENT);
+			statement.setString(1, component.getTitle());
+			statement.setInt(2, component.getOrderNumber());
+			statement.setLong(3, component.getId());
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
+	
+	@Override
+	public void deleteComponent(long id)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.DELETE_COMPONENT);
+			statement.setLong(1, id);
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
+	
+	@Override
+	public java.util.List<Item> getComponentItems(long fkPageId)
+	{
+		java.util.List<Item> items = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.GET_COMPONENT_ITEMS);
+			statement.setLong(1, fkPageId);
+			resultSet = statement.executeQuery();
+
+			Item item = null;
+			while (resultSet.next())
+			{
+				if (items == null)
+				{
+					items = new java.util.ArrayList<Item>();
+				}
+
+				long id = resultSet.getLong("component_item_id");
+				int orderNumber = resultSet.getInt("component_item_order_number");
+				String title = resultSet.getString("component_item_title");
+				String html = resultSet.getString("component_item_html");
+				long fkId = resultSet.getLong("fk_component_id");
+
+				item = new Item();
+				item.setId(id);
+				item.setOrderNumber(orderNumber);
+				item.setTitle(title);
+				item.setHtml(html);
+				item.setFkComponentId(fkId);
+
+				items.add(item);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return items;
+	}
+	
+	@Override
+	public Item getComponentItem(long id)
+	{
+		Item item = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.GET_COMPONENT_ITEM);
+			statement.setLong(1, id);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				int orderNumber = resultSet.getInt("component_item_order_number");
+				String title = resultSet.getString("component_item_title");
+				String html = resultSet.getString("component_item_html");
+				long fkId = resultSet.getLong("fk_component_id");
+
+				item = new Item();
+				item.setId(id);
+				item.setOrderNumber(orderNumber);
+				item.setTitle(title);
+				item.setHtml(html);
+				item.setFkComponentId(fkId);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return item;
+	}
+
+	@Override
+	public Item getComponentItemByOrderNumber(int orderNumber)
+	{
+		Item item = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.GET_COMPONENT_ITEM_BY_ORDER_NUMBER);
+			statement.setLong(1, orderNumber);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				long id = resultSet.getLong("component_item_id");
+				String title = resultSet.getString("component_item_title");
+				String html = resultSet.getString("component_item_html");
+				long fkId = resultSet.getLong("fk_component_id");
+
+				item = new Item();
+				item.setId(id);
+				item.setOrderNumber(orderNumber);
+				item.setTitle(title);
+				item.setHtml(html);
+				item.setFkComponentId(fkId);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return item;
+	}
+	
+	public long createComponentItem(long fkComponentId)
+	{
+		long id = 0;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.CREATE_COMPONENT_ITEM, Statement.RETURN_GENERATED_KEYS);
+			statement.setLong(1, fkComponentId);
+			statement.executeUpdate();
+			resultSet = statement.getGeneratedKeys();
+			
+			if(resultSet.next())
+			{
+				id = resultSet.getLong(1);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+		
+		return id;
+	}
+	
+	@Override
+	public void updateComponentItem(Item item)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.UPDATE_COMPONENT_ITEM);
+			statement.setInt(1, item.getOrderNumber());
+			statement.setString(2, item.getTitle());
+			statement.setString(3, item.getHtml());
+			statement.setLong(4, item.getId());
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+	}
+	
+	@Override
+	public void deleteComponentItem(long id)
+	{
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.DELETE_COMPONENT_ITEM);
+			statement.setLong(1, id);
 			statement.executeUpdate();
 		}
 		catch (SQLException e)
