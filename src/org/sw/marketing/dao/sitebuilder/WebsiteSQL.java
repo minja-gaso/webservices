@@ -16,6 +16,7 @@ public class WebsiteSQL
 	
 	public final static String GET_WEBSITE_PAGES = "SELECT * FROM sitebuilder.page WHERE fk_site_id = ?";
 	public final static String GET_WEBSITE_PAGE = "SELECT * FROM sitebuilder.page WHERE page_id = ? AND fk_site_id = ?";
+	public final static String GET_WEBSITE_PAGE_NO_SITE = "SELECT * FROM sitebuilder.page WHERE page_id = ?";
 	public final static String UPDATE_WEBSITE_PAGE = "UPDATE sitebuilder.page SET page_title = ?, page_subtitle = ?, page_html = ?, fk_template_id = ? WHERE page_id = ?";
 	public final static String CREATE_WEBSITE_PAGE = "INSERT INTO sitebuilder.page (fk_site_id) VALUES (?)";
 	public final static String DELETE_WEBSITE_PAGE = "DELETE FROM sitebuilder.page WHERE page_id = ?";
@@ -29,7 +30,7 @@ public class WebsiteSQL
 	public final static String GET_COMPONENT = "SELECT * FROM sitebuilder.component WHERE component_id = ?";
 	public final static String GET_COMPONENT_BY_ORDER_NUMBER = "SELECT * FROM sitebuilder.component WHERE component_order_number = ?";
 	public final static String CREATE_COMPONENT = "INSERT INTO sitebuilder.component (component_type, fk_page_id) VALUES (?, ?)";
-	public final static String UPDATE_COMPONENT = "UPDATE sitebuilder.component SET component_title = ?, component_order_number = ? WHERE component_id = ?";
+	public final static String UPDATE_COMPONENT = "UPDATE sitebuilder.component SET component_order_number = ?, component_type = ?, component_type_value = ?, component_title = ?, component_value = ?, component_style = ?, is_component_item_possible = ? WHERE component_id = ?";
 	public final static String DELETE_COMPONENT = "DELETE FROM sitebuilder.component WHERE component_id = ?";
 	
 	public final static String GET_COMPONENT_ITEMS = "SELECT * FROM sitebuilder.component_item WHERE fk_component_id = ? ORDER BY component_item_order_number ASC";

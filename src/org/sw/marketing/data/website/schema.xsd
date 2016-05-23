@@ -37,14 +37,19 @@
 										<xs:element name="subtitle" type="xs:string" />
 										<xs:element name="url" type="xs:string" />
 										<xs:element name="html" type="xs:string" />
-										<xs:element name="fkTemplateId" type="xs:long" />										
+										<xs:element name="fkTemplateId" type="xs:long" />		
+										<xs:element name="fkSiteId" type="xs:long" />										
 										<xs:element name="component" minOccurs="0" maxOccurs="unbounded">											
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="id" type="xs:long" />
 													<xs:element name="orderNumber" type="xs:int" />	
 													<xs:element name="type" type="xs:string" />
+													<xs:element name="typeValue" type="xs:string" />
 													<xs:element name="title" type="xs:string" />
+													<xs:element name="value" type="xs:string" />
+													<xs:element name="style" type="xs:string" />
+													<xs:element name="itemPossible" type="xs:boolean" />
 													<xs:element name="fkPageId" type="xs:long" />										
 													<xs:element name="item" minOccurs="0" maxOccurs="unbounded">											
 														<xs:complexType>

@@ -485,6 +485,56 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 	}
 	
 	@Override
+	public Page getWebsitePage(long pageID)
+	{
+		Page page = null;
+		
+		DAO dao = new BaseDAO();
+		java.sql.Connection connection = null;
+		java.sql.PreparedStatement statement = null;
+		java.sql.ResultSet resultSet = null;
+
+		try
+		{
+			connection = dao.getConnection();
+			statement = connection.prepareStatement(WebsiteSQL.GET_WEBSITE_PAGE_NO_SITE);
+			statement.setLong(1, pageID);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next())
+			{
+				long id = resultSet.getLong("page_id");
+				java.util.Date creationTimestamp = resultSet.getTimestamp("page_creation_timestamp");
+				String title = resultSet.getString("page_title");
+				String subtitle = resultSet.getString("page_subtitle");
+				String html = resultSet.getString("page_html");
+				long fkTemplateId = resultSet.getLong("fk_template_id");
+				long fkSiteId = resultSet.getLong("fk_site_id");
+
+				page = new Page();
+				page.setId(id);
+				page.setCreationTimestamp(DateToXmlGregorianCalendar.convert(creationTimestamp, false));
+				page.setTitle(title);
+				page.setSubtitle(subtitle);
+				page.setHtml(html);
+				page.setFkTemplateId(fkTemplateId);
+				page.setFkSiteId(fkSiteId);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeConnection(connection, statement, resultSet);
+		}
+
+		return page;
+	}
+	
+	
+	@Override
 	public void updateWebsitePage(Page page)
 	{
 		DAO dao = new BaseDAO();
@@ -769,15 +819,23 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 
 				long id = resultSet.getLong("component_id");
 				int orderNumber = resultSet.getInt("component_order_number");
+				String typeValue = resultSet.getString("component_type_value");
 				String type = resultSet.getString("component_type");
 				String title = resultSet.getString("component_title");
+				String value = resultSet.getString("component_value");
+				String style = resultSet.getString("component_style");
+				boolean itemPossible = resultSet.getBoolean("is_component_item_possible");
 				long fkId = resultSet.getLong("fk_page_id");
 
 				component = new Component();
 				component.setId(id);
 				component.setOrderNumber(orderNumber);
 				component.setType(type);
+				component.setTypeValue(typeValue);
 				component.setTitle(title);
+				component.setValue(value);
+				component.setStyle(style);
+				component.setItemPossible(itemPossible);
 				component.setFkPageId(fkId);
 
 				components.add(component);
@@ -816,14 +874,22 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 			{
 				int orderNumber = resultSet.getInt("component_order_number");
 				String type = resultSet.getString("component_type");
+				String typeValue = resultSet.getString("component_type_value");
 				String title = resultSet.getString("component_title");
+				String value = resultSet.getString("component_value");
+				String style = resultSet.getString("component_style");
+				boolean itemPossible = resultSet.getBoolean("is_component_item_possible");
 				long fkId = resultSet.getLong("fk_page_id");
 
 				component = new Component();
 				component.setId(id);
 				component.setOrderNumber(orderNumber);
 				component.setType(type);
+				component.setTypeValue(typeValue);
 				component.setTitle(title);
+				component.setValue(value);
+				component.setStyle(style);
+				component.setItemPossible(itemPossible);
 				component.setFkPageId(fkId);
 			}
 		}
@@ -858,16 +924,24 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 
 			while (resultSet.next())
 			{
-				long id = resultSet.getLong("component_id");
+				long id = resultSet.getInt("component_id");
 				String type = resultSet.getString("component_type");
+				String typeValue = resultSet.getString("component_type_value");
 				String title = resultSet.getString("component_title");
+				String value = resultSet.getString("component_value");
+				String style = resultSet.getString("component_style");
+				boolean itemPossible = resultSet.getBoolean("is_component_item_possible");
 				long fkId = resultSet.getLong("fk_page_id");
 
 				component = new Component();
 				component.setId(id);
 				component.setOrderNumber(orderNumber);
 				component.setType(type);
+				component.setTypeValue(typeValue);
 				component.setTitle(title);
+				component.setValue(value);
+				component.setStyle(style);
+				component.setItemPossible(itemPossible);
 				component.setFkPageId(fkId);
 			}
 		}
@@ -930,9 +1004,14 @@ public class WebsiteDAOImpl extends BaseDAO implements WebsiteDAO
 		{
 			connection = dao.getConnection();
 			statement = connection.prepareStatement(WebsiteSQL.UPDATE_COMPONENT);
-			statement.setString(1, component.getTitle());
-			statement.setInt(2, component.getOrderNumber());
-			statement.setLong(3, component.getId());
+			statement.setInt(1, component.getOrderNumber());
+			statement.setString(2, component.getType());
+			statement.setString(3, component.getTypeValue());
+			statement.setString(4, component.getTitle());
+			statement.setString(5, component.getValue());
+			statement.setString(6, component.getStyle());
+			statement.setBoolean(7, component.isItemPossible());
+			statement.setLong(8, component.getId());
 			statement.executeUpdate();
 		}
 		catch (SQLException e)

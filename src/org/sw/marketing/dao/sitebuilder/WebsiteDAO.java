@@ -23,6 +23,7 @@ public interface WebsiteDAO
 
 	public java.util.List<Page> getWebsitePages(long siteID);
 	public Page getWebsitePage(long id, long siteID);
+	public Page getWebsitePage(long id);
 	public void updateWebsitePage(Page page);
 	public long createWebsitePage(long siteID);
 	public void deleteWebsitePage(long id);
